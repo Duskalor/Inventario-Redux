@@ -13,6 +13,14 @@ export const createClientes = createAsyncThunk(
   }
 );
 
+export const deleteClientes = createAsyncThunk(
+  'delete/postClientes',
+  async (id) => {
+    const { data } = await apiSistema.delete(`cliente/delete/${id}`);
+    return data;
+  }
+);
+
 export const ClientesSlice = createSlice({
   name: 'Clientes',
   initialState: {
@@ -26,6 +34,7 @@ export const ClientesSlice = createSlice({
     },
   },
   extraReducers: {
+    ///GET
     [getClientes.pending]: (state, { payload }) => {
       state.loading = true;
     },
@@ -36,7 +45,7 @@ export const ClientesSlice = createSlice({
     [getClientes.rejected]: (state, { payload }) => {
       state.loading = false;
     },
-
+    //CREATE
     [createClientes.pending]: (state, { payload }) => {
       state.loading = true;
     },
@@ -45,6 +54,17 @@ export const ClientesSlice = createSlice({
       state.clientes = payload.ListaDeclientes;
     },
     [createClientes.rejected]: (state, { payload }) => {
+      state.loading = false;
+    },
+    //DELETE
+    [deleteClientes.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [deleteClientes.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.clientes = payload.ListaDeclientes;
+    },
+    [deleteClientes.rejected]: (state, { payload }) => {
       state.loading = false;
     },
   },

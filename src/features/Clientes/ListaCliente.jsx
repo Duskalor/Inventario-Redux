@@ -12,10 +12,11 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Cliente from './Cliente';
-import { createClientes, getClientes } from './clientesSlice';
+import { getClientes } from './clientesSlice';
 
 export default function ListaCliente() {
   const { clientes } = useSelector((state) => state.Clientes);
+  //console.log(clientes);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getClientes());
@@ -25,15 +26,12 @@ export default function ListaCliente() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const onSubmit = (d) => {
-    dispatch(createClientes(d));
-    console.log(d);
-  };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>Nombre</label>
           <input
@@ -56,7 +54,7 @@ export default function ListaCliente() {
           {errors.Dni?.type === 'minLength' && <p>El debe tener 8 digitos </p>}
         </div>
         <input type='submit' value='Crear' />
-      </form>
+      </form> */}
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
