@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 import ListaCliente from './features/Clientes/ListaCliente';
 import { getDatos } from './features/Datos/datosSlice';
-import ListaProductos from './features/Pruductos/ListaProductos';
 import Layout from './Layout';
 
 function App() {
