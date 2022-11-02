@@ -55,6 +55,7 @@ export default function ListaCliente() {
         </div>
         <input type='submit' value='Crear' />
       </form> */}
+      <h1>CLIENTES</h1>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

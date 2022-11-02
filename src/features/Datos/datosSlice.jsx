@@ -6,6 +6,18 @@ export const getDatos = createAsyncThunk('get/getDatos', async () => {
   //console.log(data);
   return data;
 });
+
+export const updateDatos = createAsyncThunk(
+  'update/updateDatos',
+  async ({ id, RazonSocial, Direccion, Ruc }) => {
+    const { data } = await apiSistema.put(`datos/update/${id}`, {
+      RazonSocial,
+      Ruc,
+      Direccion,
+    });
+    return data;
+  }
+);
 export const datosSlice = createSlice({
   name: 'Datos',
   initialState: {
@@ -22,7 +34,7 @@ export const datosSlice = createSlice({
   },
 
   extraReducers: {
-    [getDatos.pending]: (state, action) => {
+    [getDatos.pending]: (state) => {
       state.pending = true;
     },
     [getDatos.fulfilled]: (state, action) => {
@@ -32,7 +44,20 @@ export const datosSlice = createSlice({
       state.Direccion = action.payload.Datos[0].Direccion;
       state.Ruc = action.payload.Datos[0].Ruc;
     },
-    [getDatos.rejected]: (state, action) => {
+    [getDatos.rejected]: (state) => {
+      state.pending = false;
+    },
+    [updateDatos.pending]: (state) => {
+      state.pending = true;
+    },
+    [updateDatos.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.id = action.payload.Datos[0].id;
+      state.RazonSocial = action.payload.Datos[0].RazonSocial;
+      state.Direccion = action.payload.Datos[0].Direccion;
+      state.Ruc = action.payload.Datos[0].Ruc;
+    },
+    [updateDatos.rejected]: (state) => {
       state.pending = false;
     },
   },

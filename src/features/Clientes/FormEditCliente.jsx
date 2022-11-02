@@ -1,23 +1,33 @@
 import { Button, Input } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { createClientes } from './clientesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { createClientes, updateClientes } from './clientesSlice';
 
-export default function FormNuevoCliente({ handleClose }) {
+export default function FormEditCliente({ handleClose, id }) {
   const dispatch = useDispatch();
+  //console.log(id);
+  const { clientes } = useSelector((state) => state.Clientes);
+  //console.log(clientes);
+  const { FullName, Dni } = clientes.find((Cliente) => Cliente.id === id);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      FullName: FullName,
+      Dni: Dni,
+    },
+  });
 
+  //console.log(datosParaEditar);
   const onSubmit = (dato) => {
-    dispatch(createClientes(dato));
+    const { FullName, Dni } = dato;
+    dispatch(updateClientes({ id, FullName, Dni }));
     handleClose();
     reset();
-    //console.log(d);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -25,6 +35,7 @@ export default function FormNuevoCliente({ handleClose }) {
         <label>Nombre</label>
         <Input
           type='text'
+          name='FullName'
           {...register('FullName', {
             required: true,
           })}
@@ -34,6 +45,7 @@ export default function FormNuevoCliente({ handleClose }) {
       <div>
         <label>Dni</label>
         <Input
+          name='Dni'
           type='number'
           {...register('Dni', { required: true, maxLength: 8, minLength: 8 })}
         />
@@ -41,8 +53,7 @@ export default function FormNuevoCliente({ handleClose }) {
         {errors.Dni?.type === 'maxLength' && <p>El debe tener 8 digitos </p>}
         {errors.Dni?.type === 'minLength' && <p>El debe tener 8 digitos </p>}
       </div>
-
-      <Button type='submit'>Crear</Button>
+      <Button type='submit'>Guardar</Button>
     </form>
   );
 }

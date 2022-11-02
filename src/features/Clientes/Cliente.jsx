@@ -1,7 +1,8 @@
-import { TableCell, TableRow } from '@mui/material';
+import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteClientes } from './clientesSlice';
+import { ModalEdit } from './ModalEdit';
 
 export default function Cliente({ clientes }) {
   const { FullName, Dni, id } = clientes;
@@ -12,13 +13,14 @@ export default function Cliente({ clientes }) {
       dispatch(deleteClientes(id));
     }
   };
+
   return (
     <TableRow>
       <TableCell>{FullName}</TableCell>
       <TableCell>{Dni}</TableCell>
       <TableCell>
-        <button>Editar</button>
-        <button onClick={() => deleteItem(id)}>Eliminar</button>
+        <ModalEdit id={id} />
+        <Button onClick={() => deleteItem(id)}>Eliminar</Button>
       </TableCell>
     </TableRow>
   );

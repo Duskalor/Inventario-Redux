@@ -19,8 +19,8 @@ function App() {
     <BrowserRouter>
       <div>
         <h1>Sistema De Inventario {RazonSocial}</h1>
-        <Link to={'/'}> HOME</Link>
-        <Link to={'/cliente'}> Clientes</Link>
+        {/* <Link to={'/'}> HOME</Link>
+        <Link to={'/cliente'}> Clientes</Link> */}
 
         <Routes>
           <Route path='/' element={<Layout />} />

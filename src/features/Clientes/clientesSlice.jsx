@@ -20,6 +20,16 @@ export const deleteClientes = createAsyncThunk(
     return data;
   }
 );
+export const updateClientes = createAsyncThunk(
+  'update/postClientes',
+  async ({ id, FullName, Dni }) => {
+    const { data } = await apiSistema.put(`cliente/update/${id}`, {
+      FullName,
+      Dni,
+    });
+    return data;
+  }
+);
 
 export const ClientesSlice = createSlice({
   name: 'Clientes',
@@ -35,36 +45,48 @@ export const ClientesSlice = createSlice({
   },
   extraReducers: {
     ///GET
-    [getClientes.pending]: (state, { payload }) => {
+    [getClientes.pending]: (state) => {
       state.loading = true;
     },
     [getClientes.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.clientes = payload.ListaDeclientes;
     },
-    [getClientes.rejected]: (state, { payload }) => {
+    [getClientes.rejected]: (state) => {
       state.loading = false;
     },
     //CREATE
-    [createClientes.pending]: (state, { payload }) => {
+    [createClientes.pending]: (state) => {
       state.loading = true;
     },
     [createClientes.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.clientes = payload.ListaDeclientes;
     },
-    [createClientes.rejected]: (state, { payload }) => {
+    [createClientes.rejected]: (state) => {
       state.loading = false;
     },
     //DELETE
-    [deleteClientes.pending]: (state, { payload }) => {
+    [deleteClientes.pending]: (state) => {
       state.loading = true;
     },
     [deleteClientes.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.clientes = payload.ListaDeclientes;
     },
-    [deleteClientes.rejected]: (state, { payload }) => {
+    [deleteClientes.rejected]: (state) => {
+      state.loading = false;
+    },
+
+    //UPDATE
+    [updateClientes.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateClientes.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.clientes = payload.ListaDeclientes;
+    },
+    [updateClientes.rejected]: (state) => {
       state.loading = false;
     },
   },
