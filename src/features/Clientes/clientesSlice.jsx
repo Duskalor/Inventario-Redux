@@ -12,7 +12,6 @@ export const createClientes = createAsyncThunk(
     return data;
   }
 );
-
 export const deleteClientes = createAsyncThunk(
   'delete/postClientes',
   async (id) => {

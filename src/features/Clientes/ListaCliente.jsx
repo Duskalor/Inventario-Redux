@@ -34,7 +34,7 @@ export default function ListaCliente() {
           </TableHead>
           <TableBody>
             {clientes.map((cliente, id) => (
-              <Cliente cliente key={id} clientes={cliente} />
+              <Cliente key={id} clientes={cliente} />
             ))}
           </TableBody>
         </Table>
