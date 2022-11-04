@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import ListaProductos from './ListaProductos';
+import FormNuevoProducto from './FormNuevoProducto';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -37,7 +38,7 @@ export function ChildModal() {
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 200 }}>
-          {/* <FormNuevoCliente handleClose={handleClose} /> */}
+          <FormNuevoProducto handleClose={handleClose} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>
       </Modal>

@@ -8,6 +8,7 @@ export default function FormEditCliente({ handleClose }) {
   const dispatch = useDispatch();
   const { Datos } = useSelector((state) => state);
   const { RazonSocial, Direccion, Ruc, id } = Datos;
+  // console.log(Datos);
   const {
     register,
     handleSubmit,

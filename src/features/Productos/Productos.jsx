@@ -2,8 +2,9 @@ import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
+import { deleteProductos } from './productosSlice';
 
-export default function Cliente({ productos }) {
+export default function Productos({ productos }) {
   const {
     id,
     Categoria,
@@ -16,9 +17,9 @@ export default function Cliente({ productos }) {
   //console.log(clientes);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
-    // if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
-    //   dispatch(deleteClientes(id));
-    // }
+    if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
+      dispatch(deleteProductos(id));
+    }
   };
 
   return (

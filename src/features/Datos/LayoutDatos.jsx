@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import FormEditDatos from './FormEditDatos';
+import { CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const style = {
   position: 'absolute',
@@ -19,13 +21,15 @@ const style = {
 };
 export default function LayoutDatos() {
   const [open, setOpen] = React.useState(false);
+  const { pending } = useSelector((state) => state.Datos);
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
+  // ;
   return (
     <div>
       <Button onClick={handleOpen}>Datos De la Empresa</Button>
@@ -36,7 +40,11 @@ export default function LayoutDatos() {
         aria-describedby='parent-modal-description'
       >
         <Box sx={{ ...style, width: 400 }}>
-          <FormEditDatos handleClose={handleClose} />
+          {!pending ? (
+            <FormEditDatos handleClose={handleClose} />
+          ) : (
+            <CircularProgress />
+          )}
         </Box>
       </Modal>
     </div>

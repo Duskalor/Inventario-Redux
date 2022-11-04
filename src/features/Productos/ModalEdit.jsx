@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
+import FormEditProducto from './FormEditProducto';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -36,7 +37,7 @@ export function ModalEdit({ id }) {
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 200 }}>
-          {/* <FormEditCliente handleClose={handleClose} id={id} /> */}
+          <FormEditProducto handleClose={handleClose} id={id} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>
       </Modal>
