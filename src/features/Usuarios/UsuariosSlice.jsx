@@ -21,15 +21,7 @@ export const deleteUsuarios = createAsyncThunk(
 );
 export const updateUsuarios = createAsyncThunk(
   'update/postUsuarios',
-  async ({
-    id,
-    FullName,
-    email,
-    Usuario,
-    password,
-    password_confirmation,
-    IdPermisos,
-  }) => {
+  async ({ id, FullName, email, Usuario, IdPermisos }) => {
     const { data } = await apiSistema.put(`user/update/${id}`, {
       FullName,
       email,

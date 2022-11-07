@@ -14,7 +14,8 @@ import { getUsuarios } from './UsuariosSlice';
 
 export default function ListaUsuarios() {
   const { usuarios } = useSelector((state) => state.Usuarios);
-  //console.log(usuarios);
+  const { permisos } = useSelector((state) => state.Permisos);
+  //console.log(permisos);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsuarios());
@@ -35,7 +36,7 @@ export default function ListaUsuarios() {
           </TableHead>
           <TableBody>
             {usuarios.map((usuario, id) => (
-              <Usuarios key={id} usuarios={usuario} />
+              <Usuarios key={id} usuarios={usuario} permisos={permisos} />
             ))}
           </TableBody>
         </Table>

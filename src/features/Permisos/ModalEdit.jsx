@@ -2,9 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import ListaPermisos from './ListaPermisos';
-import FormNuevoPermiso from './FormNuevoPermiso';
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,7 +16,7 @@ const style = {
   pb: 3,
 };
 
-export function ChildModal() {
+export function ModalEdit({ id }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -30,7 +27,7 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Permiso</Button>
+      <Button onClick={handleOpen}>Editar</Button>
       <Modal
         hideBackdrop
         open={open}
@@ -39,36 +36,10 @@ export function ChildModal() {
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 200 }}>
-          <FormNuevoPermiso handleClose={handleClose} />
+          {/* <FormEditCliente handleClose={handleClose} id={id} /> */}
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>
       </Modal>
     </React.Fragment>
-  );
-}
-export default function LayoutPermisos() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <Button onClick={handleOpen}>Permisos</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='parent-modal-title'
-        aria-describedby='parent-modal-description'
-      >
-        <Box sx={{ ...style, width: 1050 }}>
-          <ListaPermisos />
-          <ChildModal />
-        </Box>
-      </Modal>
-    </div>
   );
 }

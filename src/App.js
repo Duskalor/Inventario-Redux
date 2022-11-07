@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 import ListaCliente from './features/Clientes/ListaCliente';
 import { getDatos } from './features/Datos/datosSlice';
+import { getpermisos } from './features/Permisos/permisosSlice';
 import Layout from './Layout';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   //console.log(RazonSocial);
   useEffect(() => {
     Dispatch(getDatos());
+    Dispatch(getpermisos());
   }, []);
 
   return (

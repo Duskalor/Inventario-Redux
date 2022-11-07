@@ -27,9 +27,9 @@ export default function ListaProductos() {
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Codigo</TableCell>
+              <TableCell>Código</TableCell>
               <TableCell>Descripción</TableCell>
-              <TableCell>Categoria</TableCell>
+              <TableCell>Categoría</TableCell>
               <TableCell>Precio Compra </TableCell>
               <TableCell>Precio Venta </TableCell>
               <TableCell>Stock </TableCell>

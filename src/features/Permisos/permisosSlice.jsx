@@ -3,6 +3,7 @@ import { apiSistema } from '../../Api/ApiSistema';
 
 export const getpermisos = createAsyncThunk('get/getpermisos', async () => {
   const { data } = await apiSistema.get('permisos');
+  //console.log(data);
   return data;
 });
 export const createpermisos = createAsyncThunk(
@@ -49,7 +50,7 @@ export const permisosSlice = createSlice({
     },
     [getpermisos.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.permisos = payload.ListaDepermisos;
+      state.permisos = payload.Listapermisos;
     },
     [getpermisos.rejected]: (state) => {
       state.loading = false;

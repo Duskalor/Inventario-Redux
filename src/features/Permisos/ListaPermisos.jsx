@@ -14,7 +14,7 @@ import { getpermisos } from './permisosSlice';
 
 export default function ListaPermisos() {
   const { permisos } = useSelector((state) => state.Permisos);
-  //console.log(clientes);
+  // console.log(permisos);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getpermisos());
@@ -22,13 +22,20 @@ export default function ListaPermisos() {
 
   return (
     <div>
-      <h1>CLIENTES</h1>
+      <h1>PERMISOS</h1>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Full Nombre</TableCell>
-              <TableCell>DNI</TableCell>
+              <TableCell>Descripcion</TableCell>
+              <TableCell>Salidas</TableCell>
+              <TableCell>Usuarios</TableCell>
+              <TableCell>Entradas</TableCell>
+              <TableCell>Productos</TableCell>
+              <TableCell>Clientes</TableCell>
+              <TableCell>Proveedores</TableCell>
+              <TableCell>Inventario</TableCell>
+              <TableCell>Configuracion</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
