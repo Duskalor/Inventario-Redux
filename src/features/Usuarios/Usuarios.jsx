@@ -1,6 +1,6 @@
 import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
 import { deleteUsuarios } from './UsuariosSlice';
 

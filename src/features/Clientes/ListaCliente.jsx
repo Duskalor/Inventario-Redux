@@ -18,7 +18,7 @@ export default function ListaCliente() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getClientes());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

@@ -22,11 +22,30 @@ export const deletepermisos = createAsyncThunk(
 );
 export const updatepermisos = createAsyncThunk(
   'update/postpermisos',
-  async ({ id, FullName, Dni }) => {
+  async ({ id, dato }) => {
+    const {
+      Descripcion,
+      Clientes,
+      Configuracion,
+      Entradas,
+      Inventario,
+      Productos,
+      Proveedores,
+      Salidas,
+      Usuarios,
+    } = dato;
     const { data } = await apiSistema.put(`permisos/update/${id}`, {
-      FullName,
-      Dni,
+      Descripcion,
+      Clientes,
+      Configuracion,
+      Entradas,
+      Inventario,
+      Productos,
+      Proveedores,
+      Salidas,
+      Usuarios,
     });
+    //console.log(data);
     return data;
   }
 );

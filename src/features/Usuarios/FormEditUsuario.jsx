@@ -1,4 +1,4 @@
-import { Button, Input } from '@mui/material';
+import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUsuarios } from './UsuariosSlice';
@@ -7,10 +7,13 @@ export default function FormEditUsuario({ handleClose, id }) {
   const dispatch = useDispatch();
   //console.log(id);
   const { usuarios } = useSelector((state) => state.Usuarios);
+  const { permisos } = useSelector((state) => state.Permisos);
   //console.log(clientes);
   const { FullName, Email, Usuario, IdPermisos } = usuarios.find(
     (Usuario) => Usuario.id === id
   );
+  const { Descripcion } = permisos.find((permiso) => permiso.id === IdPermisos);
+
   const {
     register,
     handleSubmit,
@@ -65,7 +68,7 @@ export default function FormEditUsuario({ handleClose, id }) {
         {errors.Usuario?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
 
-      <div>
+      {/* <div>
         <label>Permiso</label>
         <Input
           type='number'
@@ -73,6 +76,28 @@ export default function FormEditUsuario({ handleClose, id }) {
             required: true,
           })}
         />
+        {errors.IdPermisos?.type === 'required' && (
+          <p>El Campo es requirido </p>
+        )}
+      </div> */}
+      <div>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Permiso
+        </InputLabel>
+        <NativeSelect
+          {...register('IdPermisos', {
+            required: true,
+          })}
+          defaultValue={Descripcion}
+        >
+          {permisos.map((permiso) => {
+            return (
+              <option key={permiso.id} value={permiso.id}>
+                {permiso.Descripcion}
+              </option>
+            );
+          })}
+        </NativeSelect>
         {errors.IdPermisos?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}

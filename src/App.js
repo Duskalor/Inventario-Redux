@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import ListaCliente from './features/Clientes/ListaCliente';
 import { getDatos } from './features/Datos/datosSlice';
@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     Dispatch(getDatos());
     Dispatch(getpermisos());
-  }, []);
+  }, [Dispatch]);
 
   return (
     <BrowserRouter>

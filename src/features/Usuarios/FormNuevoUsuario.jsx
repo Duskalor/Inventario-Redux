@@ -1,11 +1,13 @@
-import { Button, Input } from '@mui/material';
+import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUsuarios } from './UsuariosSlice';
 
 export default function FormNuevoUsuario({ handleClose }) {
+  const { permisos } = useSelector((state) => state.Permisos);
   const dispatch = useDispatch();
+  console.log(permisos);
   const {
     register,
     handleSubmit,
@@ -17,13 +19,16 @@ export default function FormNuevoUsuario({ handleClose }) {
     dispatch(createUsuarios(dato));
     handleClose();
     reset();
-    //console.log(dato);
+    console.log(dato);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Crear Usuario</h1>
       <div>
-        <label>Nombre</label>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Nombre
+        </InputLabel>
         <Input
           type='text'
           {...register('FullName', {
@@ -33,7 +38,9 @@ export default function FormNuevoUsuario({ handleClose }) {
         {errors.FullName?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        <label>Usuario</label>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Usuario
+        </InputLabel>
         <Input
           type='text'
           {...register('Usuario', {
@@ -43,7 +50,9 @@ export default function FormNuevoUsuario({ handleClose }) {
         {errors.Usuario?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        <label>Email</label>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Email
+        </InputLabel>
         <Input
           type='text'
           {...register('email', {
@@ -53,7 +62,49 @@ export default function FormNuevoUsuario({ handleClose }) {
         {errors.Email?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
 
+      {/* <div>
+        <select
+          {...register('IdPermisos', {
+            required: true,
+          })}
+        >
+          {permisos.map((permiso) => {
+            return (
+              <option key={permiso.id} value={permiso.id}>
+                {permiso.Descripcion}
+              </option>
+            );
+          })}
+        </select>
+        {errors.IdPermisos?.type === 'required' && (
+          <p>El Campo es requirido </p>
+        )}
+      </div> */}
+
       <div>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Permiso
+        </InputLabel>
+        <NativeSelect
+          {...register('IdPermisos', {
+            required: true,
+          })}
+        >
+          {permisos.map((permiso) => {
+            return (
+              <option key={permiso.id} value={permiso.id}>
+                {permiso.Descripcion}
+              </option>
+            );
+          })}
+        </NativeSelect>
+        {errors.IdPermisos?.type === 'required' && (
+          <p>El Campo es requirido </p>
+        )}
+      </div>
+
+      {/* OTRO 
+       <div>
         <label>Permiso</label>
         <Input
           type='number'
@@ -64,9 +115,11 @@ export default function FormNuevoUsuario({ handleClose }) {
         {errors.IdPermisos?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div>
+      </div> */}
       <div>
-        <label>Password</label>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Password
+        </InputLabel>
         <Input
           type='password'
           {...register('password', {
@@ -81,7 +134,9 @@ export default function FormNuevoUsuario({ handleClose }) {
       </div>
       {/* CONFIRMACION PASSWORD */}
       <div>
-        <label>Confirmar Password</label>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Confirmar Password
+        </InputLabel>
         <Input
           type='password'
           {...register('password_confirmation', {

@@ -18,7 +18,7 @@ export default function ListaProductos() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductos());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

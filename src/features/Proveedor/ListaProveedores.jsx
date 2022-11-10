@@ -18,7 +18,7 @@ export default function ListaProveedores() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProveedor());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
