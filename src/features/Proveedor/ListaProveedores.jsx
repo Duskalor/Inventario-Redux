@@ -22,7 +22,7 @@ export default function ListaProveedores() {
 
   return (
     <div>
-      <h1>CLIENTES</h1>
+      <h1>PROVEEDORES</h1>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

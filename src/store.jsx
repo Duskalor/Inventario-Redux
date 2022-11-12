@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { ClientesSlice } from './features/Clientes/clientesSlice';
 import { datosSlice } from './features/Datos/datosSlice';
+import { entradaSlice } from './features/Entrada/entradaSlice';
 import { permisosSlice } from './features/Permisos/permisosSlice';
 import { productosSlice } from './features/Productos/productosSlice';
 import { ProveedorSlice } from './features/Proveedor/ProveedorSlice';
@@ -13,5 +14,6 @@ export const store = configureStore({
     Proveedor: ProveedorSlice.reducer,
     Usuarios: UsuariosSlice.reducer,
     Permisos: permisosSlice.reducer,
+    entrada: entradaSlice.reducer,
   },
 });

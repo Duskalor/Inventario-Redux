@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import FormNuevoCliente from './FormNuevoCliente';
 import ListaCliente from './ListaCliente';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -56,7 +57,9 @@ export default function LayoutClientes() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Clientes</Button>
+      <Button onClick={handleOpen}>
+        <AccountCircleIcon /> Clientes
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
