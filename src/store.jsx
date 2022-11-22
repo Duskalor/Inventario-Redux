@@ -14,6 +14,6 @@ export const store = configureStore({
     Proveedor: ProveedorSlice.reducer,
     Usuarios: UsuariosSlice.reducer,
     Permisos: permisosSlice.reducer,
-    entrada: entradaSlice.reducer,
+    Entrada: entradaSlice.reducer,
   },
 });

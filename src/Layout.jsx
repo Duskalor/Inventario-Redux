@@ -1,5 +1,6 @@
 import LayoutClientes from './features/Clientes/LayoutClientes';
 import LayoutDatos from './features/Datos/LayoutDatos';
+import LayoutEntrada from './features/Entrada/LayoutEntrada';
 import LayoutPermisos from './features/Permisos/LayoutPermisos';
 import LayoutProducto from './features/Productos/LayoutProducto';
 import LayoutProveedores from './features/Proveedor/LayoutProveedores';
@@ -14,6 +15,7 @@ export default function Layout() {
       <LayoutProveedores />
       <LayoutUsuarios />
       <LayoutPermisos />
+      <LayoutEntrada />
     </div>
   );
 }

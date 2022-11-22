@@ -1,13 +1,95 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { apiSistema } from '../../Api/ApiSistema';
+
+export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
+  const { data } = await apiSistema.get('entrada');
+  //console.log(data);
+  return data;
+});
+export const createEntradas = createAsyncThunk(
+  'create/postEntradas',
+  async (nuevo) => {
+    const { data } = await apiSistema.post('entrada/create', nuevo);
+    return data;
+  }
+);
+export const deleteEntradas = createAsyncThunk(
+  'delete/postEntradas',
+  async (id) => {
+    const { data } = await apiSistema.delete(`entrada/delete/${id}`);
+    return data;
+  }
+);
+export const updateEntradas = createAsyncThunk(
+  'update/postEntradas',
+  async ({ id, FullName, Dni }) => {
+    const { data } = await apiSistema.put(`entrada/update/${id}`, {
+      FullName,
+      Dni,
+    });
+    return data;
+  }
+);
 
 export const entradaSlice = createSlice({
-  name: 'templace',
+  name: 'Entradas',
   initialState: {
-    counter: 10,
+    entradas: [],
+    error: null,
+    loading: false,
   },
   reducers: {
     increment: (state /* action */) => {
       state.counter += 1;
+    },
+  },
+  extraReducers: {
+    ///GET
+    [getEntradas.pending]: (state) => {
+      state.loading = true;
+    },
+    [getEntradas.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      // console.log(payload.ListaEntradas);
+      state.entradas = payload.ListaEntradas;
+    },
+    [getEntradas.rejected]: (state) => {
+      state.loading = false;
+    },
+    //CREATE
+    [createEntradas.pending]: (state) => {
+      state.loading = true;
+    },
+    [createEntradas.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+
+      state.entradas = payload.ListaEntradas;
+    },
+    [createEntradas.rejected]: (state) => {
+      state.loading = false;
+    },
+    //DELETE
+    [deleteEntradas.pending]: (state) => {
+      state.loading = true;
+    },
+    [deleteEntradas.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.entradas = payload.ListaEntradas;
+    },
+    [deleteEntradas.rejected]: (state) => {
+      state.loading = false;
+    },
+
+    //UPDATE
+    [updateEntradas.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateEntradas.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.entradas = payload.ListaEntradas;
+    },
+    [updateEntradas.rejected]: (state) => {
+      state.loading = false;
     },
   },
 });

@@ -5,6 +5,7 @@ import './App.css';
 import ListaCliente from './features/Clientes/ListaCliente';
 import { getDatos } from './features/Datos/datosSlice';
 import { getpermisos } from './features/Permisos/permisosSlice';
+import { getUsuarios } from './features/Usuarios/UsuariosSlice';
 import Layout from './Layout';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   useEffect(() => {
     Dispatch(getDatos());
     Dispatch(getpermisos());
+    Dispatch(getUsuarios());
   }, [Dispatch]);
 
   return (
