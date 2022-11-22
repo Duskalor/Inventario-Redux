@@ -66,7 +66,7 @@ export default function LayoutClientes() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style, width: 500 }}>
           <ListaCliente />
           <ChildModal />
         </Box>
