@@ -1,37 +1,77 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getProductos = createAsyncThunk('get/getProductos', async () => {
-  const { data } = await apiSistema.get('producto');
-  return data;
-});
+export const getProductos = createAsyncThunk(
+  'get/getProductos',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('producto', config);
+    return data;
+  }
+);
 
 export const createProducto = createAsyncThunk(
   'create/PostProducto',
-  async (nuevo) => {
-    const { data } = await apiSistema.post('producto/create', nuevo);
+  async (nuevo, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post('producto/create', nuevo, config);
     return data;
   }
 );
 
 export const deleteProductos = createAsyncThunk(
   'delete/postProductos',
-  async (id) => {
-    const { data } = await apiSistema.delete(`producto/delete/${id}`);
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(`producto/delete/${id}`, config);
     return data;
   }
 );
 
 export const updateProductos = createAsyncThunk(
   'update/postClientes',
-  async ({ id, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock }) => {
-    const { data } = await apiSistema.put(`producto/update/${id}`, {
-      Categoria,
-      Descripcion,
-      PrecioCompra,
-      PrecioVenta,
-      Stock,
-    });
+  async (
+    { id, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock },
+    { getState }
+  ) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+
+    const { data } = await apiSistema.put(
+      `producto/update/${id}`,
+      {
+        Categoria,
+        Descripcion,
+        PrecioCompra,
+        PrecioVenta,
+        Stock,
+      },
+      config
+    );
     return data;
   }
 );

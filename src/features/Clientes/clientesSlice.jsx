@@ -3,6 +3,7 @@ import { apiSistema } from '../../Api/ApiSistema';
 
 export const getClientes = createAsyncThunk('get/getClientes', async () => {
   const { data } = await apiSistema.get('cliente');
+  console.log(data);
   return data;
 });
 export const createClientes = createAsyncThunk(

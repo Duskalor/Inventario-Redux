@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { authSlice } from './features/Auth/authSlice';
 import { ClientesSlice } from './features/Clientes/clientesSlice';
 import { datosSlice } from './features/Datos/datosSlice';
 import { entradaSlice } from './features/Entrada/entradaSlice';
@@ -8,6 +9,7 @@ import { ProveedorSlice } from './features/Proveedor/ProveedorSlice';
 import { UsuariosSlice } from './features/Usuarios/UsuariosSlice';
 export const store = configureStore({
   reducer: {
+    Auth: authSlice.reducer,
     Clientes: ClientesSlice.reducer,
     Datos: datosSlice.reducer,
     Productos: productosSlice.reducer,

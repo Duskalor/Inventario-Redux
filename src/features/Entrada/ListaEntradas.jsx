@@ -18,7 +18,7 @@ export default function ListaEntradas() {
   const { usuarios } = useSelector((state) => state.Usuarios);
 
   // const { entradas } = useSelector((state) => state.entrada);
-  console.log(usuarios);
+  //console.log(usuarios);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEntradas());
