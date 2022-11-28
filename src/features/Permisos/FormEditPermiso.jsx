@@ -14,7 +14,7 @@ export default function FormEditPermiso({ handleClose, id }) {
     Configuracion,
     Descripcion,
     Entradas,
-    Inventario,
+    Permisos,
     Productos,
     Proveedores,
     Salidas,
@@ -25,7 +25,7 @@ export default function FormEditPermiso({ handleClose, id }) {
   const Clientes1 = Clientes == 1 ? true : false;
   const Configuracion1 = Configuracion === 1 ? true : false;
   const Entradas1 = Entradas == 1 ? true : false;
-  const Inventario1 = Inventario == 1 ? true : false;
+  const Permisos1 = Permisos == 1 ? true : false;
   const Productos1 = Productos == 1 ? true : false;
   const Proveedores1 = Proveedores == 1 ? true : false;
   const Usuarios1 = Usuarios === 1 ? true : false;
@@ -46,7 +46,7 @@ export default function FormEditPermiso({ handleClose, id }) {
       Productos: Productos1,
       Clientes: Clientes1,
       Proveedores: Proveedores1,
-      Inventario: Inventario1,
+      Permisos: Permisos1,
       Configuracion: Configuracion1,
     },
   });
@@ -59,9 +59,7 @@ export default function FormEditPermiso({ handleClose, id }) {
       ? (dato.Configuracion = 1)
       : (dato.Configuracion = 0);
     dato.Entradas = dato.Entradas ? (dato.Entradas = 1) : (dato.Entradas = 0);
-    dato.Inventario = dato.Inventario
-      ? (dato.Inventario = 1)
-      : (dato.Inventario = 0);
+    dato.Permisos = dato.Permisos ? (dato.Permisos = 1) : (dato.Permisos = 0);
     dato.Productos = dato.Productos
       ? (dato.Productos = 1)
       : (dato.Productos = 0);
@@ -70,7 +68,7 @@ export default function FormEditPermiso({ handleClose, id }) {
       : (dato.Proveedores = 0);
     dato.Salidas = dato.Salidas ? (dato.Salidas = 1) : (dato.Salidas = 0);
     dato.Usuarios = dato.Usuarios ? (dato.Usuarios = 1) : (dato.Usuarios = 0);
-    // console.log(dato);
+    console.log(dato);
     // console.log(id);
     dispatch(
       updatepermisos({
@@ -187,10 +185,10 @@ export default function FormEditPermiso({ handleClose, id }) {
         />
       </div>
       <div>
-        <label>Inventario</label>
+        <label>Permisos</label>
         <Controller
           control={control}
-          name='Inventario'
+          name='Permisos'
           render={({ field: { value, onChange } }) => (
             <Checkbox
               checked={value}

@@ -1,33 +1,68 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getUsuarios = createAsyncThunk('get/getUsuarios', async () => {
-  const { data } = await apiSistema.get('user');
-  return data;
-});
+export const getUsuarios = createAsyncThunk(
+  'get/getUsuarios',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('user', config);
+    return data;
+  }
+);
 export const createUsuarios = createAsyncThunk(
   'create/postUsuarios',
-  async (nuevo) => {
-    const { data } = await apiSistema.post('user/create', nuevo);
+  async (nuevo, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post('user/create', nuevo, config);
     return data;
   }
 );
 export const deleteUsuarios = createAsyncThunk(
   'delete/postUsuarios',
-  async (id) => {
-    const { data } = await apiSistema.delete(`user/delete/${id}`);
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(`user/delete/${id}`, config);
     return data;
   }
 );
 export const updateUsuarios = createAsyncThunk(
   'update/postUsuarios',
-  async ({ id, FullName, email, Usuario, IdPermisos }) => {
-    const { data } = await apiSistema.put(`user/update/${id}`, {
-      FullName,
-      email,
-      Usuario,
-      IdPermisos,
-    });
+  async ({ id, FullName, email, Usuario, IdPermisos }, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.put(
+      `user/update/${id}`,
+      {
+        FullName,
+        email,
+        Usuario,
+        IdPermisos,
+      },
+      config
+    );
     return data;
   }
 );

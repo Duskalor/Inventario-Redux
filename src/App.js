@@ -8,15 +8,19 @@ import { getpermisos } from './features/Permisos/permisosSlice';
 import { getUsuarios } from './features/Usuarios/UsuariosSlice';
 import Layout from './Layout';
 import Login from './features/Auth/Login';
+import { getUserDetails } from './features/Auth/authSlice';
 
 function App() {
   const Dispatch = useDispatch();
   const prueba = useSelector((state) => state.Auth);
-  const { success } = prueba;
+  const { success, userToken } = prueba;
   useEffect(() => {
     Dispatch(getDatos());
     Dispatch(getpermisos());
     Dispatch(getUsuarios());
+    if (success) {
+      Dispatch(getUserDetails());
+    }
   }, [Dispatch]);
 
   return <div>{success ? <Layout /> : <Login />}</div>;

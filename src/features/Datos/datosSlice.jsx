@@ -1,20 +1,41 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getDatos = createAsyncThunk('get/getDatos', async () => {
-  const { data } = await apiSistema.get('datos');
-  // console.log(data);
-  return data;
-});
+export const getDatos = createAsyncThunk(
+  'get/getDatos',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('datos', config);
+    // console.log(data);
+    return data;
+  }
+);
 
 export const updateDatos = createAsyncThunk(
   'update/updateDatos',
-  async ({ id, RazonSocial, Direccion, Ruc }) => {
-    const { data } = await apiSistema.put(`datos/update/${id}`, {
-      RazonSocial,
-      Ruc,
-      Direccion,
-    });
+  async ({ id, RazonSocial, Direccion, Ruc }, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.put(
+      `datos/update/${id}`,
+      {
+        RazonSocial,
+        Ruc,
+        Direccion,
+      },
+      config
+    );
     return data;
   }
 );

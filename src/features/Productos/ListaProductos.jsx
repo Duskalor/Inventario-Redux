@@ -14,7 +14,7 @@ import { getProductos } from './productosSlice';
 
 export default function ListaProductos() {
   const { productos } = useSelector((state) => state.Productos);
-  //console.log(clientes);
+  //console.log(productos);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductos());

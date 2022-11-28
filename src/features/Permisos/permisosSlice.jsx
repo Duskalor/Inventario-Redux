@@ -1,50 +1,85 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getpermisos = createAsyncThunk('get/getpermisos', async () => {
-  const { data } = await apiSistema.get('permisos');
-  //console.log(data);
-  return data;
-});
+export const getpermisos = createAsyncThunk(
+  'get/getpermisos',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('permisos', config);
+    //console.log(data);
+    return data;
+  }
+);
 export const createpermisos = createAsyncThunk(
   'create/postpermisos',
-  async (nuevo) => {
-    const { data } = await apiSistema.post('permisos/create', nuevo);
+  async (nuevo, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post('permisos/create', nuevo, config);
     return data;
   }
 );
 export const deletepermisos = createAsyncThunk(
   'delete/postpermisos',
-  async (id) => {
-    const { data } = await apiSistema.delete(`permisos/delete/${id}`);
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(`permisos/delete/${id}`, config);
     return data;
   }
 );
 export const updatepermisos = createAsyncThunk(
   'update/postpermisos',
-  async ({ id, dato }) => {
+  async ({ id, dato }, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
     const {
       Descripcion,
       Clientes,
       Configuracion,
       Entradas,
-      Inventario,
+      Permisos,
       Productos,
       Proveedores,
       Salidas,
       Usuarios,
     } = dato;
-    const { data } = await apiSistema.put(`permisos/update/${id}`, {
-      Descripcion,
-      Clientes,
-      Configuracion,
-      Entradas,
-      Inventario,
-      Productos,
-      Proveedores,
-      Salidas,
-      Usuarios,
-    });
+    const { data } = await apiSistema.put(
+      `permisos/update/${id}`,
+      {
+        Descripcion,
+        Clientes,
+        Configuracion,
+        Entradas,
+        Permisos,
+        Productos,
+        Proveedores,
+        Salidas,
+        Usuarios,
+      },
+      config
+    );
     //console.log(data);
     return data;
   }

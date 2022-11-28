@@ -1,31 +1,66 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getProveedor = createAsyncThunk('get/getProveedor', async () => {
-  const { data } = await apiSistema.get('proveedor');
-  return data;
-});
+export const getProveedor = createAsyncThunk(
+  'get/getProveedor',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('proveedor', config);
+    return data;
+  }
+);
 export const createProveedor = createAsyncThunk(
   'create/postProveedor',
-  async (nuevo) => {
-    const { data } = await apiSistema.post('proveedor/create', nuevo);
+  async (nuevo, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post('proveedor/create', nuevo, config);
     return data;
   }
 );
 export const deleteProveedor = createAsyncThunk(
   'delete/postProveedor',
-  async (id) => {
-    const { data } = await apiSistema.delete(`proveedor/delete/${id}`);
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(`proveedor/delete/${id}`, config);
     return data;
   }
 );
 export const updateProveedor = createAsyncThunk(
   'update/postProveedor',
-  async ({ id, FullName, Ruc }) => {
-    const { data } = await apiSistema.put(`proveedor/update/${id}`, {
-      FullName,
-      Ruc,
-    });
+  async ({ id, FullName, Ruc }, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.put(
+      `proveedor/update/${id}`,
+      {
+        FullName,
+        Ruc,
+      },
+      config
+    );
     return data;
   }
 );

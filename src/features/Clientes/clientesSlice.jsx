@@ -1,32 +1,67 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getClientes = createAsyncThunk('get/getClientes', async () => {
-  const { data } = await apiSistema.get('cliente');
-  console.log(data);
-  return data;
-});
+export const getClientes = createAsyncThunk(
+  'get/getClientes',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('cliente', config);
+    //console.log(data);
+    return data;
+  }
+);
 export const createClientes = createAsyncThunk(
   'create/postClientes',
-  async (nuevo) => {
-    const { data } = await apiSistema.post('cliente/create', nuevo);
+  async (nuevo, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post('cliente/create', nuevo, config);
     return data;
   }
 );
 export const deleteClientes = createAsyncThunk(
   'delete/postClientes',
-  async (id) => {
-    const { data } = await apiSistema.delete(`cliente/delete/${id}`);
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(`cliente/delete/${id}`, config);
     return data;
   }
 );
 export const updateClientes = createAsyncThunk(
   'update/postClientes',
-  async ({ id, FullName, Dni }) => {
-    const { data } = await apiSistema.put(`cliente/update/${id}`, {
-      FullName,
-      Dni,
-    });
+  async ({ id, FullName, Dni }, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.put(
+      `cliente/update/${id}`,
+      {
+        FullName,
+        Dni,
+      },
+      config
+    );
     return data;
   }
 );

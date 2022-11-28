@@ -20,9 +20,7 @@ export default function FormNuevoPermiso({ handleClose }) {
       ? (dato.Configuracion = 1)
       : (dato.Configuracion = 0);
     dato.Entradas = dato.Entradas ? (dato.Entradas = 1) : (dato.Entradas = 0);
-    dato.Inventario = dato.Inventario
-      ? (dato.Inventario = 1)
-      : (dato.Inventario = 0);
+    dato.Permisos = dato.Permisos ? (dato.Permisos = 1) : (dato.Permisos = 0);
     dato.Productos = dato.Productos
       ? (dato.Productos = 1)
       : (dato.Productos = 0);
@@ -75,8 +73,8 @@ export default function FormNuevoPermiso({ handleClose }) {
         <Checkbox {...register('Proveedores')} />
       </div>
       <div>
-        <label>Inventario</label>
-        <Checkbox {...register('Inventario')} />
+        <label>Permisos</label>
+        <Checkbox {...register('Permisos')} />
       </div>
       <div>
         <label>Configuracion</label>

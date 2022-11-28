@@ -3,11 +3,19 @@ import { apiSistema } from '../../Api/ApiSistema';
 const userToken = localStorage.getItem('userToken')
   ? localStorage.getItem('userToken')
   : null;
+const success = localStorage.getItem('success')
+  ? localStorage.getItem('success')
+  : false;
+const userId = localStorage.getItem('userId')
+  ? localStorage.getItem('userId')
+  : false;
 
 export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
   const { data } = await apiSistema.post('login', userAuth);
-  console.log(data);
+  //console.log(data);
   localStorage.setItem('userToken', data.userToken);
+  localStorage.setItem('userId', data.User.id);
+  localStorage.setItem('success', data.User.success);
 
   return data;
 });
@@ -22,14 +30,30 @@ export const logout = createAsyncThunk(
       },
     };
     localStorage.removeItem('userToken');
-    console.log(Auth.userToken);
+    localStorage.removeItem('userId');
+    localStorage.removeItem('success');
+    //console.log(Auth.userToken);
     const { data } = await apiSistema.get('logout', config);
-    console.log(data);
+    //console.log(data);
     return data;
+  }
+);
+export const getUserDetails = createAsyncThunk(
+  'Logout/LogoutUser',
+  async (_, { getState }) => {
+    const { Auth } = getState();
 
-    // const { data } = await apiSistema.post('logout', config);
-    // console.log(data);
-    // return data;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get(
+      `user/details/${Auth.userId}`,
+      config
+    );
+    //console.log(data);
+    return data;
   }
 );
 
@@ -37,7 +61,8 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: [],
-    success: false,
+    userId,
+    success,
     userToken,
     error: null,
     loading: false,
@@ -57,6 +82,7 @@ export const authSlice = createSlice({
       //console.log(payload);
       state.userToken = payload.userToken;
       state.success = payload.success;
+      state.user = payload.User;
     },
     [login.rejected]: (state) => {
       state.loading = false;
@@ -67,10 +93,24 @@ export const authSlice = createSlice({
     },
     [logout.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      console.log(payload.success);
+      //console.log(payload.User);
       state.success = payload.success;
     },
     [logout.rejected]: (state) => {
+      state.loading = false;
+    },
+
+    //GET USER DETAILS
+    [getUserDetails.pending]: (state) => {
+      state.loading = true;
+    },
+    [getUserDetails.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      //console.log(payload);
+      state.success = payload.success;
+      state.user = payload.User;
+    },
+    [getUserDetails.rejected]: (state) => {
       state.loading = false;
     },
   },
