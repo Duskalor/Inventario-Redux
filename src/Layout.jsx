@@ -15,7 +15,7 @@ export default function Layout() {
   const { user } = useSelector((state) => state.Auth);
   const dispatch = useDispatch();
   const { permisos } = useSelector((state) => state.Permisos);
-  //console.log(user, permisos);
+  //console.log(user);
   const UserPermiso = permisos.find((permiso) => permiso.id == user.IdPermisos);
   //console.log(UserPermiso);
   return (

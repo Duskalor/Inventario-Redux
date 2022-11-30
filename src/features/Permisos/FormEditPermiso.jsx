@@ -22,14 +22,14 @@ export default function FormEditPermiso({ handleClose, id }) {
   } = permisos.find((permiso) => permiso.id === id);
   // console.log(Clientes);
 
-  const Clientes1 = Clientes == 1 ? true : false;
+  const Clientes1 = Clientes === 1 ? true : false;
   const Configuracion1 = Configuracion === 1 ? true : false;
-  const Entradas1 = Entradas == 1 ? true : false;
-  const Permisos1 = Permisos == 1 ? true : false;
-  const Productos1 = Productos == 1 ? true : false;
-  const Proveedores1 = Proveedores == 1 ? true : false;
+  const Entradas1 = Entradas === 1 ? true : false;
+  const Permisos1 = Permisos === 1 ? true : false;
+  const Productos1 = Productos === 1 ? true : false;
+  const Proveedores1 = Proveedores === 1 ? true : false;
   const Usuarios1 = Usuarios === 1 ? true : false;
-  const Salidas1 = Salidas == 1 ? true : false;
+  const Salidas1 = Salidas === 1 ? true : false;
 
   const {
     register,

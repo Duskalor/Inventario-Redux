@@ -8,7 +8,7 @@ const success = localStorage.getItem('success')
   : false;
 const userId = localStorage.getItem('userId')
   ? localStorage.getItem('userId')
-  : false;
+  : null;
 
 export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
   const { data } = await apiSistema.post('login', userAuth);
@@ -16,6 +16,7 @@ export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
   localStorage.setItem('userToken', data.userToken);
   localStorage.setItem('userId', data.User.id);
   localStorage.setItem('success', data.User.success);
+  // console.log(localStorage, data);
 
   return data;
 });
@@ -32,14 +33,13 @@ export const logout = createAsyncThunk(
     localStorage.removeItem('userToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('success');
-    //console.log(Auth.userToken);
+    //console.log(localStorage);
     const { data } = await apiSistema.get('logout', config);
-    //console.log(data);
     return data;
   }
 );
 export const getUserDetails = createAsyncThunk(
-  'Logout/LogoutUser',
+  'get/getUserDetails',
   async (_, { getState }) => {
     const { Auth } = getState();
 
@@ -52,7 +52,7 @@ export const getUserDetails = createAsyncThunk(
       `user/details/${Auth.userId}`,
       config
     );
-    //console.log(data);
+    //console.log(localStorage);
     return data;
   }
 );
@@ -95,6 +95,7 @@ export const authSlice = createSlice({
       state.loading = false;
       //console.log(payload.User);
       state.success = payload.success;
+      state.user = [];
     },
     [logout.rejected]: (state) => {
       state.loading = false;

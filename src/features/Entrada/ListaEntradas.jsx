@@ -31,7 +31,7 @@ export default function ListaEntradas() {
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>NumeroDocumento</TableCell>
+              <TableCell>Codigo Documento</TableCell>
               <TableCell>Usuario</TableCell>
               <TableCell>Proveedor</TableCell>
               <TableCell>Cantidad de Productos</TableCell>

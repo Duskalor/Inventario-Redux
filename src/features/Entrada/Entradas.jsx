@@ -1,6 +1,7 @@
 import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { LayoutProductosEntrada } from '../ProductoEntrada/LayoutProductosEntrada';
 import { deleteEntradas } from './entradaSlice';
 import { ModalEdit } from './ModalEdit';
 
@@ -14,6 +15,14 @@ export default function Entradas({ entradas }) {
     id,
   } = entradas;
 
+  const { usuarios } = useSelector((state) => state.Usuarios);
+  const IdUsuarioEntrada = usuarios.find((user) => user.id === IdUsuario);
+
+  const { proveedores } = useSelector((state) => state.Proveedor);
+  const IdProveedorEntrada = proveedores.find(
+    (proveedor) => proveedor.id === IdProveedor
+  );
+
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
@@ -23,9 +32,11 @@ export default function Entradas({ entradas }) {
   <h1>N/A</h1>;
   return (
     <TableRow>
-      <TableCell>{NumeroDocumento}</TableCell>
-      <TableCell>{IdProveedor}</TableCell>
-      <TableCell>{IdUsuario}</TableCell>
+      <TableCell>
+        <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
+      </TableCell>
+      <TableCell>{IdUsuarioEntrada.FullName}</TableCell>
+      <TableCell>{IdProveedorEntrada.FullName}</TableCell>
       <TableCell>{CantidadProductos}</TableCell>
       <TableCell>{MontoTotal}</TableCell>
       <TableCell>

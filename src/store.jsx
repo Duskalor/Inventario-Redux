@@ -4,6 +4,7 @@ import { ClientesSlice } from './features/Clientes/clientesSlice';
 import { datosSlice } from './features/Datos/datosSlice';
 import { entradaSlice } from './features/Entrada/entradaSlice';
 import { permisosSlice } from './features/Permisos/permisosSlice';
+import { productoEntradaSlice } from './features/ProductoEntrada/productoEntradaSlice';
 import { productosSlice } from './features/Productos/productosSlice';
 import { ProveedorSlice } from './features/Proveedor/ProveedorSlice';
 import { UsuariosSlice } from './features/Usuarios/UsuariosSlice';
@@ -17,5 +18,6 @@ export const store = configureStore({
     Usuarios: UsuariosSlice.reducer,
     Permisos: permisosSlice.reducer,
     Entrada: entradaSlice.reducer,
+    ProductoEntrada: productoEntradaSlice.reducer,
   },
 });
