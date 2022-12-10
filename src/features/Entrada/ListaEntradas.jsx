@@ -9,20 +9,24 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createProductoEntrada } from '../ProductoEntrada/productoEntradaSlice';
 import Entradas from './Entradas';
 import { getEntradas } from './entradaSlice';
 
 export default function ListaEntradas() {
-  // console.log(permisos);
   const { entradas } = useSelector((state) => state.Entrada);
-  const { usuarios } = useSelector((state) => state.Usuarios);
+  const { id: IdEntrada } = useSelector((state) => state.Entrada);
+  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
 
-  // const { entradas } = useSelector((state) => state.entrada);
-  //console.log(usuarios);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEntradas());
-  }, []);
+    if (!IdEntrada == '') {
+      productoEntrada.map((pe) => {
+        dispatch(createProductoEntrada({ IdEntrada, pe }));
+      });
+    }
+  }, [dispatch, IdEntrada]);
 
   return (
     <div>

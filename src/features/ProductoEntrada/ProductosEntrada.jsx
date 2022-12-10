@@ -1,14 +1,21 @@
-import { TableCell, TableRow } from '@mui/material';
+import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { borrarItem } from './productoEntradaSlice';
 
 export default function ProductosEntrada({ producto }) {
-  const { IdProducto, PrecioCompra, Cantidad, SubTotal, id } = producto;
+  const { IdProducto, PrecioCompra, Cantidad, SubTotal } = producto;
 
   const { productos } = useSelector((state) => state.Productos);
 
   const ListaProductos = productos.find((pro) => pro.id == IdProducto);
-  console.log(ListaProductos);
+  //console.log(ListaProductos);
+  const dispatch = useDispatch();
+  const deleteItem = (id) => {
+    if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
+      dispatch(borrarItem(id));
+    }
+  };
 
   return (
     <TableRow>
@@ -17,6 +24,9 @@ export default function ProductosEntrada({ producto }) {
       <TableCell>{PrecioCompra}</TableCell>
       <TableCell>{Cantidad}</TableCell>
       <TableCell>{SubTotal}</TableCell>
+      <TableCell>
+        <Button onClick={() => deleteItem(IdProducto)}>Eliminar</Button>
+      </TableCell>
     </TableRow>
   );
 }

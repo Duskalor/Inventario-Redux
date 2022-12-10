@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import ListaCliente from './features/Clientes/ListaCliente';
-import Layout from './Layout';
 import Login from './features/Auth/Login';
 import { getUserDetails } from './features/Auth/authSlice';
 import Peticiones from './Peticiones';

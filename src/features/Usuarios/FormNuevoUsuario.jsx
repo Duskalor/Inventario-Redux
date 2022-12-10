@@ -49,6 +49,7 @@ export default function FormNuevoUsuario({ handleClose }) {
         />
         {errors.Usuario?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
+
       <div>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Email

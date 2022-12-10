@@ -10,12 +10,16 @@ import Layout from './Layout';
 export default function Peticiones() {
   const Dispatch = useDispatch();
   useEffect(() => {
-    Dispatch(getDatos());
-    Dispatch(getUsuarios());
-    Dispatch(getpermisos());
-    Dispatch(getProveedor());
-    Dispatch(getProductos());
+    Peticions(Dispatch);
   }, [Dispatch]);
 
   return <Layout />;
+}
+
+export function Peticions(Dispatch) {
+  Dispatch(getDatos());
+  Dispatch(getUsuarios());
+  Dispatch(getpermisos());
+  Dispatch(getProveedor());
+  Dispatch(getProductos());
 }

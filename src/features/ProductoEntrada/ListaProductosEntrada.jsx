@@ -14,13 +14,13 @@ import ProductosEntrada from './ProductosEntrada';
 // import { getpermisos } from './permisosSlice';
 
 export default function ListaProductosEntrada({ codigo }) {
-  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
   const { entradas } = useSelector((state) => state.Entrada);
 
   const codigoDocumento = entradas.find(
     (entrada) => entrada.NumeroDocumento === codigo
   );
-  const listaProductosEntrada = productoEntrada.filter(
+  const listaProductosEntrada = productoEntradaBD.filter(
     (proEntrada) => proEntrada.IdEntrada === codigoDocumento.id
   );
   //console.log(listaProductosEntrada);

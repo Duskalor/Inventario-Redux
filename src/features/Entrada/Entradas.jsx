@@ -2,6 +2,7 @@ import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LayoutProductosEntrada } from '../ProductoEntrada/LayoutProductosEntrada';
+import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
 import { deleteEntradas } from './entradaSlice';
 import { ModalEdit } from './ModalEdit';
 
@@ -27,9 +28,10 @@ export default function Entradas({ entradas }) {
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
       dispatch(deleteEntradas(id));
+      dispatch(borrarEstado());
     }
   };
-  <h1>N/A</h1>;
+
   return (
     <TableRow>
       <TableCell>

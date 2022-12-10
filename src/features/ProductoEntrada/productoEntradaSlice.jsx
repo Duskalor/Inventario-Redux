@@ -16,20 +16,27 @@ export const getDetalleEntradas = createAsyncThunk(
     return data;
   }
 );
-// export const createUsuarios = createAsyncThunk(
-//   'create/postUsuarios',
-//   async (nuevo, { getState }) => {
-//     const { Auth } = getState();
-
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${Auth.userToken}`,
-//       },
-//     };
-//     const { data } = await apiSistema.post('user/create', nuevo, config);
-//     return data;
-//   }
-// );
+export const createProductoEntrada = createAsyncThunk(
+  'create/postProductoEntrada',
+  async (nuevo, { getState }) => {
+    const { Auth } = getState();
+    //console.log(nuevo);
+    const { IdEntrada } = nuevo;
+    const { IdProducto, PrecioCompra, Cantidad, SubTotal } = nuevo.pe;
+    //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post(
+      'detalleEntrada/create',
+      { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
+      config
+    );
+    return data;
+  }
+);
 // export const deleteUsuarios = createAsyncThunk(
 //   'delete/postUsuarios',
 //   async (id, { getState }) => {
@@ -71,13 +78,28 @@ export const getDetalleEntradas = createAsyncThunk(
 export const productoEntradaSlice = createSlice({
   name: 'ProductoEntrada',
   initialState: {
+    productoEntradaBD: [],
     productoEntrada: [],
     error: null,
     loading: false,
   },
   reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
+    GuardarEstado: (state, { payload }) => {
+      //console.log(payload);
+      if (!payload.IdProducto == '') {
+        state.productoEntrada = [...state.productoEntrada, payload];
+      }
+    },
+    borrarEstado: (state) => {
+      //console.log(payload);
+      state.productoEntrada = [];
+    },
+    borrarItem: (state, { payload }) => {
+      console.log(payload);
+      state.productoEntrada = state.productoEntrada.filter(
+        (item) => item.IdProducto !== payload
+      );
+      console.log(state.productoEntrada);
     },
   },
   extraReducers: {
@@ -88,45 +110,23 @@ export const productoEntradaSlice = createSlice({
     [getDetalleEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
       //console.log(payload);
-      state.productoEntrada = payload.ListaDetalleEntrada;
+      state.productoEntradaBD = payload.ListaDetalleEntrada;
     },
     [getDetalleEntradas.rejected]: (state) => {
       state.loading = false;
     },
-    // //CREATE
-    // [createUsuarios.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [createUsuarios.fulfilled]: (state, { payload }) => {
-    //   state.loading = false;
-    //   state.usuarios = payload.ListaUsuarios;
-    // },
-    // [createUsuarios.rejected]: (state) => {
-    //   state.loading = false;
-    // },
-    // //DELETE
-    // [deleteUsuarios.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [deleteUsuarios.fulfilled]: (state, { payload }) => {
-    //   state.loading = false;
-    //   state.usuarios = payload.ListaUsuarios;
-    // },
-    // [deleteUsuarios.rejected]: (state) => {
-    //   state.loading = false;
-    // },
-
-    // //UPDATE
-    // [updateProductoEntrada.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [updateProductoEntrada.fulfilled]: (state, { payload }) => {
-    //   state.loading = false;
-    //   state.usuarios = payload.ListaUsuarios;
-    // },
-    // [updateProductoEntrada.rejected]: (state) => {
-    //   state.loading = false;
-    // },
+    [createProductoEntrada.pending]: (state) => {
+      state.loading = true;
+    },
+    [createProductoEntrada.fulfilled]: (state, action) => {
+      state.loading = false;
+      //console.log(action);
+    },
+    [createProductoEntrada.rejected]: (state, action) => {
+      state.loading = false;
+      //console.log(action);
+    },
   },
 });
-export const { increment } = productoEntradaSlice.actions;
+export const { GuardarEstado, borrarEstado, borrarItem } =
+  productoEntradaSlice.actions;

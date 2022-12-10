@@ -3,12 +3,12 @@ import { apiSistema } from '../../Api/ApiSistema';
 
 export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
   const { data } = await apiSistema.get('entrada');
-  //console.log(data);
   return data;
 });
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
   async (nuevo) => {
+    console.log(nuevo);
     const { data } = await apiSistema.post('entrada/create', nuevo);
     return data;
   }
@@ -35,6 +35,7 @@ export const entradaSlice = createSlice({
   name: 'Entradas',
   initialState: {
     entradas: [],
+    id: null,
     error: null,
     loading: false,
   },
@@ -50,7 +51,7 @@ export const entradaSlice = createSlice({
     },
     [getEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      // console.log(payload.ListaEntradas);
+
       state.entradas = payload.ListaEntradas;
     },
     [getEntradas.rejected]: (state) => {
@@ -64,6 +65,7 @@ export const entradaSlice = createSlice({
       state.loading = false;
 
       state.entradas = payload.ListaEntradas;
+      state.id = payload.Entrada.id;
     },
     [createEntradas.rejected]: (state) => {
       state.loading = false;

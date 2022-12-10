@@ -4,11 +4,16 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import ListaEntradas from './ListaEntradas';
 import { style } from '../style';
+import FormNuevaEntrada from './FormNuevaEntrada';
+import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
+import { useDispatch } from 'react-redux';
 
 export function ChildModal() {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
+    dispatch(borrarEstado());
   };
   const handleClose = () => {
     setOpen(false);
@@ -24,8 +29,8 @@ export function ChildModal() {
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
-        <Box sx={{ ...style, width: 200 }}>
-          {/* <FormNuevoPermiso handleClose={handleClose} /> */}
+        <Box sx={{ ...style, width: 600 }}>
+          <FormNuevaEntrada handleClose={handleClose} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>
       </Modal>
