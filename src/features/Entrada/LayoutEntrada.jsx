@@ -39,7 +39,9 @@ export function ChildModal() {
 }
 export default function LayoutEntrada() {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
   const handleOpen = () => {
+    dispatch(borrarEstado());
     setOpen(true);
   };
   const handleClose = () => {
