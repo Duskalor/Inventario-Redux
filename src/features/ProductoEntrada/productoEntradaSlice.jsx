@@ -37,50 +37,80 @@ export const createProductoEntrada = createAsyncThunk(
     return data;
   }
 );
-// export const deleteUsuarios = createAsyncThunk(
-//   'delete/postUsuarios',
-//   async (id, { getState }) => {
-//     const { Auth } = getState();
 
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${Auth.userToken}`,
-//       },
-//     };
-//     const { data } = await apiSistema.delete(`user/delete/${id}`, config);
-//     return data;
-//   }
-// );
-// export const updateProductoEntrada = createAsyncThunk(
-//   'update/postUsuarios',
-//   async ({ id, FullName, email, Usuario, IdPermisos }, { getState }) => {
-//     const { Auth } = getState();
+export const updateProductoEntrada = createAsyncThunk(
+  'update/postProductoEntrada',
+  async ({ pe }, { getState }) => {
+    const { Auth } = getState();
+    const { id, IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
 
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${Auth.userToken}`,
-//       },
-//     };
-//     const { data } = await apiSistema.put(
-//       `user/update/${id}`,
-//       {
-//         FullName,
-//         email,
-//         Usuario,
-//         IdPermisos,
-//       },
-//       config
-//     );
-//     return data;
-//   }
-// );
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.put(
+      `detalleEntrada/update/${id}`,
+      {
+        id,
+        IdEntrada,
+        IdProducto,
+        PrecioCompra,
+        Cantidad,
+        SubTotal,
+      },
+      config
+    );
+    return data;
+  }
+);
+
+export const EditProductoEntrada = createAsyncThunk(
+  'create/postProductoEntrada',
+  async ({ pe }, { getState }) => {
+    const { Auth } = getState();
+    //console.log(nuevo);
+
+    const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
+    //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post(
+      'detalleEntrada/create',
+      { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
+      config
+    );
+    return data;
+  }
+);
+export const DeleteProductoEntrada = createAsyncThunk(
+  'delete/postProductosEntrada',
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(
+      `detalleEntrada/delete/${id}`,
+      config
+    );
+    return data;
+  }
+);
 
 export const productoEntradaSlice = createSlice({
   name: 'ProductoEntrada',
   initialState: {
     productoEntradaBD: [],
     productoEntrada: [],
-    error: null,
+    productoEntradaEdit: [],
+    change: false,
     loading: false,
   },
   reducers: {
@@ -101,7 +131,28 @@ export const productoEntradaSlice = createSlice({
       );
       console.log(state.productoEntrada);
     },
+
+    borrarItemEdit: (state, { payload }) => {
+      // console.log(payload);
+      state.productoEntradaEdit = state.productoEntradaEdit.filter(
+        (item) => item.IdProducto !== payload
+      );
+    },
+    GuardarDatos: (state, { payload }) => {
+      // console.log(payload);
+      state.productoEntradaEdit = payload;
+    },
+
+    GuardarEstadoEdit: (state, { payload }) => {
+      if (!payload.IdProducto == '') {
+        state.productoEntradaEdit = [...state.productoEntradaEdit, payload];
+      }
+    },
+    BorrarEstadoEdit: (state, { payload }) => {
+      state.productoEntradaBD = [];
+    },
   },
+
   extraReducers: {
     ///GET
     [getDetalleEntradas.pending]: (state) => {
@@ -115,6 +166,7 @@ export const productoEntradaSlice = createSlice({
     [getDetalleEntradas.rejected]: (state) => {
       state.loading = false;
     },
+
     [createProductoEntrada.pending]: (state) => {
       state.loading = true;
     },
@@ -126,7 +178,25 @@ export const productoEntradaSlice = createSlice({
       state.loading = false;
       //console.log(action);
     },
+    [DeleteProductoEntrada.pending]: (state) => {
+      state.loading = true;
+    },
+    [DeleteProductoEntrada.fulfilled]: (state, action) => {
+      state.loading = false;
+      //console.log(action);
+    },
+    [DeleteProductoEntrada.rejected]: (state, action) => {
+      state.loading = false;
+      //console.log(action);
+    },
   },
 });
-export const { GuardarEstado, borrarEstado, borrarItem } =
-  productoEntradaSlice.actions;
+export const {
+  GuardarEstado,
+  borrarEstado,
+  borrarItem,
+  borrarItemEdit,
+  GuardarEstadoEdit,
+  BorrarEstadoEdit,
+  GuardarDatos,
+} = productoEntradaSlice.actions;
