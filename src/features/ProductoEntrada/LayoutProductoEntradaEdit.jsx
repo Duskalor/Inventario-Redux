@@ -6,15 +6,25 @@ import {
   NativeSelect,
   TextField,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { GuardarEstado } from './productoEntradaSlice';
-import ProductosEntradaDatosLocal from './ProductosEntradaDatosLocal';
+import ProductoEntradaEdit from './ProductoEntradaEdit';
+import { GuardarDatos, GuardarEstadoEdit } from './productoEntradaSlice';
 
-export default function FormNuevoProductoEntrada() {
+export default function LayoutProductoEntradaEdit({ id }) {
   const { productos } = useSelector((state) => state.Productos);
-  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  const { productoEntrada, productoEntradaBD } = useSelector(
+    (state) => state.ProductoEntrada
+  );
+
+  const datos = productoEntradaBD.filter((pro) => pro.IdEntrada == id);
+  //console.log(datos);
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GuardarDatos(datos));
+  }, [dispatch]);
+
   //console.log(productos);
   const [productosAgregados, setProductosAgregados] = useState({
     IdProducto: '',
@@ -36,12 +46,19 @@ export default function FormNuevoProductoEntrada() {
     const Verificar = productoEntrada.find(
       (pro) => pro.IdProducto === productosAgregados.IdProducto
     );
+    productosAgregados.IdEntrada = id;
+    productosAgregados.PrecioCompra = productosAgregados.PrecioCompra + '.00';
+    productosAgregados.SubTotal = productosAgregados.SubTotal + '.00';
+
+    //console.log(productosAgregados);
     if (
       productosAgregados.PrecioCompra &&
       productosAgregados.Cantidad &&
       productosAgregados.IdProducto
     ) {
-      if (!Verificar) dispatch(GuardarEstado(productosAgregados));
+      if (!Verificar) {
+        dispatch(GuardarEstadoEdit(productosAgregados));
+      }
     }
 
     //console.log(productosAgregados);
@@ -53,42 +70,9 @@ export default function FormNuevoProductoEntrada() {
     });
   };
 
-  // const handleTag = ({ target }, fieldName) => {
-  //   const { value } = target;
-  //   //console.log(fieldName, value[0]);
-  //   setProductosAgregados({
-  //     ...productosAgregados,
-  //     [fieldName]: value[0],
-  //   });
-  // };
-
   return (
     <>
       <div>
-        {/* <Autocomplete
-          onChange={(e, value) => {
-            setProductosAgregados({ IdProducto: value.id });
-          }}
-          // onSelect={(event) => handleTag(event, 'IdProducto')}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          name='IdProducto'
-          id='combo-box-demo'
-          options={productos}
-          sx={{ width: 400 }}
-          renderInput={(params) => (
-            <TextField {...params} label='Producto' variant='outlined' />
-          )}
-          getOptionLabel={(option) =>
-            `${option.Codigo} : ${option.Descripcion}`
-          }
-          renderOption={(props, option) => {
-            return (
-              <div {...props}>
-                {` ${option.Codigo} :  ${option.Descripcion}`}
-              </div>
-            );
-          }}
-        /> */}
         <NativeSelect onChange={(e) => Guardar(e)} name='IdProducto'>
           <option aria-label='None' value='' />
           {productos.map((producto) => {
@@ -124,28 +108,7 @@ export default function FormNuevoProductoEntrada() {
       </div>
       <Button onClick={(e) => onSave(e)}>Agregar</Button>
       <hr />
-      <ProductosEntradaDatosLocal />
-      {/* <div>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Proveedor
-        </InputLabel>
-        <NativeSelect
-          {...register('IdProveedor', {
-            required: true,
-          })}
-        >
-          {proveedores.map((proveedor) => {
-            return (
-              <option key={proveedor.id} value={proveedor.id}>
-                {proveedor.FullName}
-              </option>
-            );
-          })}
-        </NativeSelect>
-        {errors.IdProveedor?.type === 'required' && (
-          <p>El Campo es requirido </p>
-        )}
-      </div> */}
+      <ProductoEntradaEdit />
     </>
   );
 }

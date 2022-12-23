@@ -8,14 +8,15 @@ import {
   TableRow,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
-import ProductosEntrada from './ProductosEntrada';
+import ProductoEntradaDatosEdit from './ProductoEntradaDatosEdit';
 
-export default function ProductosEntradaDatosLocal() {
-  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+export default function ProductoEntradaEdit() {
+  const { productoEntradaEdit } = useSelector((state) => state.ProductoEntrada);
 
+  //console.log(productoEntradaEdit);
   return (
     <div>
-      {productoEntrada && (
+      {productoEntradaEdit && (
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
             <TableHead>
@@ -29,8 +30,8 @@ export default function ProductosEntradaDatosLocal() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {productoEntrada.map((producto, id) => (
-                <ProductosEntrada key={id} producto={producto} />
+              {productoEntradaEdit.map((producto, id) => (
+                <ProductoEntradaDatosEdit key={id} producto={producto} />
               ))}
             </TableBody>
           </Table>

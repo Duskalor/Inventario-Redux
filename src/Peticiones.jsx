@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getDatos } from './features/Datos/datosSlice';
 import { getpermisos } from './features/Permisos/permisosSlice';
+import { getDetalleEntradas } from './features/ProductoEntrada/productoEntradaSlice';
 import { getProductos } from './features/Productos/productosSlice';
 import { getProveedor } from './features/Proveedor/ProveedorSlice';
 import { getUsuarios } from './features/Usuarios/UsuariosSlice';
@@ -22,4 +23,5 @@ export function Peticions(Dispatch) {
   Dispatch(getpermisos());
   Dispatch(getProveedor());
   Dispatch(getProductos());
+  Dispatch(getDetalleEntradas());
 }

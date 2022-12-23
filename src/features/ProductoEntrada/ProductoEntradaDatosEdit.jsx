@@ -1,19 +1,20 @@
 import { Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { borrarItem } from './productoEntradaSlice';
+import { borrarItemEdit } from './productoEntradaSlice';
 
-export default function ProductosEntrada({ producto }) {
+export default function ProductoEntradaDatosEdit({ producto }) {
+  //console.log(producto);
   const { IdProducto, PrecioCompra, Cantidad, SubTotal } = producto;
 
   const { productos } = useSelector((state) => state.Productos);
-  //console.log(producto, productos);
+
   const ListaProductos = productos.find((pro) => pro.id == IdProducto);
-  //console.log(ListaProductos);
+  //.log(ListaProductos);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
-      dispatch(borrarItem(id));
+      dispatch(borrarItemEdit(id));
     }
   };
 

@@ -5,7 +5,10 @@ import Button from '@mui/material/Button';
 import ListaEntradas from './ListaEntradas';
 import { style } from '../style';
 import FormNuevaEntrada from './FormNuevaEntrada';
-import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
+import {
+  borrarEstado,
+  getDetalleEntradas,
+} from '../ProductoEntrada/productoEntradaSlice';
 import { useDispatch } from 'react-redux';
 
 export function ChildModal() {
@@ -42,6 +45,7 @@ export default function LayoutEntrada() {
   const dispatch = useDispatch();
   const handleOpen = () => {
     dispatch(borrarEstado());
+
     setOpen(true);
   };
   const handleClose = () => {

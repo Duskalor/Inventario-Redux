@@ -22,10 +22,13 @@ export const deleteEntradas = createAsyncThunk(
 );
 export const updateEntradas = createAsyncThunk(
   'update/postEntradas',
-  async ({ id, FullName, Dni }) => {
+  async ({ id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal }) => {
+    //console.log({ id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal });
     const { data } = await apiSistema.put(`entrada/update/${id}`, {
-      FullName,
-      Dni,
+      IdUsuario,
+      IdProveedor,
+      CantidadProductos,
+      MontoTotal,
     });
     return data;
   }

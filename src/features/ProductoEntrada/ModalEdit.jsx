@@ -7,11 +7,13 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductosEntrada from './ProductosEntrada';
+// import { getpermisos } from './permisosSlice';
 
 export default function ProductosEntradaDatosLocal() {
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  //console.log(productoEntrada);
 
   return (
     <div>

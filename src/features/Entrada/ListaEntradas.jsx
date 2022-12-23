@@ -9,7 +9,10 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProductoEntrada } from '../ProductoEntrada/productoEntradaSlice';
+import {
+  createProductoEntrada,
+  getDetalleEntradas,
+} from '../ProductoEntrada/productoEntradaSlice';
 import Entradas from './Entradas';
 import { getEntradas } from './entradaSlice';
 
@@ -21,6 +24,7 @@ export default function ListaEntradas() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEntradas());
+    // dispatch(getDetalleEntradas());
     if (!IdEntrada == '') {
       productoEntrada.map((pe) => {
         dispatch(createProductoEntrada({ IdEntrada, pe }));
