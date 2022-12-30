@@ -6,7 +6,9 @@ import { entradaSlice } from './features/Entrada/entradaSlice';
 import { permisosSlice } from './features/Permisos/permisosSlice';
 import { productoEntradaSlice } from './features/ProductoEntrada/productoEntradaSlice';
 import { productosSlice } from './features/Productos/productosSlice';
+import { productosSalidaSlice } from './features/ProductoSalidas/productosSalidaSlice';
 import { ProveedorSlice } from './features/Proveedor/ProveedorSlice';
+import { salidasSlice } from './features/Salidas/salidasSlice';
 import { UsuariosSlice } from './features/Usuarios/UsuariosSlice';
 export const store = configureStore({
   reducer: {
@@ -19,5 +21,7 @@ export const store = configureStore({
     Permisos: permisosSlice.reducer,
     Entrada: entradaSlice.reducer,
     ProductoEntrada: productoEntradaSlice.reducer,
+    Salida: salidasSlice.reducer,
+    ProductoSalida: productosSalidaSlice.reducer,
   },
 });

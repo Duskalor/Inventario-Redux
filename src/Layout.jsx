@@ -8,6 +8,7 @@ import LayoutEntrada from './features/Entrada/LayoutEntrada';
 import LayoutPermisos from './features/Permisos/LayoutPermisos';
 import LayoutProducto from './features/Productos/LayoutProducto';
 import LayoutProveedores from './features/Proveedor/LayoutProveedores';
+import LayoutSalida from './features/Salidas/LayoutSalida';
 import Salidas from './features/Salidas/Salidas';
 import LayoutUsuarios from './features/Usuarios/LayoutUsuarios';
 
@@ -33,7 +34,7 @@ export default function Layout() {
       {UserPermiso?.Usuarios === 1 && <LayoutUsuarios />}
       {UserPermiso?.Permisos === 1 && <LayoutPermisos />}
       {UserPermiso?.Entradas === 1 && <LayoutEntrada />}
-      {UserPermiso?.Salidas === 1 && <Salidas />}
+      {UserPermiso?.Salidas === 1 && <LayoutSalida />}
     </div>
   );
 }

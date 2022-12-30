@@ -27,6 +27,7 @@ export default function ListaEntradas() {
     // dispatch(getDetalleEntradas());
     if (!IdEntrada == '') {
       productoEntrada.map((pe) => {
+        console.log(pe);
         dispatch(createProductoEntrada({ IdEntrada, pe }));
       });
     }
