@@ -21,8 +21,6 @@ import { getSalidas } from './salidasSlice';
 
 export default function ListaSalidas() {
   const { salidas } = useSelector((state) => state.Salida);
-  console.log(salidas);
-
   const { id: IdSalida } = useSelector((state) => state.Salida);
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
 
@@ -32,7 +30,7 @@ export default function ListaSalidas() {
     dispatch(getDetalleSalida());
     if (!IdSalida == '') {
       productoSalida.map((pe) => {
-        console.log(pe);
+        //console.log(pe);
         dispatch(createProductoSalida({ IdSalida, pe }));
       });
     }

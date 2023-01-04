@@ -7,7 +7,7 @@ import { createUsuarios } from './UsuariosSlice';
 export default function FormNuevoUsuario({ handleClose }) {
   const { permisos } = useSelector((state) => state.Permisos);
   const dispatch = useDispatch();
-  console.log(permisos);
+  //console.log(permisos);
   const {
     register,
     handleSubmit,
@@ -19,7 +19,7 @@ export default function FormNuevoUsuario({ handleClose }) {
     dispatch(createUsuarios(dato));
     handleClose();
     reset();
-    console.log(dato);
+    //console.log(dato);
   };
 
   return (

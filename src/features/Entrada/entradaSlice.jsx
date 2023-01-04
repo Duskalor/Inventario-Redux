@@ -8,7 +8,7 @@ export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
   async (nuevo) => {
-    console.log(nuevo);
+    //console.log(nuevo);
     const { data } = await apiSistema.post('entrada/create', nuevo);
     return data;
   }

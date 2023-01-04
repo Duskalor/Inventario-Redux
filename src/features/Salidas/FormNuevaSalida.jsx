@@ -22,7 +22,7 @@ export default function FormNuevaSalida({ handleClose }) {
   } = useForm();
 
   const onSubmit = (datos) => {
-    console.log(productoSalida.length);
+    //console.log(productoSalida.length);
     if (!productoSalida.length == 0) {
       let total = 0;
       productoSalida.forEach(function (a) {
@@ -38,7 +38,7 @@ export default function FormNuevaSalida({ handleClose }) {
       dispatch(createSalida(datos));
       dispatch(getDetalleSalida());
       handleClose();
-      console.log(datos);
+      //console.log(datos);
     }
   };
 

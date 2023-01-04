@@ -125,11 +125,11 @@ export const productoEntradaSlice = createSlice({
       state.productoEntrada = [];
     },
     borrarItem: (state, { payload }) => {
-      console.log(payload);
+      //console.log(payload);
       state.productoEntrada = state.productoEntrada.filter(
         (item) => item.IdProducto !== payload
       );
-      console.log(state.productoEntrada);
+      //console.log(state.productoEntrada);
     },
 
     borrarItemEdit: (state, { payload }) => {

@@ -19,7 +19,7 @@ export default function FormNuevaEntrada({ handleClose }) {
   } = useForm();
 
   const onSubmit = (datos) => {
-    console.log(productoEntrada.length);
+    //console.log(productoEntrada.length);
     if (!productoEntrada.length == 0) {
       let total = 0;
       productoEntrada.forEach(function (a) {

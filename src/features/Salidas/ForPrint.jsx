@@ -20,7 +20,7 @@ import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
 
 export default function ForPrint({ ToPrint }) {
   //console.log(ToPrint);
-  const { MontoTotal, id, IdClienteSalida, fecha } = ToPrint;
+  const { MontoTotal, id, IdClienteSalida, fecha, IdUsuarioSalida } = ToPrint;
   const Datos = useSelector((state) => state.Datos);
   const dispatch = useDispatch();
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
@@ -48,6 +48,7 @@ export default function ForPrint({ ToPrint }) {
         <h3>Señor(es) : {IdClienteSalida.FullName}</h3>
         <h3>DNI : {IdClienteSalida.Dni}</h3>
         <h3>Fecha de Emision : {fecha.substr(0, 10)}</h3>
+        <h3>Atendido por : {IdUsuarioSalida.FullName}</h3>
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
             <TableHead>

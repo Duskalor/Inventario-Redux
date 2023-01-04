@@ -17,7 +17,7 @@ export default function FormNuevoCliente({ handleClose }) {
     dispatch(createClientes(dato));
     handleClose();
     reset();
-    console.log(dato);
+    //console.log(dato);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

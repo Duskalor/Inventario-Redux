@@ -29,7 +29,7 @@ export default function FormNuevoPermiso({ handleClose }) {
       : (dato.Proveedores = 0);
     dato.Salidas = dato.Salidas ? (dato.Salidas = 1) : (dato.Salidas = 0);
     dato.Usuarios = dato.Usuarios ? (dato.Usuarios = 1) : (dato.Usuarios = 0);
-    console.log(dato);
+    //console.log(dato);
     dispatch(createpermisos(dato));
     handleClose();
   };
