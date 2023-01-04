@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import ListaProductos from './ListaProductos';
 import FormNuevoProducto from './FormNuevoProducto';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import { style } from '../style';
 
 export function ChildModal() {
@@ -44,7 +45,16 @@ export default function LayoutProducto() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Productos</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <InventoryIcon sx={{ fontSize: 60 }} />
+        Productos
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

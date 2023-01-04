@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +17,8 @@ import { getDetalleSalida } from './productosSalidaSlice';
 // import ProductosEntrada from './ProductosEntrada';
 // import { getpermisos } from './permisosSlice';
 
-export default function ListaProductosSalida({ codigo }) {
+export default function ListaProductosSalida({ codigo = null, montoTotal }) {
+  // console.log(codigo);
   const dispatch = useDispatch();
 
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
@@ -30,21 +32,23 @@ export default function ListaProductosSalida({ codigo }) {
   );
   //console.log(listaProductosSalida);
   useEffect(() => {
-    //console.log(productoEntradaBD);
     dispatch(getDetalleSalida());
   }, [dispatch]);
+
   return (
     <div>
       {/* <h1>PERMISOS</h1> */}
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ maxHeight: 700 }}>
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Codigo</TableCell>
-              <TableCell>Producto</TableCell>
-              <TableCell>Precio de Compra</TableCell>
-              <TableCell>Cantidad</TableCell>
-              <TableCell>SubTotal</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Codigo</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Producto</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>
+                Precio de Compra
+              </TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Cantidad</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>SubTotal</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -54,6 +58,10 @@ export default function ListaProductosSalida({ codigo }) {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Typography align='right' variant='subtitle1' mt={2} mr={3}>
+        TOTAL : S/. {montoTotal}
+      </Typography>
     </div>
   );
 }

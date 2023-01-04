@@ -42,7 +42,7 @@ export const salidasSlice = createSlice({
     [getSalidas.fulfilled]: (state, { payload }) => {
       state.loading = false;
 
-      state.salidas = payload.ListaSalidas;
+      state.salidas = payload.ListaSalidas.reverse();
     },
     [getSalidas.rejected]: (state) => {
       state.loading = false;

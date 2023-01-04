@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
-  : null;
 const success = localStorage.getItem('success')
   ? localStorage.getItem('success')
   : false;
+const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null;
 const userId = localStorage.getItem('userId')
   ? localStorage.getItem('userId')
   : null;
@@ -30,9 +30,10 @@ export const logout = createAsyncThunk(
         Authorization: `Bearer ${Auth.userToken}`,
       },
     };
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('success');
+    localStorage.clear();
+    // localStorage.removeItem('userToken');
+    // localStorage.removeItem('userId');
+    // localStorage.removeItem('success');
     //console.log(localStorage);
     const { data } = await apiSistema.get('logout', config);
     return data;
@@ -95,6 +96,8 @@ export const authSlice = createSlice({
       state.loading = false;
       //console.log(payload.User);
       state.success = payload.success;
+      state.userId = null;
+      state.userToken = null;
       state.user = [];
     },
     [logout.rejected]: (state) => {

@@ -16,9 +16,9 @@ export default function Cliente({ clientes }) {
 
   return (
     <TableRow>
-      <TableCell>{FullName}</TableCell>
-      <TableCell>{Dni}</TableCell>
-      <TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>{FullName}</TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>{Dni}</TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>
         <ModalEdit id={id} />
         <Button onClick={() => deleteItem(id)}>Eliminar</Button>
       </TableCell>

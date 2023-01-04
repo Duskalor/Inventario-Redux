@@ -3,16 +3,21 @@ import { useSelector } from 'react-redux';
 export default function ProductoSalidaVista({ producto }) {
   const { IdProducto, PrecioVenta, Cantidad, SubTotal } = producto;
   const { productos } = useSelector((state) => state.Productos);
+
   const ListaProductos = productos.find((pro) => pro.id == IdProducto);
 
   return (
     producto && (
       <TableRow>
-        <TableCell>{ListaProductos.Codigo}</TableCell>
-        <TableCell>{ListaProductos.Descripcion}</TableCell>
-        <TableCell>{PrecioVenta}</TableCell>
-        <TableCell>{Cantidad}</TableCell>
-        <TableCell>{SubTotal}</TableCell>
+        <TableCell sx={{ textAlign: 'center' }}>
+          {ListaProductos.Codigo}
+        </TableCell>
+        <TableCell sx={{ textAlign: 'center' }}>
+          {ListaProductos.Descripcion}
+        </TableCell>
+        <TableCell sx={{ textAlign: 'center' }}>{PrecioVenta}</TableCell>
+        <TableCell sx={{ textAlign: 'center' }}>{Cantidad}</TableCell>
+        <TableCell sx={{ textAlign: 'center' }}>{SubTotal}</TableCell>
       </TableRow>
     )
   );

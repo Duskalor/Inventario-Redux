@@ -7,16 +7,15 @@ import Peticiones from './Peticiones';
 
 function App() {
   const Dispatch = useDispatch();
-  const prueba = useSelector((state) => state.Auth);
-  const { success } = prueba;
+  const { userToken } = useSelector((state) => state.Auth);
+
   useEffect(() => {
-    if (success) {
+    if (userToken) {
       Dispatch(getUserDetails());
     }
   }, [Dispatch]);
-  //console.log(success);
 
-  return <div>{success ? <Peticiones /> : <Login />}</div>;
+  return <div>{userToken ? <Peticiones /> : <Login />}</div>;
 }
 
 export default App;

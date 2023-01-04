@@ -10,7 +10,7 @@ import {
   getDetalleEntradas,
 } from '../ProductoEntrada/productoEntradaSlice';
 import { useDispatch } from 'react-redux';
-
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 export function ChildModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -54,7 +54,16 @@ export default function LayoutEntrada() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Entradas</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <ArrowDownwardIcon sx={{ fontSize: 60 }} />
+        Entradas
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

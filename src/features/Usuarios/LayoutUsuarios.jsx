@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import FormNuevoUsuario from './FormNuevoUsuario';
 import ListaUsuarios from './ListaUsuarios';
 import { style } from '../style';
+import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -44,7 +45,16 @@ export default function LayoutUsuarios() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Usuarios</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <SelfImprovementIcon sx={{ fontSize: 60 }} />
+        Usuarios
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

@@ -34,14 +34,18 @@ export default function Entradas({ entradas }) {
 
   return (
     <TableRow>
-      <TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
-      <TableCell>{IdUsuarioEntrada.FullName}</TableCell>
-      <TableCell>{IdProveedorEntrada.FullName}</TableCell>
-      <TableCell>{CantidadProductos}</TableCell>
-      <TableCell>{MontoTotal}</TableCell>
-      <TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>
+        {IdUsuarioEntrada.FullName}
+      </TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>
+        {IdProveedorEntrada.FullName}
+      </TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>{CantidadProductos}</TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>{MontoTotal}</TableCell>
+      <TableCell sx={{ textAlign: 'center' }}>
         <ModalEdit id={id} />
         <Button onClick={() => deleteItem(id)}>Eliminar</Button>
       </TableCell>

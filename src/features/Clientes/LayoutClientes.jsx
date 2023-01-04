@@ -45,8 +45,15 @@ export default function LayoutClientes() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>
-        <AccountCircleIcon /> Clientes
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <AccountCircleIcon sx={{ fontSize: 60 }} />
+        Clientes
       </Button>
       <Modal
         open={open}

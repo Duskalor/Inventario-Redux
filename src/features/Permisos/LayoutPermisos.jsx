@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import ListaPermisos from './ListaPermisos';
 import FormNuevoPermiso from './FormNuevoPermiso';
 import { style } from '../style';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -44,7 +45,16 @@ export default function LayoutPermisos() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Permisos</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <ManageAccountsIcon sx={{ fontSize: 60 }} />
+        Permisos
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

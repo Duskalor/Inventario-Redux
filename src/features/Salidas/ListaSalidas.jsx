@@ -21,7 +21,8 @@ import { getSalidas } from './salidasSlice';
 
 export default function ListaSalidas() {
   const { salidas } = useSelector((state) => state.Salida);
-  //console.log(salidas);
+  console.log(salidas);
+
   const { id: IdSalida } = useSelector((state) => state.Salida);
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
 
@@ -44,12 +45,16 @@ export default function ListaSalidas() {
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Codigo Documento</TableCell>
-              <TableCell>Vendedor</TableCell>
-              <TableCell>Cliente</TableCell>
-              <TableCell>Cantidad de Productos</TableCell>
-              <TableCell>Monto Total</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>
+                Codigo Documento
+              </TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Vendedor</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Cliente</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>
+                Cantidad de Productos
+              </TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Monto Total</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

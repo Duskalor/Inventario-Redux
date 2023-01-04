@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import FormEditDatos from './FormEditDatos';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
+import BusinessIcon from '@mui/icons-material/Business';
 import { useSelector } from 'react-redux';
 import { style } from '../style';
 export default function LayoutDatos() {
@@ -17,9 +18,20 @@ export default function LayoutDatos() {
     setOpen(false);
   };
   // ;
+
   return (
     <div>
-      <Button onClick={handleOpen}>Datos De la Empresa</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <BusinessIcon sx={{ fontSize: 60 }} />
+        Datos
+      </Button>
+
       <Modal
         open={open}
         onClose={handleClose}

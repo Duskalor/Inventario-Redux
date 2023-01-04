@@ -40,12 +40,16 @@ export default function ListaEntradas() {
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Codigo Documento</TableCell>
-              <TableCell>Usuario</TableCell>
-              <TableCell>Proveedor</TableCell>
-              <TableCell>Cantidad de Productos</TableCell>
-              <TableCell>Monto Total</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>
+                Codigo Documento
+              </TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Usuario</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Proveedor</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>
+                Cantidad de Productos
+              </TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Monto Total</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

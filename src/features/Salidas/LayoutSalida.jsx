@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { style } from '../style';
+import Button from '@mui/material/Button';
 import ListaSalidas from './ListaSalidas';
 import FormNuevaSalida from './FormNuevaSalida';
 import { borrarEstado } from '../ProductoSalidas/productosSalidaSlice';
@@ -51,7 +52,15 @@ export default function LayoutSalida() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Salidas</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <ArrowUpwardIcon sx={{ fontSize: 60 }} /> Salidas
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

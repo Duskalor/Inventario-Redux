@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { style } from '../style';
 import ListaProductosSalida from './ListaProductosSalida';
-export function LayoutProductosSalida({ NumeroDocumento }) {
+export function LayoutProductosSalida({ NumeroDocumento, montoTotal }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -26,6 +26,7 @@ export function LayoutProductosSalida({ NumeroDocumento }) {
         <Box sx={{ ...style, width: 600 }}>
           <h1>{NumeroDocumento}</h1>
           <ListaProductosSalida
+            montoTotal={montoTotal}
             handleClose={handleClose}
             codigo={NumeroDocumento}
           />

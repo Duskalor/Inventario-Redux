@@ -27,9 +27,9 @@ export default function ListaCliente() {
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Full Nombre</TableCell>
-              <TableCell>DNI</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Full Nombre</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>DNI</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
