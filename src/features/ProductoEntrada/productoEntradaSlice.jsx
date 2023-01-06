@@ -40,9 +40,10 @@ export const createProductoEntrada = createAsyncThunk(
 
 export const updateProductoEntrada = createAsyncThunk(
   'update/postProductoEntrada',
-  async ({ pe }, { getState }) => {
+  async ({ Existencia, pe }, { getState }) => {
     const { Auth } = getState();
-    const { id, IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
+    const id = Existencia.id;
+    const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
 
     const config = {
       headers: {
@@ -149,7 +150,8 @@ export const productoEntradaSlice = createSlice({
       }
     },
     BorrarEstadoEdit: (state, { payload }) => {
-      state.productoEntradaBD = [];
+      state.productoEntradaEdit = [];
+      // state.productoEntradaBD = [];
     },
   },
 

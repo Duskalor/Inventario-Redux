@@ -13,7 +13,7 @@ import { GuardarDatos, GuardarEstadoEdit } from './productoEntradaSlice';
 
 export default function LayoutProductoEntradaEdit({ id }) {
   const { productos } = useSelector((state) => state.Productos);
-  const { productoEntrada, productoEntradaBD } = useSelector(
+  const { productoEntradaEdit, productoEntradaBD } = useSelector(
     (state) => state.ProductoEntrada
   );
 
@@ -43,7 +43,7 @@ export default function LayoutProductoEntradaEdit({ id }) {
   const onSave = (e) => {
     productosAgregados.SubTotal =
       productosAgregados.Cantidad * productosAgregados.PrecioCompra;
-    const Verificar = productoEntrada.find(
+    const Verificar = productoEntradaEdit.find(
       (pro) => pro.IdProducto === productosAgregados.IdProducto
     );
     productosAgregados.IdEntrada = id;
@@ -55,6 +55,8 @@ export default function LayoutProductoEntradaEdit({ id }) {
       productosAgregados.PrecioCompra &&
       productosAgregados.Cantidad &&
       productosAgregados.IdProducto
+      // productosAgregados.Cantidad > 0 &&
+      // productosAgregados.PrecioCompra > 0
     ) {
       if (!Verificar) {
         dispatch(GuardarEstadoEdit(productosAgregados));

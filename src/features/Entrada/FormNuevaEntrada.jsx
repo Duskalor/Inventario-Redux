@@ -2,12 +2,14 @@ import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
-import { createEntradas } from './entradaSlice';
+import { borrarProductos, getProductos } from '../Productos/productosSlice';
+import { borrarEntrada, createEntradas } from './entradaSlice';
 
 export default function FormNuevaEntrada({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { proveedores } = useSelector((state) => state.Proveedor);
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  const { productos } = useSelector((state) => state.Productos);
 
   // USE STATE
 
@@ -18,7 +20,7 @@ export default function FormNuevaEntrada({ handleClose }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (datos) => {
+  const onSubmit = async (datos) => {
     //console.log(productoEntrada.length);
     if (!productoEntrada.length == 0) {
       let total = 0;
@@ -32,7 +34,8 @@ export default function FormNuevaEntrada({ handleClose }) {
 
       datos = { ...datos, CantidadProductos: total };
       datos = { ...datos, MontoTotal: Precio };
-      dispatch(createEntradas(datos));
+      dispatch(createEntradas({ datos, productoEntrada, productos }));
+
       handleClose();
     }
   };

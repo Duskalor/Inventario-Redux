@@ -4,11 +4,14 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { style } from '../style';
 import FormEditEntrada from './FormEditEntrada';
+import { useDispatch } from 'react-redux';
+import { getDetalleEntradas } from '../ProductoEntrada/productoEntradaSlice';
 
 export function ModalEdit({ id }) {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
   const handleOpen = () => {
-    
+    dispatch(getDetalleEntradas());
     setOpen(true);
   };
   const handleClose = () => {

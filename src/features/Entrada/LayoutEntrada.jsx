@@ -11,6 +11,8 @@ import {
 } from '../ProductoEntrada/productoEntradaSlice';
 import { useDispatch } from 'react-redux';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { getEntradas } from './entradaSlice';
+import { getProductos } from '../Productos/productosSlice';
 export function ChildModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -42,10 +44,17 @@ export function ChildModal() {
 }
 export default function LayoutEntrada() {
   const [open, setOpen] = React.useState(false);
+
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getEntradas());
+    dispatch(getProductos());
+    dispatch(getDetalleEntradas());
+  }, [dispatch]);
+
   const handleOpen = () => {
     dispatch(borrarEstado());
-
     setOpen(true);
   };
   const handleClose = () => {

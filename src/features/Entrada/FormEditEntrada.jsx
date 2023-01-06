@@ -9,9 +9,10 @@ import {
   DeleteProductoEntrada,
   EditProductoEntrada,
   getDetalleEntradas,
+  GuardarDatos,
   updateProductoEntrada,
 } from '../ProductoEntrada/productoEntradaSlice';
-import { getProductos } from '../Productos/productosSlice';
+import { getProductos, updateProductos } from '../Productos/productosSlice';
 import { updateEntradas } from './entradaSlice';
 
 export default function FormEditEntrada({ handleClose, id }) {
@@ -33,7 +34,7 @@ export default function FormEditEntrada({ handleClose, id }) {
   const { proveedores } = useSelector((state) => state.Proveedor);
   const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
   const { productoEntradaEdit } = useSelector((state) => state.ProductoEntrada);
-
+  const { productos } = useSelector((state) => state.Productos);
   const ProDucEntra = productoEntradaBD.filter((pro) => pro.IdEntrada == id);
   //console.log(ProDucEntra);
   const {
@@ -56,9 +57,38 @@ export default function FormEditEntrada({ handleClose, id }) {
         const Existencia = ProDucEntra.find(
           (pro) => pro.IdProducto == pe.IdProducto
         );
-        Existencia
-          ? dispatch(updateProductoEntrada({ pe }))
-          : dispatch(EditProductoEntrada({ pe }));
+        //console.log(Existencia);
+        if (Existencia) {
+          dispatch(updateProductoEntrada({ Existencia, pe }));
+          if (Existencia.Cantidad < pe.Cantidad) {
+            const productoAeditar = productos.find(
+              (pro) => pro.id == pe.IdProducto
+            );
+            const pro = { ...productoAeditar };
+            pro.Stock = pro.Stock + (pe.Cantidad - Existencia.Cantidad);
+
+            dispatch(updateProductos(pro));
+          }
+
+          if (Existencia.Cantidad > pe.Cantidad) {
+            const productoAeditar = productos.find(
+              (pro) => pro.id == pe.IdProducto
+            );
+            const pro = { ...productoAeditar };
+            pro.Stock = pro.Stock - (Existencia.Cantidad - pe.Cantidad);
+
+            dispatch(updateProductos(pro));
+          }
+        } else {
+          dispatch(EditProductoEntrada({ pe }));
+          const productoAeditar = productos.find(
+            (pro) => pro.id == pe.IdProducto
+          );
+          const pro = { ...productoAeditar };
+          pro.Stock = pro.Stock + parseInt(pe.Cantidad);
+          //console.log(pro);
+          dispatch(updateProductos(pro));
+        }
       });
 
       ProDucEntra.map((pe) => {
@@ -67,6 +97,12 @@ export default function FormEditEntrada({ handleClose, id }) {
         );
 
         if (!Existencia) {
+          const productoAeditar = productos.find(
+            (pro) => pro.id == pe.IdProducto
+          );
+          const pro = { ...productoAeditar };
+          pro.Stock = pro.Stock - pe.Cantidad;
+          dispatch(updateProductos(pro));
           dispatch(DeleteProductoEntrada(pe.id));
         }
       });
@@ -88,7 +124,7 @@ export default function FormEditEntrada({ handleClose, id }) {
       datos = { ...datos, MontoTotal: Precio };
 
       dispatch(updateEntradas(datos));
-      dispatch(BorrarEstadoEdit());
+
       dispatch(getProductos());
       handleClose();
     }

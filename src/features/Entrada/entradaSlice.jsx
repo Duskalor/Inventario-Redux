@@ -1,15 +1,43 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
+import {
+  BorrarEstadoEdit,
+  createProductoEntrada,
+  getDetalleEntradas,
+} from '../ProductoEntrada/productoEntradaSlice';
+import {
+  borrarProductos,
+  getProductos,
+  updateProductos,
+} from '../Productos/productosSlice';
+import { getSalidas } from '../Salidas/salidasSlice';
 
 export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
   const { data } = await apiSistema.get('entrada');
   return data;
 });
+
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
-  async (nuevo) => {
-    //console.log(nuevo);
-    const { data } = await apiSistema.post('entrada/create', nuevo);
+  async ({ datos, productoEntrada, productos }, { dispatch }) => {
+    //console.log(productoEntrada);
+
+    const { data } = await apiSistema.post('entrada/create', datos);
+    const IdEntrada = data.Entrada.id;
+    //console.log(data);
+    productoEntrada.map((pe) => {
+      dispatch(createProductoEntrada({ IdEntrada, pe }));
+      const ParaAgregar = productos.find((pro) => pro.id == pe.IdProducto);
+      const pro = { ...ParaAgregar };
+      pro.Stock = pro.Stock + parseInt(pe.Cantidad);
+      dispatch(updateProductos(pro));
+      console.log(pro);
+    });
+    dispatch(getDetalleEntradas());
+    dispatch(borrarProductos());
+    dispatch(getProductos());
+    dispatch(BorrarEstadoEdit());
+
     return data;
   }
 );
@@ -22,7 +50,10 @@ export const deleteEntradas = createAsyncThunk(
 );
 export const updateEntradas = createAsyncThunk(
   'update/postEntradas',
-  async ({ id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal }) => {
+  async (
+    { id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal },
+    { dispatch }
+  ) => {
     //console.log({ id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal });
     const { data } = await apiSistema.put(`entrada/update/${id}`, {
       IdUsuario,
@@ -30,6 +61,9 @@ export const updateEntradas = createAsyncThunk(
       CantidadProductos,
       MontoTotal,
     });
+    dispatch(BorrarEstadoEdit());
+    dispatch(getDetalleEntradas());
+
     return data;
   }
 );
@@ -39,12 +73,13 @@ export const entradaSlice = createSlice({
   initialState: {
     entradas: [],
     id: null,
-    error: null,
+    error: false,
     loading: false,
   },
   reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
+    borrarEntrada: (state, payload) => {
+      // console.log(payload);
+      state.entradas = [];
     },
   },
   extraReducers: {
@@ -55,7 +90,7 @@ export const entradaSlice = createSlice({
     [getEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
 
-      state.entradas = payload.ListaEntradas;
+      state.entradas = payload.ListaEntradas.reverse();
     },
     [getEntradas.rejected]: (state) => {
       state.loading = false;
@@ -70,8 +105,9 @@ export const entradaSlice = createSlice({
       state.entradas = payload.ListaEntradas;
       state.id = payload.Entrada.id;
     },
-    [createEntradas.rejected]: (state) => {
+    [createEntradas.rejected]: (state, action) => {
       state.loading = false;
+      console.log(action.error);
     },
     //DELETE
     [deleteEntradas.pending]: (state) => {
@@ -98,4 +134,4 @@ export const entradaSlice = createSlice({
     },
   },
 });
-export const { increment } = entradaSlice.actions;
+export const { borrarEntrada } = entradaSlice.actions;

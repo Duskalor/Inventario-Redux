@@ -84,8 +84,8 @@ export const productosSlice = createSlice({
     loading: false,
   },
   reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
+    borrarProductos: (state /* action */) => {
+      state.productos = [];
     },
   },
   extraReducers: {
@@ -135,4 +135,4 @@ export const productosSlice = createSlice({
     },
   },
 });
-export const { increment } = productosSlice.actions;
+export const { borrarProductos } = productosSlice.actions;

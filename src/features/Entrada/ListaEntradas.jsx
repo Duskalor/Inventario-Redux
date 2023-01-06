@@ -9,29 +9,21 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createProductoEntrada,
-  getDetalleEntradas,
-} from '../ProductoEntrada/productoEntradaSlice';
+import { getDetalleEntradas } from '../ProductoEntrada/productoEntradaSlice';
+import { getProductos } from '../Productos/productosSlice';
 import Entradas from './Entradas';
 import { getEntradas } from './entradaSlice';
 
 export default function ListaEntradas() {
   const { entradas } = useSelector((state) => state.Entrada);
-  const { id: IdEntrada } = useSelector((state) => state.Entrada);
-  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEntradas());
-    // dispatch(getDetalleEntradas());
-    if (!IdEntrada == '') {
-      productoEntrada.map((pe) => {
-        //console.log(pe);
-        dispatch(createProductoEntrada({ IdEntrada, pe }));
-      });
-    }
-  }, [dispatch, IdEntrada]);
+    dispatch(getProductos());
+    dispatch(getDetalleEntradas());
+    return () => {};
+  }, []);
 
   return (
     <div>
@@ -53,9 +45,15 @@ export default function ListaEntradas() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {entradas.map((entrada, id) => (
-              <Entradas key={id} entradas={entrada} />
-            ))}
+            {entradas.length == 0 ? (
+              <TableRow>
+                <TableCell sx={{ textAlign: 'center' }}>Cargando</TableCell>
+              </TableRow>
+            ) : (
+              entradas.map((entrada, id) => (
+                <Entradas key={id} entradas={entrada} />
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

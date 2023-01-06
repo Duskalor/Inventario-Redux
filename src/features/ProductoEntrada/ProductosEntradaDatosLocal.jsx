@@ -16,7 +16,7 @@ export default function ProductosEntradaDatosLocal() {
   return (
     <div>
       {productoEntrada && (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{ maxHeight: 700 }}>
           <Table arial-label='simple tables'>
             <TableHead>
               <TableRow>
