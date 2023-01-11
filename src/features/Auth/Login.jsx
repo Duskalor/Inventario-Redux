@@ -35,7 +35,7 @@ export default function Login() {
           <div>
             <label>Password</label>
             <Input
-              type='pasword'
+              type='password'
               {...register('password', {
                 required: true,
               })}

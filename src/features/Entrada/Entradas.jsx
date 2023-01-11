@@ -3,7 +3,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LayoutProductosEntrada } from '../ProductoEntrada/LayoutProductosEntrada';
 import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
-import { getProductos, updateProductos } from '../Productos/productosSlice';
+import { updateProductos } from '../Productos/productosSlice';
+import { centrar } from '../style';
 import { deleteEntradas } from './entradaSlice';
 import { ModalEdit } from './ModalEdit';
 
@@ -26,23 +27,18 @@ export default function Entradas({ entradas }) {
     (proveedor) => proveedor.id === IdProveedor
   );
   const ParaEliminar = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
-
-  //console.log(ParaEliminar);
   const dispatch = useDispatch();
+
   const deleteItem = (id) => {
-    if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
+    if (window.confirm('Esta Seguro de eliminar a esta Entrada ?')) {
       ParaEliminar.map((pe) => {
         const productoAeditar = productos.find(
           (pro) => pro.id == pe.IdProducto
         );
-        //console.log(pe.Cantidad, productoAeditar);
         const pro = { ...productoAeditar };
-        //console.log(pro);
         pro.Stock = pro.Stock - pe.Cantidad;
         dispatch(updateProductos(pro));
-        //console.log(pro.Stock);
       });
-
       dispatch(deleteEntradas(id));
       dispatch(borrarEstado());
     }
@@ -50,18 +46,14 @@ export default function Entradas({ entradas }) {
 
   return (
     <TableRow>
-      <TableCell sx={{ textAlign: 'center' }}>
+      <TableCell sx={centrar}>
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
-      <TableCell sx={{ textAlign: 'center' }}>
-        {IdUsuarioEntrada.FullName}
-      </TableCell>
-      <TableCell sx={{ textAlign: 'center' }}>
-        {IdProveedorEntrada.FullName}
-      </TableCell>
-      <TableCell sx={{ textAlign: 'center' }}>{CantidadProductos}</TableCell>
-      <TableCell sx={{ textAlign: 'center' }}>{MontoTotal}</TableCell>
-      <TableCell sx={{ textAlign: 'center' }}>
+      <TableCell sx={centrar}>{IdUsuarioEntrada.FullName}</TableCell>
+      <TableCell sx={centrar}>{IdProveedorEntrada.FullName}</TableCell>
+      <TableCell sx={centrar}>{CantidadProductos}</TableCell>
+      <TableCell sx={centrar}>{MontoTotal}</TableCell>
+      <TableCell sx={centrar}>
         <ModalEdit id={id} />
         <Button onClick={() => deleteItem(id)}>Eliminar</Button>
       </TableCell>

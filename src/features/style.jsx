@@ -11,3 +11,5 @@ export const style = {
   px: 4,
   pb: 3,
 };
+
+export const centrar = { textAlign: 'center' };

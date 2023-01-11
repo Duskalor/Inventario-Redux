@@ -15,7 +15,7 @@ export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
   //console.log(data);
   localStorage.setItem('userToken', data.userToken);
   localStorage.setItem('userId', data.User.id);
-  localStorage.setItem('success', data.User.success);
+  localStorage.setItem('success', data.success);
   // console.log(localStorage, data);
 
   return data;
@@ -53,7 +53,7 @@ export const getUserDetails = createAsyncThunk(
       `user/details/${Auth.userId}`,
       config
     );
-    //console.log(localStorage);
+    //console.log(data);
     return data;
   }
 );

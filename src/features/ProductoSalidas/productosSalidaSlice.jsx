@@ -23,7 +23,7 @@ export const createProductoSalida = createAsyncThunk(
     //console.log(nuevo);
     const { IdSalida } = nuevo;
     const { IdProducto, PrecioVenta, Cantidad, SubTotal } = nuevo.pe;
-    console.log(IdSalida, IdProducto, PrecioVenta, Cantidad, SubTotal);
+    //console.log(IdSalida, IdProducto, PrecioVenta, Cantidad, SubTotal);
     const config = {
       headers: {
         Authorization: `Bearer ${Auth.userToken}`,
@@ -65,27 +65,27 @@ export const CrearProductoSalida = createAsyncThunk(
   }
 );
 
-export const EditProductoEntrada = createAsyncThunk(
-  'create/postProductoEntrada',
-  async ({ pe }, { getState }) => {
-    const { Auth } = getState();
-    //console.log(nuevo);
+// export const EditProductoEntrada = createAsyncThunk(
+//   'edit/postProductoEntrada',
+//   async ({ pe }, { getState }) => {
+//     const { Auth } = getState();
+//     //console.log(nuevo);
 
-    const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
-    //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post(
-      'detalleSalida/create',
-      { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
-      config
-    );
-    return data;
-  }
-);
+//     const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
+//     //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${Auth.userToken}`,
+//       },
+//     };
+//     const { data } = await apiSistema.post(
+//       'detalleSalida/create',
+//       { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
+//       config
+//     );
+//     return data;
+//   }
+// );
 export const DeleteProductoEntrada = createAsyncThunk(
   'delete/postProductosEntrada',
   async (id, { getState }) => {

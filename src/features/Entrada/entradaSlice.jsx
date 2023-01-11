@@ -12,17 +12,30 @@ import {
 } from '../Productos/productosSlice';
 import { getSalidas } from '../Salidas/salidasSlice';
 
-export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
-  const { data } = await apiSistema.get('entrada');
-  return data;
-});
+export const getEntradas = createAsyncThunk(
+  'get/getEntradas',
+  async (_, { getState }) => {
+    const { Auth } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.get('entrada', config);
+    return data;
+  }
+);
 
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
-  async ({ datos, productoEntrada, productos }, { dispatch }) => {
-    //console.log(productoEntrada);
-
-    const { data } = await apiSistema.post('entrada/create', datos);
+  async ({ datos, productoEntrada, productos }, { dispatch, getState }) => {
+    const { Auth } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.post('entrada/create', datos, config);
     const IdEntrada = data.Entrada.id;
     //console.log(data);
     productoEntrada.map((pe) => {
@@ -31,7 +44,7 @@ export const createEntradas = createAsyncThunk(
       const pro = { ...ParaAgregar };
       pro.Stock = pro.Stock + parseInt(pe.Cantidad);
       dispatch(updateProductos(pro));
-      console.log(pro);
+      //console.log(pro);
     });
     dispatch(getDetalleEntradas());
     dispatch(borrarProductos());
@@ -43,8 +56,15 @@ export const createEntradas = createAsyncThunk(
 );
 export const deleteEntradas = createAsyncThunk(
   'delete/postEntradas',
-  async (id) => {
-    const { data } = await apiSistema.delete(`entrada/delete/${id}`);
+  async (id, { getState }) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
+    const { data } = await apiSistema.delete(`entrada/delete/${id}`, config);
     return data;
   }
 );
@@ -52,15 +72,26 @@ export const updateEntradas = createAsyncThunk(
   'update/postEntradas',
   async (
     { id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal },
-    { dispatch }
+    { dispatch, getState }
   ) => {
+    const { Auth } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Auth.userToken}`,
+      },
+    };
     //console.log({ id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal });
-    const { data } = await apiSistema.put(`entrada/update/${id}`, {
-      IdUsuario,
-      IdProveedor,
-      CantidadProductos,
-      MontoTotal,
-    });
+    const { data } = await apiSistema.put(
+      `entrada/update/${id}`,
+      {
+        IdUsuario,
+        IdProveedor,
+        CantidadProductos,
+        MontoTotal,
+      },
+      config
+    );
     dispatch(BorrarEstadoEdit());
     dispatch(getDetalleEntradas());
 
@@ -102,7 +133,7 @@ export const entradaSlice = createSlice({
     [createEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
 
-      state.entradas = payload.ListaEntradas;
+      state.entradas = payload.ListaEntradas.reverse();
       state.id = payload.Entrada.id;
     },
     [createEntradas.rejected]: (state, action) => {
@@ -115,7 +146,7 @@ export const entradaSlice = createSlice({
     },
     [deleteEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.entradas = payload.ListaEntradas;
+      state.entradas = payload.ListaEntradas.reverse();
     },
     [deleteEntradas.rejected]: (state) => {
       state.loading = false;

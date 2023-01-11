@@ -125,7 +125,7 @@ export default function FormEditEntrada({ handleClose, id }) {
 
       dispatch(updateEntradas(datos));
 
-      dispatch(getProductos());
+      //dispatch(getProductos());
       handleClose();
     }
     //console.log(datos);

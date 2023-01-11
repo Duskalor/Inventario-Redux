@@ -8,6 +8,7 @@ import { productoEntradaSlice } from './features/ProductoEntrada/productoEntrada
 import { productosSlice } from './features/Productos/productosSlice';
 import { productosSalidaSlice } from './features/ProductoSalidas/productosSalidaSlice';
 import { ProveedorSlice } from './features/Proveedor/ProveedorSlice';
+import { reportSlice } from './features/Report/reportSlice';
 import { salidasSlice } from './features/Salidas/salidasSlice';
 import { UsuariosSlice } from './features/Usuarios/UsuariosSlice';
 export const store = configureStore({
@@ -23,5 +24,6 @@ export const store = configureStore({
     ProductoEntrada: productoEntradaSlice.reducer,
     Salida: salidasSlice.reducer,
     ProductoSalida: productosSalidaSlice.reducer,
+    Report: reportSlice.reducer,
   },
 });

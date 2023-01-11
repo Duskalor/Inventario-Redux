@@ -47,7 +47,7 @@ export const deleteProductos = createAsyncThunk(
 );
 
 export const updateProductos = createAsyncThunk(
-  'update/postClientes',
+  'update/postProductos',
   async (
     { id, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock },
     { getState }

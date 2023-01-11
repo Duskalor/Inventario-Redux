@@ -17,7 +17,7 @@ export default function ListaCliente() {
   //console.log(clientes);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getClientes());
+    if (clientes.length === 0) dispatch(getClientes());
   }, [dispatch]);
 
   return (

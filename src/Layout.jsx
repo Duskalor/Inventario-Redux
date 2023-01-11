@@ -8,12 +8,12 @@ import LayoutEntrada from './features/Entrada/LayoutEntrada';
 import LayoutPermisos from './features/Permisos/LayoutPermisos';
 import LayoutProducto from './features/Productos/LayoutProducto';
 import LayoutProveedores from './features/Proveedor/LayoutProveedores';
+import LayoutReports from './features/Report/LayoutReports';
 import LayoutSalida from './features/Salidas/LayoutSalida';
 import LayoutUsuarios from './features/Usuarios/LayoutUsuarios';
 
 export default function Layout() {
   const { RazonSocial } = useSelector((state) => state.Datos);
-
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.Auth);
   const { permisos } = useSelector((state) => state.Permisos);
@@ -27,38 +27,12 @@ export default function Layout() {
       <Typography variant='h4' align='center' mt={4} mr={4}>
         Bienvenido {user.FullName}
       </Typography>
-      {/* <h1>Sistema De Inventario {RazonSocial}</h1>
-      <h1>Bienvenido {user.FullName}</h1> */}
-      {/* <Box
-        sx={{
-          display: 'flex',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 800,
-          bgcolor: 'background.paper',
-          // border: '2px solid #000',
-          boxShadow: 24,
-          pt: 2,
-          px: 4,
-          pb: 3,
-        }}
-      >
-        {UserPermiso?.Clientes === 1 && <LayoutClientes />}
-        {UserPermiso?.Configuracion === 1 && <LayoutDatos />}
-        {UserPermiso?.Productos === 1 && <LayoutProducto />}
-        {UserPermiso?.Proveedores === 1 && <LayoutProveedores />}
-        {UserPermiso?.Usuarios === 1 && <LayoutUsuarios />}
-        {UserPermiso?.Permisos === 1 && <LayoutPermisos />}
-        {UserPermiso?.Entradas === 1 && <LayoutEntrada />}
-        {UserPermiso?.Salidas === 1 && <LayoutSalida />}
-      </Box> */}
+      <LayoutReports />
       <Box
         sx={{
           display: 'flex',
           position: 'absolute',
-          top: '40%',
+          top: '43%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '50%',

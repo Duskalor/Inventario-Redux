@@ -47,11 +47,11 @@ export default function LayoutEntrada() {
 
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(getEntradas());
-    dispatch(getProductos());
-    dispatch(getDetalleEntradas());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(getEntradas());
+  //   dispatch(getProductos());
+  //   dispatch(getDetalleEntradas());
+  // }, [dispatch]);
 
   const handleOpen = () => {
     dispatch(borrarEstado());

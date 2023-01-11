@@ -14,7 +14,7 @@ import { GuardarEstado } from './productosSalidaSlice';
 
 export default function FormNuevoProductoSalida() {
   const { productos } = useSelector((state) => state.Productos);
-  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  const { productoSalida } = useSelector((state) => state.ProductoSalida);
   const dispatch = useDispatch();
   //console.log(productos);
   const [productosAgregados, setProductosAgregados] = useState({
@@ -34,7 +34,7 @@ export default function FormNuevoProductoSalida() {
   const onSave = (e) => {
     productosAgregados.SubTotal =
       productosAgregados.Cantidad * productosAgregados.PrecioVenta;
-    const Verificar = productoEntrada.find(
+    const Verificar = productoSalida.find(
       (pro) => pro.IdProducto === productosAgregados.IdProducto
     );
     if (

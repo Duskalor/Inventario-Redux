@@ -35,7 +35,6 @@ export default function FormNuevaEntrada({ handleClose }) {
       datos = { ...datos, CantidadProductos: total };
       datos = { ...datos, MontoTotal: Precio };
       dispatch(createEntradas({ datos, productoEntrada, productos }));
-
       handleClose();
     }
   };

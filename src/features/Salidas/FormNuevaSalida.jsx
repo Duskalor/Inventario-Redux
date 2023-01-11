@@ -11,6 +11,7 @@ export default function FormNuevaSalida({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { clientes } = useSelector((state) => state.Clientes);
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
+  const { productos } = useSelector((state) => state.Productos);
 
   // USE STATE
 
@@ -35,8 +36,7 @@ export default function FormNuevaSalida({ handleClose }) {
 
       datos = { ...datos, CantidadProductos: total };
       datos = { ...datos, MontoTotal: Precio };
-      dispatch(createSalida(datos));
-      dispatch(getDetalleSalida());
+      dispatch(createSalida({ datos, productoSalida, productos }));
       handleClose();
       //console.log(datos);
     }
