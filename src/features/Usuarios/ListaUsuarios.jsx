@@ -19,7 +19,7 @@ export default function ListaUsuarios() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsuarios());
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       <h1>USUARIOS</h1>

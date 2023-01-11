@@ -30,7 +30,7 @@ export default function ListaSalidas() {
     dispatch(getProductos());
     dispatch(getDetalleSalida());
     return () => {};
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
