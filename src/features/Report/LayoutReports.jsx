@@ -7,34 +7,6 @@ import { style } from '../style';
 import { useSelector } from 'react-redux';
 import GenerarReporte from './GenerarReporte';
 
-// export function ChildModal() {
-//   const [open, setOpen] = React.useState(false);
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   return (
-//     <React.Fragment>
-//       <Button onClick={handleOpen}>Nuevo Producto</Button>
-//       <Modal
-//         hideBackdrop
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby='child-modal-title'
-//         aria-describedby='child-modal-description'
-//       >
-//         <Box sx={{ ...style, width: 200 }}>
-//           <FormNuevoProducto handleClose={handleClose} />
-//           <Button onClick={handleClose}>Cerrar</Button>
-//         </Box>
-//       </Modal>
-//     </React.Fragment>
-//   );
-// }
-
 export default function LayoutReports() {
   const [open, setOpen] = React.useState(false);
 

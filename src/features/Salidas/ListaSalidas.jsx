@@ -42,6 +42,7 @@ export default function ListaSalidas() {
               <TableCell sx={centrar}>Codigo Documento</TableCell>
               <TableCell sx={centrar}>Vendedor</TableCell>
               <TableCell sx={centrar}>Cliente</TableCell>
+              <TableCell sx={centrar}>Dni</TableCell>
               <TableCell sx={centrar}>Cantidad de Productos</TableCell>
               <TableCell sx={centrar}>Monto Total</TableCell>
               <TableCell sx={centrar}>Acciones</TableCell>

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { getDatosReports } from './reportSlice';
 import { getProductos } from '../Productos/productosSlice';
 import { getEntradas } from '../Entrada/entradaSlice';
 import { getSalidas } from '../Salidas/salidasSlice';
@@ -18,11 +16,6 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-//import ExportExcel from 'react-export-excel';
-
-// const ExcelFile = ExportExcel.ExcelFile;
-// const ExcelSheet = ExportExcel.ExcelSheet;
-// const ExcelColumn = ExportExcel.ExcelColumn;
 
 export default function GenerarReporte({ handleClose }) {
   var { productos } = useSelector((state) => state.Productos);
@@ -44,10 +37,6 @@ export default function GenerarReporte({ handleClose }) {
   //console.log(DatosReports);
   useEffect(() => {
     if (productos.length === 0) {
-      dispatch(getDatosReports());
-    }
-
-    if (productos.length === 0) {
       dispatch(getProductos());
     }
     if (entradas.length === 0) {
@@ -62,15 +51,13 @@ export default function GenerarReporte({ handleClose }) {
     seterror(false);
     console.log(dato);
     var data = [];
-    var IdAusar = '';
+
     var otro = [];
     if (dato.OpcionEoS === 'Entrada') {
       data = [...entradas];
-      IdAusar = 'IdProveedor';
       otro = [...proveedores];
     } else {
       data = [...salidas];
-      IdAusar = 'IdCliente';
       otro = [...clientes];
     }
 
@@ -101,7 +88,6 @@ export default function GenerarReporte({ handleClose }) {
 
         break;
     }
-    //////////////////////////////////////////////////////////////////////
 
     //console.log(Reporte);
     //console.log(data, IdAusar, otro);
@@ -136,6 +122,7 @@ export default function GenerarReporte({ handleClose }) {
           Usuario: user.FullName,
           Cantidad_Productos: report.CantidadProductos,
           clientes: cliente.FullName,
+          Dni: cliente.Dni,
           Fecha_Creado: report.created_at,
           Fecha_Actualizado: report.updated_at,
         };

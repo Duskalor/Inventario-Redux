@@ -61,6 +61,7 @@ export default function Salidas({ salida }) {
       </TableCell>
       <TableCell sx={centrar}>{IdUsuarioSalida.FullName}</TableCell>
       <TableCell sx={centrar}>{IdClienteSalida.FullName}</TableCell>
+      <TableCell sx={centrar}>{IdClienteSalida.Dni}</TableCell>
       <TableCell sx={centrar}>{CantidadProductos}</TableCell>
       <TableCell sx={centrar}>{MontoTotal}</TableCell>
       <TableCell sx={{ ...centrar, display: 'flex' }}>
