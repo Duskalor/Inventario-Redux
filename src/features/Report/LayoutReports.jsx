@@ -70,10 +70,10 @@ export default function LayoutReports() {
           sx={{
             ...style,
 
-            width: 800,
+            width: 300,
           }}
         >
-          <GenerarReporte />
+          <GenerarReporte handleClose={handleClose} />
 
           {/* <ChildModal /> */}
         </Box>
