@@ -14,7 +14,7 @@ export default function Permiso({ permisos }) {
     Productos,
     Clientes,
     Proveedores,
-    Inventario,
+    Permisos,
     Configuracion,
     id,
   } = permisos;
@@ -48,7 +48,7 @@ export default function Permiso({ permisos }) {
         {Proveedores === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
       </TableCell>
       <TableCell>
-        {Inventario === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        {Permisos === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
       </TableCell>
       <TableCell>
         {Configuracion === 1 ? <CheckRoundedIcon /> : <ClearIcon />}

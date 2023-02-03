@@ -19,6 +19,8 @@ export default function Layout() {
   const { permisos } = useSelector((state) => state.Permisos);
   const UserPermiso = permisos.find((permiso) => permiso.id == user.IdPermisos);
 
+  //console.log(UserPermiso);
+
   return (
     <div>
       <Typography variant='h4' align='center' mt={7} ml={4}>
