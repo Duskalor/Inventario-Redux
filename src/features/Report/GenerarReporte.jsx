@@ -104,7 +104,7 @@ export default function GenerarReporte({ handleClose }) {
           NumeroDocumento: report.NumeroDocumento,
           Usuario: user.FullName,
           Cantidad_Productos: report.CantidadProductos,
-          proveedor: proveedor.FullName,
+          Proveedor: proveedor.FullName,
           Fecha_Creado: report.created_at,
           Fecha_Actualizado: report.updated_at,
         };
@@ -121,7 +121,7 @@ export default function GenerarReporte({ handleClose }) {
           NumeroDocumento: report.NumeroDocumento,
           Usuario: user.FullName,
           Cantidad_Productos: report.CantidadProductos,
-          clientes: cliente.FullName,
+          Clientes: cliente.FullName,
           Dni: cliente.Dni,
           Fecha_Creado: report.created_at,
           Fecha_Actualizado: report.updated_at,
