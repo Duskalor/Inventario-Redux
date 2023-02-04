@@ -8,21 +8,37 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductos } from './productosSlice';
+import { filtrar, getProductos } from './productosSlice';
 
 export default function ListaProductos() {
-  const { productos } = useSelector((state) => state.Productos);
+  const { productos, filtrado } = useSelector((state) => state.Productos);
+  console.log(productos);
+  const [Busqueda, setBusqueda] = useState('');
+
+  console.log(filtrado);
   //console.log(productos);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductos());
   }, [dispatch]);
+  const handleChange = (e) => {
+    setBusqueda(e.target.value);
+    dispatch(filtrar(e.target.value));
+  };
 
   return (
     <div>
       <h1>PRODUCTOS</h1>
+      <div>
+        <input
+          value={Busqueda}
+          type='text'
+          placeholder='Código o descripción'
+          onChange={handleChange}
+        />
+      </div>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
@@ -36,11 +52,26 @@ export default function ListaProductos() {
               <TableCell>Acciones </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {productos.map((producto, id) => (
-              <Productos key={id} productos={producto} />
-            ))}
-          </TableBody>
+
+          {filtrado.length != 0 ? (
+            <TableBody>
+              {filtrado.map((producto, id) => (
+                <Productos key={id} productos={producto} />
+              ))}
+            </TableBody>
+          ) : (
+            <h1>No Existe el Producto</h1>
+          )}
+
+          {/* <TableBody>
+            {filtrado.length != 0 ? (
+              filtrado.map((producto, id) => (
+                <Productos key={id} productos={producto} />
+              ))
+            ) : (
+              <h1>No Existe el Producto</h1>
+            )}
+          </TableBody> */}
         </Table>
       </TableContainer>
     </div>

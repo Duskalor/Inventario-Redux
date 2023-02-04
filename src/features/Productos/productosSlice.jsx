@@ -80,12 +80,28 @@ export const productosSlice = createSlice({
   name: 'Productos',
   initialState: {
     productos: [],
+    filtrado: [],
     error: null,
     loading: false,
   },
   reducers: {
     borrarProductos: (state /* action */) => {
       state.productos = [];
+    },
+    filtrar: (state, action) => {
+      var tablaBusqueda = state.productos.filter((elemento) => {
+        if (
+          elemento.Codigo.toString()
+            .toLowerCase()
+            .includes(action.payload.toLowerCase()) ||
+          elemento.Descripcion.toString()
+            .toLowerCase()
+            .includes(action.payload.toLowerCase())
+        ) {
+          return elemento;
+        }
+      });
+      state.filtrado = tablaBusqueda;
     },
   },
   extraReducers: {
@@ -96,6 +112,7 @@ export const productosSlice = createSlice({
     [getProductos.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.productos = payload.ListaProductos;
+      state.filtrado = payload.ListaProductos;
     },
     [getProductos.rejected]: (state) => {
       state.loading = false;
@@ -135,4 +152,4 @@ export const productosSlice = createSlice({
     },
   },
 });
-export const { borrarProductos } = productosSlice.actions;
+export const { borrarProductos, filtrar } = productosSlice.actions;
