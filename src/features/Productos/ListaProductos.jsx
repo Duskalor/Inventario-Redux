@@ -1,5 +1,7 @@
 import Productos from './Productos';
 import {
+  Box,
+  InputAdornment,
   Paper,
   Table,
   TableBody,
@@ -7,10 +9,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
+  Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtrar, getProductos } from './productosSlice';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function ListaProductos() {
   const { productos, filtrado } = useSelector((state) => state.Productos);
@@ -30,50 +35,76 @@ export default function ListaProductos() {
 
   return (
     <div>
-      <h1>PRODUCTOS</h1>
-      <div>
-        <input
-          value={Busqueda}
-          type='text'
-          placeholder='Código o descripción'
-          onChange={handleChange}
-        />
-      </div>
-      <TableContainer component={Paper}>
-        <Table arial-label='simple tables'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Código</TableCell>
-              <TableCell>Descripción</TableCell>
-              <TableCell>Categoría</TableCell>
-              <TableCell>Precio Compra </TableCell>
-              <TableCell>Precio Venta </TableCell>
-              <TableCell>Stock </TableCell>
-              <TableCell>Acciones </TableCell>
-            </TableRow>
-          </TableHead>
+      <Box
+        sx={{
+          justifyContent: 'space-evenly ',
+        }}
+      >
+        <Typography
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+          variant='h4'
+          component='h2'
+        >
+          PRODUCTOS
+        </Typography>
 
-          {filtrado.length != 0 ? (
+        <TextField
+          sx={{
+            display: 'flex',
+            // margin: '50px 0 0 0',
+          }}
+          id='input-with-icon-textfield'
+          // label='Busqueda'
+          value={Busqueda}
+          onChange={handleChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant='standard'
+        />
+      </Box>
+      {filtrado.length != 0 ? (
+        <TableContainer component={Paper}>
+          <Table arial-label='simple tables'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Código</TableCell>
+                <TableCell>Descripción</TableCell>
+                <TableCell>Categoría</TableCell>
+                <TableCell>Precio Compra </TableCell>
+                <TableCell>Precio Venta </TableCell>
+                <TableCell>Stock </TableCell>
+                <TableCell>Acciones </TableCell>
+              </TableRow>
+            </TableHead>
+
             <TableBody>
               {filtrado.map((producto, id) => (
                 <Productos key={id} productos={producto} />
               ))}
             </TableBody>
-          ) : (
-            <h1>No Existe el Producto</h1>
-          )}
-
-          {/* <TableBody>
-            {filtrado.length != 0 ? (
-              filtrado.map((producto, id) => (
-                <Productos key={id} productos={producto} />
-              ))
-            ) : (
-              <h1>No Existe el Producto</h1>
-            )}
-          </TableBody> */}
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '15px',
+          }}
+          variant='h4'
+          component='h2'
+        >
+          No Existe el Codigo o Producto
+        </Typography>
+      )}
     </div>
   );
 }
