@@ -13,3 +13,12 @@ export const style = {
 };
 
 export const centrar = { textAlign: 'center' };
+
+export const titulos = {
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '15px 0 20px 0',
+  textTransform: 'capitalize',
+  fontSize: '2.2em',
+  fontWeight: '500',
+};

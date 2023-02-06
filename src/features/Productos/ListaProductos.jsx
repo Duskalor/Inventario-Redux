@@ -19,10 +19,10 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function ListaProductos() {
   const { productos, filtrado } = useSelector((state) => state.Productos);
-  console.log(productos);
+  //console.log(productos);
   const [Busqueda, setBusqueda] = useState('');
 
-  console.log(filtrado);
+  //console.log(filtrado);
   //console.log(productos);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,10 +54,8 @@ export default function ListaProductos() {
         <TextField
           sx={{
             display: 'flex',
-            // margin: '50px 0 0 0',
           }}
           id='input-with-icon-textfield'
-          // label='Busqueda'
           value={Busqueda}
           onChange={handleChange}
           InputProps={{

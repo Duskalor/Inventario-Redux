@@ -22,7 +22,12 @@ export default function Layout() {
   //console.log(UserPermiso);
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Typography variant='h4' align='center' mt={7} ml={4}>
         Sistema De Inventario {RazonSocial}
       </Typography>
@@ -44,6 +49,7 @@ export default function Layout() {
           pt: 2,
           pl: 4,
           pb: 3,
+          borderRadius: 4,
         }}
       >
         <Grid container spacing={2} columns={{ xs: 4, sm: 4, md: 8 }}>
@@ -102,6 +108,6 @@ export default function Layout() {
           Logout
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 }
