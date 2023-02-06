@@ -103,6 +103,7 @@ export const entradaSlice = createSlice({
   name: 'Entradas',
   initialState: {
     entradas: [],
+    filtrado: [],
     id: null,
     error: false,
     loading: false,
@@ -111,6 +112,22 @@ export const entradaSlice = createSlice({
     borrarEntrada: (state, payload) => {
       // console.log(payload);
       state.entradas = [];
+    },
+    filtrar: (state, action) => {
+      var tablaBusqueda = state.entradas.filter((elemento) => {
+        if (
+          elemento.NumeroDocumento.toString()
+            .toLowerCase()
+            .includes(action.payload.toLowerCase())
+          //   ||
+          // elemento.Descripcion.toString()
+          //   .toLowerCase()
+          //   .includes(action.payload.toLowerCase())
+        ) {
+          return elemento;
+        }
+      });
+      state.filtrado = tablaBusqueda;
     },
   },
   extraReducers: {
@@ -122,6 +139,7 @@ export const entradaSlice = createSlice({
       state.loading = false;
 
       state.entradas = payload.ListaEntradas.reverse();
+      state.filtrado = payload.ListaEntradas.reverse();
     },
     [getEntradas.rejected]: (state) => {
       state.loading = false;
@@ -134,6 +152,7 @@ export const entradaSlice = createSlice({
       state.loading = false;
 
       state.entradas = payload.ListaEntradas.reverse();
+      state.filtrado = payload.ListaEntradas.reverse();
       state.id = payload.Entrada.id;
     },
     [createEntradas.rejected]: (state, action) => {
@@ -147,6 +166,7 @@ export const entradaSlice = createSlice({
     [deleteEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.entradas = payload.ListaEntradas.reverse();
+      state.filtrado = payload.ListaEntradas.reverse();
     },
     [deleteEntradas.rejected]: (state) => {
       state.loading = false;
@@ -159,10 +179,11 @@ export const entradaSlice = createSlice({
     [updateEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.entradas = payload.ListaEntradas;
+      state.filtrado = payload.ListaEntradas;
     },
     [updateEntradas.rejected]: (state) => {
       state.loading = false;
     },
   },
 });
-export const { borrarEntrada } = entradaSlice.actions;
+export const { borrarEntrada, filtrar } = entradaSlice.actions;

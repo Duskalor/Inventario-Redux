@@ -68,6 +68,7 @@ export default function ListaProductos() {
           variant='standard'
         />
       </Box>
+
       {filtrado.length != 0 ? (
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
