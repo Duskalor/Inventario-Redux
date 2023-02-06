@@ -26,7 +26,7 @@ export default function ListaEntradas() {
   const { productos } = useSelector((state) => state.Productos);
   const [Busqueda, setBusqueda] = useState('');
 
-  //console.log(entradas);
+  console.log(entradas);
   const dispatch = useDispatch();
   useEffect(() => {
     if (entradas.length === 0) dispatch(getEntradas());

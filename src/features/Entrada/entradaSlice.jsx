@@ -133,9 +133,9 @@ export const entradaSlice = createSlice({
     },
     [getEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-
-      state.entradas = payload.ListaEntradas.reverse();
-      state.filtrado = payload.ListaEntradas.reverse();
+      const volteado = payload.ListaEntradas.reverse();
+      state.entradas = volteado;
+      state.filtrado = volteado;
     },
     [getEntradas.rejected]: (state) => {
       state.loading = false;
@@ -146,9 +146,9 @@ export const entradaSlice = createSlice({
     },
     [createEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-
-      state.entradas = payload.ListaEntradas.reverse();
-      state.filtrado = payload.ListaEntradas.reverse();
+      const volteado = payload.ListaEntradas.reverse();
+      state.entradas = volteado;
+      state.filtrado = volteado;
       state.id = payload.Entrada.id;
     },
     [createEntradas.rejected]: (state, action) => {
@@ -161,8 +161,9 @@ export const entradaSlice = createSlice({
     },
     [deleteEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.entradas = payload.ListaEntradas.reverse();
-      state.filtrado = payload.ListaEntradas.reverse();
+      const volteado = payload.ListaEntradas.reverse();
+      state.entradas = volteado;
+      state.filtrado = volteado;
     },
     [deleteEntradas.rejected]: (state) => {
       state.loading = false;
@@ -174,8 +175,9 @@ export const entradaSlice = createSlice({
     },
     [updateEntradas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.entradas = payload.ListaEntradas;
-      state.filtrado = payload.ListaEntradas;
+      const volteado = payload.ListaEntradas.reverse();
+      state.entradas = volteado;
+      state.filtrado = volteado;
     },
     [updateEntradas.rejected]: (state) => {
       state.loading = false;

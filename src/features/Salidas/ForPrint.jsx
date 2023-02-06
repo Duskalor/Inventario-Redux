@@ -17,6 +17,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useRef } from 'react';
 import ItemsForPrint from './ItemsForPrint';
 import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
+import { titulos } from '../style';
 
 export default function ForPrint({ ToPrint }) {
   //console.log(ToPrint);
@@ -29,7 +30,7 @@ export default function ForPrint({ ToPrint }) {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'data-print',
+    documentTitle: `F-${fecha.substr(0, 10)}-NB00${id}  `,
     // onAfterPrint: () => alert('print success'),
   });
   useEffect(() => {
@@ -38,17 +39,31 @@ export default function ForPrint({ ToPrint }) {
 
   return (
     <>
-      <Box ref={componentRef}>
-        <h1>
-          <b>{Datos.RazonSocial}</b>
-        </h1>
-        <h3> {Datos.Direccion}</h3>
-        <h3> R.U.C. {Datos.Ruc}</h3>
-        <h3>Boleta de Venta 00{id}</h3>
-        <h3>Señor(es) : {IdClienteSalida.FullName}</h3>
-        <h3>DNI : {IdClienteSalida.Dni}</h3>
-        <h3>Fecha de Emision : {fecha.substr(0, 10)}</h3>
-        <h3>Atendido por : {IdUsuarioSalida.FullName}</h3>
+      <Box ref={componentRef} sx={{}}>
+        <Typography sx={titulos} variant='h4' component='h2'>
+          {Datos.RazonSocial}
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              pl: 3,
+            }}
+          >
+            <h3>Señor(es) : {IdClienteSalida.FullName}</h3>
+            <h3>DNI : {IdClienteSalida.Dni}</h3>
+            <h3>Fecha de Emision : {fecha.substr(0, 10)}</h3>
+            <h3>Atendido por : {IdUsuarioSalida.FullName}</h3>
+          </Box>
+          <Box
+            sx={{
+              pr: 6,
+            }}
+          >
+            <h3> {Datos.Direccion}</h3>
+            <h3> R.U.C. {Datos.Ruc}</h3>
+            <h3>Boleta de Venta 00{id}</h3>
+          </Box>
+        </Box>
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
             <TableHead>

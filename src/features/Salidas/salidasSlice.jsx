@@ -102,9 +102,9 @@ export const salidasSlice = createSlice({
     },
     [getSalidas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-
-      state.salidas = payload.ListaSalidas.reverse();
-      state.filtrado = payload.ListaSalidas.reverse();
+      const volteado = payload.ListaSalidas.reverse();
+      state.salidas = volteado;
+      state.filtrado = volteado;
     },
     [getSalidas.rejected]: (state) => {
       state.loading = false;
@@ -115,9 +115,9 @@ export const salidasSlice = createSlice({
     },
     [createSalida.fulfilled]: (state, { payload }) => {
       state.loading = false;
-
-      state.salidas = payload.ListaSalidas.reverse();
-      state.filtrado = payload.ListaSalidas.reverse();
+      const volteado = payload.ListaSalidas.reverse();
+      state.salidas = volteado;
+      state.filtrado = volteado;
       state.id = payload.Salida.id;
     },
     [createSalida.rejected]: (state) => {
@@ -129,8 +129,9 @@ export const salidasSlice = createSlice({
     },
     [deleteSalidas.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.salidas = payload.ListaSalidas.reverse();
-      state.filtrado = payload.ListaSalidas.reverse();
+      const volteado = payload.ListaSalidas.reverse();
+      state.salidas = volteado;
+      state.filtrado = volteado;
     },
     [deleteSalidas.rejected]: (state) => {
       state.loading = false;
