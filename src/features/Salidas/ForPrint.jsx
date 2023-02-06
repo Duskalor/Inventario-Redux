@@ -81,8 +81,14 @@ export default function ForPrint({ ToPrint }) {
             </TableBody>
           </Table>
         </TableContainer>
+        <Typography align='right' variant='subtitle2' mt={2} mr={3}>
+          SUBTOTAL S/. {(MontoTotal - (MontoTotal * 18) / 100).toFixed(2)}
+        </Typography>
+        <Typography align='right' variant='subtitle2' mt={2} mr={3}>
+          I.G.V.(18%) S/. {((MontoTotal * 18) / 100).toFixed(2)}
+        </Typography>
         <Typography align='right' variant='subtitle1' mt={2} mr={3}>
-          TOTAL : S/. {MontoTotal}
+          TOTAL S/. {parseInt(MontoTotal).toFixed(2)}
         </Typography>
       </Box>
       <Button onClick={handlePrint}> Imprimir </Button>
