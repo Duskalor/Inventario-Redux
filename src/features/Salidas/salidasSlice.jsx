@@ -73,6 +73,7 @@ export const salidasSlice = createSlice({
   name: 'Salidas',
   initialState: {
     salidas: [],
+    filtrado: [],
     id: null,
     error: null,
     loading: false,
@@ -80,6 +81,18 @@ export const salidasSlice = createSlice({
   reducers: {
     increment: (state /* action */) => {
       state.counter += 1;
+    },
+    filtrar: (state, action) => {
+      var tablaBusqueda = state.salidas.filter((elemento) => {
+        if (
+          elemento.NumeroDocumento.toString()
+            .toLowerCase()
+            .includes(action.payload.toLowerCase())
+        ) {
+          return elemento;
+        }
+      });
+      state.filtrado = tablaBusqueda;
     },
   },
   extraReducers: {
@@ -91,6 +104,7 @@ export const salidasSlice = createSlice({
       state.loading = false;
 
       state.salidas = payload.ListaSalidas.reverse();
+      state.filtrado = payload.ListaSalidas.reverse();
     },
     [getSalidas.rejected]: (state) => {
       state.loading = false;
@@ -103,6 +117,7 @@ export const salidasSlice = createSlice({
       state.loading = false;
 
       state.salidas = payload.ListaSalidas.reverse();
+      state.filtrado = payload.ListaSalidas.reverse();
       state.id = payload.Salida.id;
     },
     [createSalida.rejected]: (state) => {
@@ -115,10 +130,11 @@ export const salidasSlice = createSlice({
     [deleteSalidas.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.salidas = payload.ListaSalidas.reverse();
+      state.filtrado = payload.ListaSalidas.reverse();
     },
     [deleteSalidas.rejected]: (state) => {
       state.loading = false;
     },
   },
 });
-export const { increment } = salidasSlice.actions;
+export const { increment, filtrar } = salidasSlice.actions;

@@ -119,10 +119,6 @@ export const entradaSlice = createSlice({
           elemento.NumeroDocumento.toString()
             .toLowerCase()
             .includes(action.payload.toLowerCase())
-          //   ||
-          // elemento.Descripcion.toString()
-          //   .toLowerCase()
-          //   .includes(action.payload.toLowerCase())
         ) {
           return elemento;
         }

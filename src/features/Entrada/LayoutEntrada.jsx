@@ -79,7 +79,7 @@ export default function LayoutEntrada() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 1050 }}>
+        <Box sx={{ ...style, width: 1050, borderRadius: 4 }}>
           <ListaEntradas />
           <ChildModal />
         </Box>

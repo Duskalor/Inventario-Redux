@@ -9,6 +9,7 @@ import { getDetalleEntradas } from '../ProductoEntrada/productoEntradaSlice';
 
 export function ModalEdit({ id }) {
   const [open, setOpen] = React.useState(false);
+
   const dispatch = useDispatch();
   const handleOpen = () => {
     dispatch(getDetalleEntradas());

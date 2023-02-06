@@ -67,7 +67,7 @@ export default function LayoutSalida() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 850 }}>
+        <Box sx={{ ...style, width: 850, borderRadius: 4 }}>
           <ListaSalidas />
           <ChildModal />
         </Box>

@@ -15,7 +15,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetalleEntradas } from '../ProductoEntrada/productoEntradaSlice';
 import { getProductos } from '../Productos/productosSlice';
-import { centrar } from '../style';
+import { centrar, titulos } from '../style';
 import Entradas from './Entradas';
 import { filtrar, getEntradas } from './entradaSlice';
 import SearchIcon from '@mui/icons-material/Search';
@@ -26,7 +26,7 @@ export default function ListaEntradas() {
   const { productos } = useSelector((state) => state.Productos);
   const [Busqueda, setBusqueda] = useState('');
 
-  console.log(entradas);
+  //console.log(entradas);
   const dispatch = useDispatch();
   useEffect(() => {
     if (entradas.length === 0) dispatch(getEntradas());
@@ -47,14 +47,7 @@ export default function ListaEntradas() {
           justifyContent: 'space-evenly ',
         }}
       >
-        <Typography
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          variant='h4'
-          component='h2'
-        >
+        <Typography sx={titulos} variant='h4' component='h2'>
           ENTRADAS
         </Typography>
 
@@ -75,8 +68,8 @@ export default function ListaEntradas() {
           variant='standard'
         />
       </Box>
-      {/* <h1>ENTRADAS</h1> */}
-      {filtrado.length != 0 ? (
+
+      {filtrado.length !== 0 ? (
         <TableContainer component={Paper} style={{ maxHeight: 550 }}>
           <Table stickyHeader arial-label='simple tables'>
             <TableHead>

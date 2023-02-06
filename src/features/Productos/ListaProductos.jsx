@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filtrar, getProductos } from './productosSlice';
 import SearchIcon from '@mui/icons-material/Search';
+import { titulos } from '../style';
 
 export default function ListaProductos() {
   const { productos, filtrado } = useSelector((state) => state.Productos);
@@ -40,14 +41,7 @@ export default function ListaProductos() {
           justifyContent: 'space-evenly ',
         }}
       >
-        <Typography
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          variant='h4'
-          component='h2'
-        >
+        <Typography sx={titulos} variant='h4' component='h2'>
           PRODUCTOS
         </Typography>
 

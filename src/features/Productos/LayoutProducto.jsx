@@ -61,7 +61,7 @@ export default function LayoutProducto() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 800 }}>
+        <Box sx={{ ...style, width: 800, borderRadius: 4 }}>
           <ListaProductos />
           <ChildModal />
         </Box>

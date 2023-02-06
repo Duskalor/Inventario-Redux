@@ -6,9 +6,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { titulos } from '../style';
 import Cliente from './Cliente';
 import { getClientes } from './clientesSlice';
 
@@ -22,7 +24,10 @@ export default function ListaCliente() {
 
   return (
     <div>
-      <h1>CLIENTES</h1>
+      {/* <h1>CLIENTES</h1> */}
+      <Typography sx={titulos} variant='h4' component='h2'>
+        CLIENTES
+      </Typography>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

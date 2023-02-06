@@ -6,9 +6,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { titulos } from '../style';
 import Proveedor from './Proveedor';
 import { getProveedor } from './ProveedorSlice';
 
@@ -22,7 +24,9 @@ export default function ListaProveedores() {
 
   return (
     <div>
-      <h1>PROVEEDORES</h1>
+      <Typography sx={titulos} variant='h4' component='h2'>
+        PROVEEDORES
+      </Typography>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

@@ -20,5 +20,5 @@ export const titulos = {
   padding: '15px 0 20px 0',
   textTransform: 'capitalize',
   fontSize: '2.2em',
-  fontWeight: '500',
+  fontWeight: '600',
 };

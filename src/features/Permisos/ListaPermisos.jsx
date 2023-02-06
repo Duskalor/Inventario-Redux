@@ -6,9 +6,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { titulos } from '../style';
 import Permiso from './Permiso';
 import { getpermisos } from './permisosSlice';
 
@@ -22,7 +24,9 @@ export default function ListaPermisos() {
 
   return (
     <div>
-      <h1>PERMISOS</h1>
+      <Typography sx={titulos} variant='h4' component='h2'>
+        PERMISOS
+      </Typography>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

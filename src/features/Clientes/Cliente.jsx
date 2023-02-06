@@ -1,4 +1,4 @@
-import { Button, TableCell, TableRow } from '@mui/material';
+import { Box, Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteClientes } from './clientesSlice';
@@ -20,7 +20,9 @@ export default function Cliente({ clientes }) {
       <TableCell sx={{ textAlign: 'center' }}>{Dni}</TableCell>
       <TableCell sx={{ textAlign: 'center' }}>
         <ModalEdit id={id} />
-        <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        <Box>
+          <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        </Box>
       </TableCell>
     </TableRow>
   );

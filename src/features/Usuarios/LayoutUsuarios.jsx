@@ -61,7 +61,7 @@ export default function LayoutUsuarios() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 900 }}>
+        <Box sx={{ ...style, width: 900, borderRadius: 4 }}>
           <ListaUsuarios />
           <ChildModal />
         </Box>

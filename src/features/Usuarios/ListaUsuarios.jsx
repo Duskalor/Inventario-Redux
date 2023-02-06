@@ -6,9 +6,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { titulos } from '../style';
 import Usuarios from './Usuarios';
 import { getUsuarios } from './UsuariosSlice';
 
@@ -22,7 +24,9 @@ export default function ListaUsuarios() {
   }, [dispatch]);
   return (
     <div>
-      <h1>USUARIOS</h1>
+      <Typography sx={titulos} variant='h4' component='h2'>
+        USUARIOS
+      </Typography>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

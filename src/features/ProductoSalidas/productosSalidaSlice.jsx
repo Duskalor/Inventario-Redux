@@ -115,7 +115,7 @@ export const productosSalidaSlice = createSlice({
   },
   reducers: {
     GuardarEstado: (state, { payload }) => {
-      console.log(payload);
+      //console.log(payload);
       if (
         !payload.IdProducto == '' &&
         payload.Cantidad > 0 &&
