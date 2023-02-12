@@ -6,6 +6,7 @@ import { getSalidas } from '../Salidas/salidasSlice';
 // import XLSX from 'xlsx';
 import * as XLSX from 'xlsx';
 import {
+  Box,
   Button,
   FormControl,
   FormControlLabel,
@@ -13,9 +14,11 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { ReportCenter, titulos } from '../style';
 
 export default function GenerarReporte({ handleClose }) {
   var { productos } = useSelector((state) => state.Productos);
@@ -50,8 +53,17 @@ export default function GenerarReporte({ handleClose }) {
   const onSubmit = (dato) => {
     seterror(false);
     console.log(dato);
-    var data = [];
+    // PRODUCTOS
 
+    if (dato.OpcionEoS === 'Inventario') {
+      var wb = XLSX.utils.book_new(),
+        ws = XLSX.utils.json_to_sheet(productos);
+      XLSX.utils.book_append_sheet(wb, ws, `${dato.OpcionEoS}`);
+      XLSX.writeFile(wb, `Report-${dato.Fecha}-${dato.OpcionEoS}.xlsx`);
+      return;
+    }
+    //ENTRADA -  SALIDA
+    var data = [];
     var otro = [];
     if (dato.OpcionEoS === 'Entrada') {
       data = [...entradas];
@@ -148,80 +160,106 @@ export default function GenerarReporte({ handleClose }) {
 
   return (
     <>
-      <h1>REPORTES</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          {...register('Fecha')}
-          id='date'
-          label='Fecha'
-          type='date'
-          defaultValue={new Date().toISOString().slice(0, 10)}
-          sx={{ width: 220 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <hr />
-        <FormControl>
-          <FormLabel id='demo-radio-buttons-group-label'>
-            Opciones de Filtrado
-          </FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby='demo-radio-buttons-group-label'
-            defaultValue='Day'
-            name='radio-buttons-group'
-          >
-            <FormControlLabel
-              {...register('OpcionsFecha')}
-              value='Day'
-              control={<Radio />}
-              label='Dia'
-            />
-            <FormControlLabel
-              {...register('OpcionsFecha')}
-              value='Month'
-              control={<Radio />}
-              label='Mes'
-            />
-            <FormControlLabel
-              {...register('OpcionsFecha')}
-              value='Year'
-              control={<Radio />}
-              label='Año'
-            />
-          </RadioGroup>
-        </FormControl>
-        <hr />
-        <FormControl>
-          <FormLabel id='demo-radio-buttons-group-label'>
-            Opciones de Reporte
-          </FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby='demo-radio-buttons-group-label'
-            defaultValue='Entrada'
-            name='radio-buttons-group'
-          >
-            <FormControlLabel
-              {...register('OpcionEoS')}
-              value='Entrada'
-              control={<Radio />}
-              label='Entrada'
-            />
-            <FormControlLabel
-              {...register('OpcionEoS')}
-              value='Salida'
-              control={<Radio />}
-              label='Salida'
-            />
-          </RadioGroup>
-        </FormControl>
-        <hr />
-        {error ? <h3>'No hay Datos en esa Fecha'</h3> : ''}
+      <Typography sx={titulos} variant='h4' component='h2'>
+        REPORTES
+      </Typography>
 
-        <Button type='submit'>Generar</Button>
-        <Button onClick={() => handleClose(false)}>Cerrar</Button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={ReportCenter}>
+          <TextField
+            {...register('Fecha')}
+            id='date'
+            label='Fecha'
+            type='date'
+            defaultValue={new Date().toISOString().slice(0, 10)}
+            sx={{ width: 220 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Box>
+        <hr />
+
+        <Box sx={ReportCenter}>
+          <FormControl>
+            <FormLabel id='demo-radio-buttons-group-label'>
+              Opciones de Filtrado
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby='demo-radio-buttons-group-label'
+              defaultValue='Day'
+              name='radio-buttons-group'
+            >
+              <FormControlLabel
+                {...register('OpcionsFecha')}
+                value='Day'
+                control={<Radio />}
+                label='Dia'
+              />
+              <FormControlLabel
+                {...register('OpcionsFecha')}
+                value='Month'
+                control={<Radio />}
+                label='Mes'
+              />
+              <FormControlLabel
+                {...register('OpcionsFecha')}
+                value='Year'
+                control={<Radio />}
+                label='Año'
+              />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+        <hr />
+
+        <Box sx={ReportCenter}>
+          <FormControl>
+            <FormLabel id='demo-radio-buttons-group-label'>
+              Opciones de Reporte
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby='demo-radio-buttons-group-label'
+              defaultValue='Entrada'
+              name='radio-buttons-group'
+            >
+              <FormControlLabel
+                {...register('OpcionEoS')}
+                value='Entrada'
+                control={<Radio />}
+                label='Entrada'
+              />
+              <FormControlLabel
+                {...register('OpcionEoS')}
+                value='Salida'
+                control={<Radio />}
+                label='Salida'
+              />
+              <FormControlLabel
+                {...register('OpcionEoS')}
+                value='Inventario'
+                control={<Radio />}
+                label='Inventario'
+              />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+        <hr />
+        {error && <h3>'No hay Datos en esa Fecha'</h3>}
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          <Button variant='contained' type='submit'>
+            Generar
+          </Button>
+          <Button onClick={() => handleClose(false)}>Cerrar</Button>
+        </Box>
       </form>
     </>
   );

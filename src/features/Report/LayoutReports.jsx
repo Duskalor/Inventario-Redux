@@ -41,8 +41,8 @@ export default function LayoutReports() {
         <Box
           sx={{
             ...style,
-
-            width: 300,
+            width: 320,
+            borderRadius: 4,
           }}
         >
           <GenerarReporte handleClose={handleClose} />

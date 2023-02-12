@@ -22,3 +22,8 @@ export const titulos = {
   fontSize: '2.2em',
   fontWeight: '600',
 };
+
+export const ReportCenter = {
+  display: 'flex',
+  justifyContent: 'center',
+};
