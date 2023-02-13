@@ -31,7 +31,7 @@ export default function ListaPermisos() {
         <Table arial-label='simple tables'>
           <TableHead>
             <TableRow>
-              <TableCell>Descripcion</TableCell>
+              <TableCell>Descripción</TableCell>
               <TableCell>Salidas</TableCell>
               <TableCell>Usuarios</TableCell>
               <TableCell>Entradas</TableCell>
@@ -39,7 +39,7 @@ export default function ListaPermisos() {
               <TableCell>Clientes</TableCell>
               <TableCell>Proveedores</TableCell>
               <TableCell>Permisos</TableCell>
-              <TableCell>Configuracion</TableCell>
+              <TableCell>Configuración</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>

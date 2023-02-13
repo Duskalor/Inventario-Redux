@@ -24,7 +24,7 @@ export default function FormNuevoUsuario({ handleClose }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Crear Usuario</h1>
+      <h1>Nuevo Usuario</h1>
       <div>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Nombre

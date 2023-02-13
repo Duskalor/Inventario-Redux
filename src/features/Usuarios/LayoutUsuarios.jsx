@@ -26,7 +26,7 @@ export function ChildModal() {
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
-        <Box sx={{ ...style, width: 230 }}>
+        <Box sx={{ ...style, width: 230, borderRadius: 4 }}>
           <FormNuevoUsuario handleClose={handleClose} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>

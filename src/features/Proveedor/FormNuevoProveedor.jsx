@@ -1,4 +1,4 @@
-import { Button, Input } from '@mui/material';
+import { Button, Input, TextField } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -21,21 +21,43 @@ export default function FormNuevoProveedor({ handleClose }) {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>Nuevo Proveedor</h1>
       <div>
-        <label>Nombre</label>
+        {/* <label>Nombre</label>
         <Input
           type='text'
           {...register('FullName', {
             required: true,
           })}
+        /> */}
+        <TextField
+          sx={{
+            margin: '10px 0 0 0',
+          }}
+          type='text'
+          {...register('FullName', {
+            required: true,
+          })}
+          label='Nombre'
+          variant='outlined'
         />
         {errors.FullName?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        <label>RUC</label>
+        {/* <label>RUC</label>
         <Input
           type='number'
           {...register('Ruc', { required: true, maxLength: 11, minLength: 11 })}
+        /> */}
+
+        <TextField
+          sx={{
+            margin: '10px 0 0 0',
+          }}
+          type='text'
+          {...register('Ruc', { required: true, maxLength: 11, minLength: 11 })}
+          label='Ruc'
+          variant='outlined'
         />
         {errors.Ruc?.type === 'required' && <p>El Campo es requirido </p>}
         {errors.Ruc?.type === 'maxLength' && <p>El debe tener 11 digitos </p>}

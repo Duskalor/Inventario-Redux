@@ -1,4 +1,4 @@
-import { Button, Checkbox, Input } from '@mui/material';
+import { Button, Checkbox, Input, TextField } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -36,13 +36,25 @@ export default function FormNuevoPermiso({ handleClose }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>Nuevo Rol</h1>
       <div>
-        <label>Nombre</label>
+        {/* <label>Nombre</label>
         <Input
           type='text'
           {...register('Descripcion', {
             required: true,
           })}
+        /> */}
+        <TextField
+          sx={{
+            margin: '10px 0 0 0',
+          }}
+          type='text'
+          {...register('Descripcion', {
+            required: true,
+          })}
+          label='Descripción'
+          variant='outlined'
         />
         {errors.Descripcion?.type === 'required' && (
           <p>El Campo es requirido </p>
