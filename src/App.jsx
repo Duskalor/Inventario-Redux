@@ -8,7 +8,6 @@ import Peticiones from './Peticiones';
 function App() {
   const Dispatch = useDispatch();
   const { success } = useSelector((state) => state.auth);
-  console.log(success);
 
   useEffect(() => {
     if (success) {
