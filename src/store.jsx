@@ -12,16 +12,16 @@ import { salidasSlice } from './features/Salidas/salidasSlice';
 import { UsuariosSlice } from './features/Usuarios/UsuariosSlice';
 export const store = configureStore({
   reducer: {
-    Auth: authSlice.reducer,
-    Clientes: ClientesSlice.reducer,
-    Datos: datosSlice.reducer,
-    Productos: productosSlice.reducer,
-    Proveedor: ProveedorSlice.reducer,
-    Usuarios: UsuariosSlice.reducer,
-    Permisos: permisosSlice.reducer,
-    Entrada: entradaSlice.reducer,
-    ProductoEntrada: productoEntradaSlice.reducer,
-    Salida: salidasSlice.reducer,
-    ProductoSalida: productosSalidaSlice.reducer,
+    [authSlice.name]: authSlice.reducer,
+    [ClientesSlice.name]: ClientesSlice.reducer,
+    [datosSlice.name]: datosSlice.reducer,
+    [productosSlice.name]: productosSlice.reducer,
+    [ProveedorSlice.name]: ProveedorSlice.reducer,
+    [UsuariosSlice.name]: UsuariosSlice.reducer,
+    [permisosSlice.name]: permisosSlice.reducer,
+    [entradaSlice.name]: entradaSlice.reducer,
+    [productoEntradaSlice.name]: productoEntradaSlice.reducer,
+    [salidasSlice.name]: salidasSlice.reducer,
+    [productosSalidaSlice.name]: productosSalidaSlice.reducer,
   },
 });

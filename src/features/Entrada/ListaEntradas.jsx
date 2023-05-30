@@ -32,9 +32,8 @@ export default function ListaEntradas() {
     if (entradas.length === 0) dispatch(getEntradas());
     if (productos.length === 0) dispatch(getProductos());
     dispatch(getDetalleEntradas());
-
-    return () => {};
   }, [dispatch]);
+
   const handleChange = (e) => {
     setBusqueda(e.target.value);
     //console.log(e.target.value);

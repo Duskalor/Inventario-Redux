@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, styled, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './features/Auth/authSlice';
 
@@ -17,9 +17,9 @@ export default function Layout() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.Auth);
   const { permisos } = useSelector((state) => state.Permisos);
-  const UserPermiso = permisos.find((permiso) => permiso.id == user.IdPermisos);
-
-  //console.log(UserPermiso);
+  const UserPermiso = permisos.find(
+    (permiso) => permiso.id === user.IdPermisos
+  );
 
   return (
     <Box

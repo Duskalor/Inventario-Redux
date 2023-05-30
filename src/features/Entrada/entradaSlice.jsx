@@ -38,9 +38,10 @@ export const createEntradas = createAsyncThunk(
     const { data } = await apiSistema.post('entrada/create', datos, config);
     const IdEntrada = data.Entrada.id;
     //console.log(data);
-    productoEntrada.map((pe) => {
+
+    productoEntrada.forEach((pe) => {
       dispatch(createProductoEntrada({ IdEntrada, pe }));
-      const ParaAgregar = productos.find((pro) => pro.id == pe.IdProducto);
+      const ParaAgregar = productos.find((pro) => pro.id === pe.IdProducto);
       const pro = { ...ParaAgregar };
       pro.Stock = pro.Stock + parseInt(pe.Cantidad);
       dispatch(updateProductos(pro));
