@@ -59,7 +59,7 @@ export const getUserDetails = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: 'Auth',
   initialState: {
     user: [],
     userId,
@@ -73,50 +73,93 @@ export const authSlice = createSlice({
       state.counter += 1;
     },
   },
-  extraReducers: {
-    //Login
-    [login.pending]: (state) => {
-      state.loading = true;
-    },
-    [login.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      //console.log(payload);
-      state.userToken = payload.userToken;
-      state.success = payload.success;
-      state.user = payload.User;
-    },
-    [login.rejected]: (state) => {
-      state.loading = false;
-    },
-    //Logout
-    [logout.pending]: (state) => {
-      state.loading = true;
-    },
-    [logout.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      //console.log(payload.User);
-      state.success = payload.success;
-      state.userId = null;
-      state.userToken = null;
-      state.user = [];
-    },
-    [logout.rejected]: (state) => {
-      state.loading = false;
-    },
-
-    //GET USER DETAILS
-    [getUserDetails.pending]: (state) => {
-      state.loading = true;
-    },
-    [getUserDetails.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      //console.log(payload);
-      state.success = payload.success;
-      state.user = payload.User;
-    },
-    [getUserDetails.rejected]: (state) => {
-      state.loading = false;
-    },
+  extraReducers: (build) => {
+    // login cases
+    build
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.userToken = payload.userToken;
+        state.success = payload.success;
+        state.user = payload.User;
+      })
+      .addCase(login.rejected, (state) => {
+        state.loading = true;
+      })
+      // logout cases
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logout.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.success = payload.success;
+        state.userId = null;
+        state.userToken = null;
+        state.user = [];
+      })
+      .addCase(logout.rejected, (state) => {
+        state.loading = true;
+      })
+      // getUserDetails cases
+      .addCase(getUserDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserDetails.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.success = payload.success;
+        state.user = payload.User;
+      })
+      .addCase(getUserDetails.rejected, (state) => {
+        state.loading = true;
+      });
   },
+
+  // extraReducers: {
+  //   //Login
+  //   [login.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [login.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     //console.log(payload);
+  //     state.userToken = payload.userToken;
+  //     state.success = payload.success;
+  //     state.user = payload.User;
+  //   },
+  //   [login.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //Logout
+  //   [logout.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [logout.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     //console.log(payload.User);
+  //     state.success = payload.success;
+  //     state.userId = null;
+  //     state.userToken = null;
+  //     state.user = [];
+  //   },
+  //   [logout.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+
+  //   //GET USER DETAILS
+  //   [getUserDetails.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [getUserDetails.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     //console.log(payload);
+  //     state.success = payload.success;
+  //     state.user = payload.User;
+  //   },
+  //   [getUserDetails.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  // },
 });
 export const { increment } = authSlice.actions;

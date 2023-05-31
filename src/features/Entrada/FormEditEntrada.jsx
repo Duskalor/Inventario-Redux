@@ -1,25 +1,19 @@
-import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
+import { Button, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import LayoutProductoEntradaEdit from '../ProductoEntrada/LayoutProductoEntradaEdit';
-import ProductoEntradaEdit from '../ProductoEntrada/ProductoEntradaEdit';
 import {
-  BorrarEstadoEdit,
-  createProductoEntrada,
   DeleteProductoEntrada,
   EditProductoEntrada,
-  getDetalleEntradas,
-  GuardarDatos,
   updateProductoEntrada,
 } from '../ProductoEntrada/productoEntradaSlice';
-import { getProductos, updateProductos } from '../Productos/productosSlice';
+import { updateProductos } from '../Productos/productosSlice';
 import { updateEntradas } from './entradaSlice';
 
 export default function FormEditEntrada({ handleClose, id }) {
   const dispatch = useDispatch();
-  //console.log(id);
 
-  const { entradas } = useSelector((state) => state.Entrada);
+  const { entradas } = useSelector((state) => state.Entradas);
 
   const {
     NumeroDocumento,
@@ -28,20 +22,19 @@ export default function FormEditEntrada({ handleClose, id }) {
     IdUsuario,
     MontoTotal,
     id: identrada,
-  } = entradas.find((entra) => entra.id == id);
+  } = entradas.find((entra) => entra.id === id);
 
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { proveedores } = useSelector((state) => state.Proveedor);
   const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
   const { productoEntradaEdit } = useSelector((state) => state.ProductoEntrada);
   const { productos } = useSelector((state) => state.Productos);
-  const ProDucEntra = productoEntradaBD.filter((pro) => pro.IdEntrada == id);
-  //console.log(ProDucEntra);
+  const ProDucEntra = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       NumeroDocumento: NumeroDocumento,
@@ -52,17 +45,16 @@ export default function FormEditEntrada({ handleClose, id }) {
     },
   });
   const onSubmit = (datos) => {
-    if (!productoEntradaEdit.length == 0) {
-      productoEntradaEdit.map((pe) => {
+    if (productoEntradaEdit.length !== 0) {
+      productoEntradaEdit.forEach((pe) => {
         const Existencia = ProDucEntra.find(
-          (pro) => pro.IdProducto == pe.IdProducto
+          (pro) => pro.IdProducto === pe.IdProducto
         );
-        //console.log(Existencia);
         if (Existencia) {
           dispatch(updateProductoEntrada({ Existencia, pe }));
           if (Existencia.Cantidad < pe.Cantidad) {
             const productoAeditar = productos.find(
-              (pro) => pro.id == pe.IdProducto
+              (pro) => pro.id === +pe.IdProducto
             );
             const pro = { ...productoAeditar };
             pro.Stock = pro.Stock + (pe.Cantidad - Existencia.Cantidad);
@@ -72,7 +64,7 @@ export default function FormEditEntrada({ handleClose, id }) {
 
           if (Existencia.Cantidad > pe.Cantidad) {
             const productoAeditar = productos.find(
-              (pro) => pro.id == pe.IdProducto
+              (pro) => pro.id === +pe.IdProducto
             );
             const pro = { ...productoAeditar };
             pro.Stock = pro.Stock - (Existencia.Cantidad - pe.Cantidad);
@@ -82,7 +74,7 @@ export default function FormEditEntrada({ handleClose, id }) {
         } else {
           dispatch(EditProductoEntrada({ pe }));
           const productoAeditar = productos.find(
-            (pro) => pro.id == pe.IdProducto
+            (pro) => pro.id === +pe.IdProducto
           );
           const pro = { ...productoAeditar };
           pro.Stock = pro.Stock + parseInt(pe.Cantidad);
@@ -91,14 +83,14 @@ export default function FormEditEntrada({ handleClose, id }) {
         }
       });
 
-      ProDucEntra.map((pe) => {
+      ProDucEntra.forEach((pe) => {
         const Existencia = productoEntradaEdit.find(
-          (pro) => pro.IdProducto == pe.IdProducto
+          (pro) => pro.IdProducto === +pe.IdProducto
         );
 
         if (!Existencia) {
           const productoAeditar = productos.find(
-            (pro) => pro.id == pe.IdProducto
+            (pro) => pro.id === +pe.IdProducto
           );
           const pro = { ...productoAeditar };
           pro.Stock = pro.Stock - pe.Cantidad;

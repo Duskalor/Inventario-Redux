@@ -23,7 +23,6 @@ export const createProductoEntrada = createAsyncThunk(
     //console.log(nuevo);
     const { IdEntrada } = nuevo;
     const { IdProducto, PrecioCompra, Cantidad, SubTotal } = nuevo.pe;
-    //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
     const config = {
       headers: {
         Authorization: `Bearer ${Auth.userToken}`,
@@ -116,14 +115,8 @@ export const productoEntradaSlice = createSlice({
   },
   reducers: {
     GuardarEstado: (state, { payload }) => {
-      //console.log(payload);
-      if (
-        !payload.IdProducto == '' &&
-        payload.Cantidad > 0 &&
-        payload.PrecioCompra > 0
-      ) {
-        state.productoEntrada = [...state.productoEntrada, payload];
-      }
+      // console.log(payload);
+      state.productoEntrada = [...state.productoEntrada, payload];
     },
     borrarEstado: (state) => {
       //console.log(payload);
@@ -149,9 +142,7 @@ export const productoEntradaSlice = createSlice({
     },
 
     GuardarEstadoEdit: (state, { payload }) => {
-      if (!payload.IdProducto == '') {
-        state.productoEntradaEdit = [...state.productoEntradaEdit, payload];
-      }
+      state.productoEntradaEdit = [...state.productoEntradaEdit, payload];
     },
     BorrarEstadoEdit: (state, { payload }) => {
       state.productoEntradaEdit = [];
@@ -176,9 +167,9 @@ export const productoEntradaSlice = createSlice({
     [createProductoEntrada.pending]: (state) => {
       state.loading = true;
     },
-    [createProductoEntrada.fulfilled]: (state, action) => {
+    [createProductoEntrada.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      //console.log(action);
+      state.productoEntradaBD = payload.ListaDetalleEntrada;
     },
     [createProductoEntrada.rejected]: (state, action) => {
       state.loading = false;

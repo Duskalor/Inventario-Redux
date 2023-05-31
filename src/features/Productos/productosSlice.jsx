@@ -48,10 +48,10 @@ export const deleteProductos = createAsyncThunk(
 
 export const updateProductos = createAsyncThunk(
   'update/postProductos',
-  async (
-    { id, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock },
-    { getState }
-  ) => {
+  async (datos, { getState }) => {
+    const { id, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock } =
+      datos;
+    console.log({ datos });
     const { Auth } = getState();
 
     const config = {

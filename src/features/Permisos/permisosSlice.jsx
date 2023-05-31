@@ -12,7 +12,7 @@ export const getpermisos = createAsyncThunk(
       },
     };
     const { data } = await apiSistema.get('permisos', config);
-    //console.log(data);
+
     return data;
   }
 );
@@ -23,7 +23,7 @@ export const createpermisos = createAsyncThunk(
 
     const config = {
       headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
+        Authorization: `Bearer ${Auth?.userToken}`,
       },
     };
     const { data } = await apiSistema.post('permisos/create', nuevo, config);
@@ -92,57 +92,100 @@ export const permisosSlice = createSlice({
     error: null,
     loading: false,
   },
-  reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
-    },
-  },
-  extraReducers: {
-    ///GET
-    [getpermisos.pending]: (state) => {
-      state.loading = true;
-    },
-    [getpermisos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.permisos = payload.Listapermisos;
-    },
-    [getpermisos.rejected]: (state) => {
-      state.loading = false;
-    },
-    //CREATE
-    [createpermisos.pending]: (state) => {
-      state.loading = true;
-    },
-    [createpermisos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.permisos = payload.Listapermisos;
-    },
-    [createpermisos.rejected]: (state) => {
-      state.loading = false;
-    },
-    //DELETE
-    [deletepermisos.pending]: (state) => {
-      state.loading = true;
-    },
-    [deletepermisos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.permisos = payload.Listapermisos;
-    },
-    [deletepermisos.rejected]: (state) => {
-      state.loading = false;
-    },
+  extraReducers: (build) => {
+    // getpermisos
+    build
+      .addCase(getpermisos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getpermisos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.permisos = payload.Listapermisos;
+      })
+      .addCase(getpermisos.rejected, (state, { error }) => {
+        state.loading = true;
+        console.log(error.message);
+      })
+      // createpermisos
+      .addCase(createpermisos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createpermisos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.permisos = payload.Listapermisos;
+      })
+      .addCase(createpermisos.rejected, (state) => {
+        state.loading = true;
+      })
+      // deletepermisos
+      .addCase(deletepermisos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deletepermisos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.permisos = payload.Listapermisos;
+      })
+      .addCase(deletepermisos.rejected, (state) => {
+        state.loading = true;
+      })
 
-    //UPDATE
-    [updatepermisos.pending]: (state) => {
-      state.loading = true;
-    },
-    [updatepermisos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.permisos = payload.Listapermisos;
-    },
-    [updatepermisos.rejected]: (state) => {
-      state.loading = false;
-    },
+      // UpdatePermisos
+      .addCase(updatepermisos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updatepermisos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.permisos = payload.Listapermisos;
+      })
+      .addCase(updatepermisos.rejected, (state) => {
+        state.loading = true;
+      });
   },
+  // extraReducers: {
+  //   ///GET
+  //   [getpermisos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [getpermisos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.permisos = payload.Listapermisos;
+  //   },
+  //   [getpermisos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //CREATE
+  //   [createpermisos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [createpermisos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.permisos = payload.Listapermisos;
+  //   },
+  //   [createpermisos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //DELETE
+  //   [deletepermisos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [deletepermisos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.permisos = payload.Listapermisos;
+  //   },
+  //   [deletepermisos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+
+  //   //UPDATE
+  //   [updatepermisos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [updatepermisos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.permisos = payload.Listapermisos;
+  //   },
+  //   [updatepermisos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  // },
 });
-export const { increment } = permisosSlice.actions;

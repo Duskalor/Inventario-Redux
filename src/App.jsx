@@ -7,7 +7,7 @@ import Peticiones from './Peticiones';
 
 function App() {
   const Dispatch = useDispatch();
-  const { success } = useSelector((state) => state.auth);
+  const { success } = useSelector((state) => state.Auth);
 
   useEffect(() => {
     if (success) {

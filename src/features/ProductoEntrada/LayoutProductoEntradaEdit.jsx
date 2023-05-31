@@ -1,11 +1,4 @@
-import {
-  Autocomplete,
-  Button,
-  Input,
-  InputLabel,
-  NativeSelect,
-  TextField,
-} from '@mui/material';
+import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductoEntradaEdit from './ProductoEntradaEdit';
@@ -17,8 +10,8 @@ export default function LayoutProductoEntradaEdit({ id }) {
     (state) => state.ProductoEntrada
   );
 
-  const datos = productoEntradaBD.filter((pro) => pro.IdEntrada == id);
-  //console.log(datos);
+  const datos = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
+  // console.log(datos);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,29 +34,27 @@ export default function LayoutProductoEntradaEdit({ id }) {
     });
   };
   const onSave = (e) => {
-    productosAgregados.SubTotal =
-      productosAgregados.Cantidad * productosAgregados.PrecioCompra;
-    const Verificar = productoEntradaEdit.find(
-      (pro) => pro.IdProducto === productosAgregados.IdProducto
-    );
-    productosAgregados.IdEntrada = id;
-    productosAgregados.PrecioCompra = productosAgregados.PrecioCompra + '.00';
-    productosAgregados.SubTotal = productosAgregados.SubTotal + '.00';
+    const newProducto = structuredClone(productosAgregados);
+    newProducto.SubTotal = newProducto.Cantidad * newProducto.PrecioCompra;
 
-    //console.log(productosAgregados);
+    const Verificar = productoEntradaEdit.find(
+      (pro) => pro.IdProducto === newProducto.IdProducto
+    );
+    newProducto.IdEntrada = id;
+    newProducto.PrecioCompra = newProducto.PrecioCompra + '.00';
+    newProducto.SubTotal = newProducto.SubTotal + '.00';
+
+    console.log(productoEntradaEdit, newProducto);
     if (
-      productosAgregados.PrecioCompra &&
-      productosAgregados.Cantidad &&
-      productosAgregados.IdProducto
-      // productosAgregados.Cantidad > 0 &&
-      // productosAgregados.PrecioCompra > 0
+      newProducto.PrecioCompra !== '' &&
+      newProducto.Cantidad !== '' &&
+      newProducto.IdProducto !== ''
     ) {
       if (!Verificar) {
-        dispatch(GuardarEstadoEdit(productosAgregados));
+        dispatch(GuardarEstadoEdit(newProducto));
       }
     }
 
-    //console.log(productosAgregados);
     setProductosAgregados({
       IdProducto: '',
       PrecioCompra: '',

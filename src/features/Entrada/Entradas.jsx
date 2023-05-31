@@ -8,7 +8,13 @@ import { centrar } from '../style';
 import { deleteEntradas } from './entradaSlice';
 import { ModalEdit } from './ModalEdit';
 
-export default function Entradas({ entradas }) {
+export default function Entradas({ entrada }) {
+  const { usuarios } = useSelector((state) => state.Usuarios);
+  const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
+  const { proveedores } = useSelector((state) => state.Proveedor);
+  const { productos } = useSelector((state) => state.Productos);
+  const dispatch = useDispatch();
+
   const {
     NumeroDocumento,
     CantidadProductos,
@@ -16,24 +22,22 @@ export default function Entradas({ entradas }) {
     IdUsuario,
     MontoTotal,
     id,
-  } = entradas;
-
-  const { usuarios } = useSelector((state) => state.Usuarios);
-  const IdUsuarioEntrada = usuarios.find((user) => user.id === IdUsuario);
-  const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
-  const { proveedores } = useSelector((state) => state.Proveedor);
-  const { productos } = useSelector((state) => state.Productos);
-  const IdProveedorEntrada = proveedores.find(
+  } = entrada;
+  // obteniendo al usuario para listarlo
+  const usuario = usuarios.find((user) => user.id === IdUsuario);
+  // obteniendo al proveedor para listarlo
+  const proveedor = proveedores.find(
     (proveedor) => proveedor.id === IdProveedor
   );
+  // obteniendo los productos para modificar el stock
   const ParaEliminar = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
-  const dispatch = useDispatch();
 
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a esta Entrada ?')) {
-      ParaEliminar.map((pe) => {
+      // modificando el stock con las cantidades de los productos eliminados
+      ParaEliminar.forEach((pe) => {
         const productoAeditar = productos.find(
-          (pro) => pro.id == pe.IdProducto
+          (pro) => pro.id === pe.IdProducto
         );
         const pro = { ...productoAeditar };
         pro.Stock = pro.Stock - pe.Cantidad;
@@ -49,8 +53,8 @@ export default function Entradas({ entradas }) {
       <TableCell sx={centrar}>
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
-      <TableCell sx={centrar}>{IdUsuarioEntrada.FullName}</TableCell>
-      <TableCell sx={centrar}>{IdProveedorEntrada.FullName}</TableCell>
+      <TableCell sx={centrar}>{usuario.FullName}</TableCell>
+      <TableCell sx={centrar}>{proveedor.FullName}</TableCell>
       <TableCell sx={centrar}>{CantidadProductos}</TableCell>
       <TableCell sx={centrar}>{MontoTotal}</TableCell>
       <TableCell sx={centrar}>

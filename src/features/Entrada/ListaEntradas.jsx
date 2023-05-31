@@ -11,22 +11,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetalleEntradas } from '../ProductoEntrada/productoEntradaSlice';
 import { getProductos } from '../Productos/productosSlice';
 import { centrar, titulos } from '../style';
 import Entradas from './Entradas';
-import { filtrar, getEntradas } from './entradaSlice';
+import { getEntradas } from './entradaSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 
 export default function ListaEntradas() {
-  const { entradas, filtrado } = useSelector((state) => state.Entrada);
+  const { entradas } = useSelector((state) => state.Entradas);
   const { productos } = useSelector((state) => state.Productos);
   const [Busqueda, setBusqueda] = useState('');
 
-  //console.log(entradas);
   const dispatch = useDispatch();
   useEffect(() => {
     if (entradas.length === 0) dispatch(getEntradas());
@@ -36,9 +35,18 @@ export default function ListaEntradas() {
 
   const handleChange = (e) => {
     setBusqueda(e.target.value);
-    //console.log(e.target.value);
-    dispatch(filtrar(e.target.value));
   };
+
+  const entradasFiltradas = useMemo(() => {
+    return (Busqueda !== '') & (Busqueda !== null)
+      ? entradas.filter((entra) => {
+          return entra.NumeroDocumento.toLowerCase().includes(
+            Busqueda.toLowerCase()
+          );
+        })
+      : entradas;
+  }, [Busqueda, entradas]);
+
   return (
     <div>
       <Box
@@ -68,7 +76,7 @@ export default function ListaEntradas() {
         />
       </Box>
 
-      {filtrado.length !== 0 ? (
+      {entradas.length !== 0 ? (
         <TableContainer component={Paper} style={{ maxHeight: 550 }}>
           <Table stickyHeader arial-label='simple tables'>
             <TableHead>
@@ -82,9 +90,17 @@ export default function ListaEntradas() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filtrado.map((entrada, id) => (
-                <Entradas key={id} entradas={entrada} />
-              ))}
+              {entradasFiltradas.length > 0 ? (
+                entradasFiltradas.map((entrada, id) => (
+                  <Entradas key={id} entrada={entrada} />
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell sx={{ ...centrar, fontSize: '2rem' }} colSpan={6}>
+                    No existe codigo de Entrada
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
@@ -98,7 +114,7 @@ export default function ListaEntradas() {
           variant='h4'
           component='h2'
         >
-          No Existe el Codigo
+          No hay entradas existentes
         </Typography>
       )}
     </div>

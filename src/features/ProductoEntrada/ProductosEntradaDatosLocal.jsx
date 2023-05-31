@@ -12,7 +12,7 @@ import ProductosEntrada from './ProductosEntrada';
 
 export default function ProductosEntradaDatosLocal() {
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
-
+  // console.log(productoEntrada);
   return (
     <div>
       {productoEntrada && (

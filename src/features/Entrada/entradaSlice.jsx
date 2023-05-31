@@ -10,7 +10,6 @@ import {
   getProductos,
   updateProductos,
 } from '../Productos/productosSlice';
-import { getSalidas } from '../Salidas/salidasSlice';
 
 export const getEntradas = createAsyncThunk(
   'get/getEntradas',
@@ -28,8 +27,12 @@ export const getEntradas = createAsyncThunk(
 
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
-  async ({ datos, productoEntrada, productos }, { dispatch, getState }) => {
-    const { Auth } = getState();
+  async ({ datos, productoEntrada }, { dispatch, getState }) => {
+    const {
+      Auth,
+      Productos: { productos },
+    } = getState();
+
     const config = {
       headers: {
         Authorization: `Bearer ${Auth.userToken}`,
@@ -37,21 +40,22 @@ export const createEntradas = createAsyncThunk(
     };
     const { data } = await apiSistema.post('entrada/create', datos, config);
     const IdEntrada = data.Entrada.id;
-    //console.log(data);
 
     productoEntrada.forEach((pe) => {
       dispatch(createProductoEntrada({ IdEntrada, pe }));
-      const ParaAgregar = productos.find((pro) => pro.id === pe.IdProducto);
-      const pro = { ...ParaAgregar };
+      const ParaModificar = productos.find((pro) => {
+        return pro.id === +pe.IdProducto;
+      });
+      const pro = structuredClone(ParaModificar);
       pro.Stock = pro.Stock + parseInt(pe.Cantidad);
       dispatch(updateProductos(pro));
-      //console.log(pro);
     });
     dispatch(getDetalleEntradas());
     dispatch(borrarProductos());
     dispatch(getProductos());
     dispatch(BorrarEstadoEdit());
 
+    console.log({ data });
     return data;
   }
 );
@@ -104,28 +108,27 @@ export const entradaSlice = createSlice({
   name: 'Entradas',
   initialState: {
     entradas: [],
-    filtrado: [],
     id: null,
     error: false,
     loading: false,
   },
   reducers: {
-    borrarEntrada: (state, payload) => {
-      // console.log(payload);
-      state.entradas = [];
-    },
-    filtrar: (state, action) => {
-      var tablaBusqueda = state.entradas.filter((elemento) => {
-        if (
-          elemento.NumeroDocumento.toString()
-            .toLowerCase()
-            .includes(action.payload.toLowerCase())
-        ) {
-          return elemento;
-        }
-      });
-      state.filtrado = tablaBusqueda;
-    },
+    // borrarEntrada: (state, payload) => {
+    //   // console.log(payload);
+    //   state.entradas = [];
+    // },
+    // filtrar: (state, action) => {
+    //   const tablaBusqueda = state.entradas.filter((elemento) => {
+    //     if (
+    //       elemento.NumeroDocumento.toString()
+    //         .toLowerCase()
+    //         .includes(action.payload.toLowerCase())
+    //     ) {
+    //       return elemento;
+    //     }
+    //   });
+    //   state.filtrado = tablaBusqueda;
+    // },
   },
   extraReducers: {
     ///GET
@@ -185,4 +188,5 @@ export const entradaSlice = createSlice({
     },
   },
 });
-export const { borrarEntrada, filtrar } = entradaSlice.actions;
+
+// export const { borrarEntrada, filtrar } = entradaSlice.actions;

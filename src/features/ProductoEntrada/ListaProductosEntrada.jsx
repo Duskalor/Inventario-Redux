@@ -18,7 +18,7 @@ export default function ListaProductosEntrada({ codigo }) {
   const dispatch = useDispatch();
 
   const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
-  const { entradas } = useSelector((state) => state.Entrada);
+  const { entradas } = useSelector((state) => state.Entradas);
 
   const codigoDocumento = entradas.find(
     (entrada) => entrada.NumeroDocumento === codigo

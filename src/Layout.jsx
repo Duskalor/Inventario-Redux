@@ -14,13 +14,13 @@ import LayoutUsuarios from './features/Usuarios/LayoutUsuarios';
 
 export default function Layout() {
   const { RazonSocial } = useSelector((state) => state.Datos);
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.Auth);
   const { permisos } = useSelector((state) => state.Permisos);
+
   const UserPermiso = permisos.find(
     (permiso) => permiso.id === user.IdPermisos
   );
-
+  const dispatch = useDispatch();
   return (
     <Box
       sx={{

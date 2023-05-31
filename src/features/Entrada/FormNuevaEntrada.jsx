@@ -2,8 +2,7 @@ import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
-import { borrarProductos, getProductos } from '../Productos/productosSlice';
-import { borrarEntrada, createEntradas } from './entradaSlice';
+import { createEntradas } from './entradaSlice';
 
 export default function FormNuevaEntrada({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
@@ -21,20 +20,17 @@ export default function FormNuevaEntrada({ handleClose }) {
   } = useForm();
 
   const onSubmit = async (datos) => {
-    //console.log(productoEntrada.length);
-    if (!productoEntrada.length == 0) {
+    // console.log({ productoEntrada });
+    // verificando existencia de productos generar la entrada
+    if (productoEntrada.length !== 0) {
       let total = 0;
-      productoEntrada.forEach(function (a) {
-        total += parseInt(a.Cantidad);
-      });
+      productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
       let Precio = 0;
-      productoEntrada.forEach(function (a) {
-        Precio += parseInt(a.SubTotal);
-      });
+      productoEntrada.forEach((a) => (Precio += parseInt(a.SubTotal)));
 
       datos = { ...datos, CantidadProductos: total };
       datos = { ...datos, MontoTotal: Precio };
-      dispatch(createEntradas({ datos, productoEntrada, productos }));
+      dispatch(createEntradas({ datos, productoEntrada }));
       handleClose();
     }
   };
