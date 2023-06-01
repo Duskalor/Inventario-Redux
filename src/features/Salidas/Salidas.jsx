@@ -33,9 +33,9 @@ export default function Salidas({ salida }) {
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a esta Entrada ?')) {
-      ParaEliminar.map((pe) => {
+      ParaEliminar.forEach((pe) => {
         const productoAeditar = productos.find(
-          (pro) => pro.id == pe.IdProducto
+          (pro) => pro.id === +pe.IdProducto
         );
         //console.log(pe.Cantidad, productoAeditar);
         const pro = { ...productoAeditar };

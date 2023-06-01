@@ -10,24 +10,18 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createProductoSalida,
-  getDetalleSalida,
-} from '../ProductoSalidas/productosSalidaSlice';
+import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
 import Salidas from './Salidas';
-import { filtrar, getSalidas } from './salidasSlice';
+import { getSalidas } from './salidasSlice';
 import { getProductos } from '../Productos/productosSlice';
 import { centrar, titulos } from '../style';
 import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 
-// import Entradas from './Entradas';
-// import { getEntradas } from './entradaSlice';
-
 export default function ListaSalidas() {
-  const { salidas, filtrado } = useSelector((state) => state.Salida);
+  const { salidas } = useSelector((state) => state.Salidas);
   const [Busqueda, setBusqueda] = useState('');
 
   const dispatch = useDispatch();
@@ -35,14 +29,20 @@ export default function ListaSalidas() {
     dispatch(getSalidas());
     dispatch(getProductos());
     dispatch(getDetalleSalida());
-    return () => {};
   }, [dispatch]);
 
   const handleChange = (e) => {
     setBusqueda(e.target.value);
-    //console.log(e.target.value);
-    dispatch(filtrar(e.target.value));
   };
+
+  const salidasFiltradas = useMemo(() => {
+    return Busqueda !== '' && Busqueda !== null
+      ? salidas.filter((prod) =>
+          prod.NumeroDocumento.toLowerCase().includes(Busqueda.toLowerCase())
+        )
+      : salidas;
+  }, [Busqueda, salidas]);
+  // console.log({ salidasFiltradas });
   return (
     <div>
       <Typography sx={titulos} variant='h4' component='h2'>
@@ -65,24 +65,36 @@ export default function ListaSalidas() {
         }}
         variant='standard'
       />
-      {filtrado.length !== 0 ? (
+      {salidas.length !== 0 ? (
         <TableContainer component={Paper} style={{ maxHeight: 550 }}>
           <Table stickyHeader arial-label='simple tables'>
             <TableHead>
-              <TableRow>
-                <TableCell sx={centrar}>Codigo Documento</TableCell>
-                <TableCell sx={centrar}>Vendedor</TableCell>
-                <TableCell sx={centrar}>Cliente</TableCell>
-                <TableCell sx={centrar}>Dni</TableCell>
-                <TableCell sx={centrar}>Cantidad de Productos</TableCell>
-                <TableCell sx={centrar}>Monto Total</TableCell>
-                <TableCell sx={centrar}>Acciones</TableCell>
+              <TableRow
+                sx={{
+                  '&>th': { textAlign: 'center' },
+                }}
+              >
+                <TableCell>Codigo Documento</TableCell>
+                <TableCell>Vendedor</TableCell>
+                <TableCell>Cliente</TableCell>
+                <TableCell>Dni</TableCell>
+                <TableCell>Cantidad de Productos</TableCell>
+                <TableCell>Monto Total</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {filtrado.map((salida, id) => (
-                <Salidas key={id} salida={salida} />
-              ))}
+              {salidasFiltradas.length > 0 ? (
+                salidasFiltradas.map((salida, id) => (
+                  <Salidas key={id} salida={salida} />
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell sx={{ ...centrar, fontSize: '2rem' }} colSpan={6}>
+                    No existe codigo de Salida
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
@@ -96,7 +108,7 @@ export default function ListaSalidas() {
           variant='h4'
           component='h2'
         >
-          No Existe el Codigo
+          No hay salidas existentes
         </Typography>
       )}
     </div>

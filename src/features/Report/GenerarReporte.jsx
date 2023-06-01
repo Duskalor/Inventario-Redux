@@ -22,20 +22,15 @@ import { ReportCenter, titulos } from '../style';
 
 export default function GenerarReporte({ handleClose }) {
   var { productos } = useSelector((state) => state.Productos);
-  const { entradas } = useSelector((state) => state.Entrada);
-  const { salidas } = useSelector((state) => state.Salida);
+  const { entradas } = useSelector((state) => state.Entradas);
+  const { salidas } = useSelector((state) => state.Salidas);
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { proveedores } = useSelector((state) => state.Proveedor);
   const { clientes } = useSelector((state) => state.Clientes);
   const dispatch = useDispatch();
   const [error, seterror] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   //console.log(DatosReports);
   useEffect(() => {
@@ -56,15 +51,15 @@ export default function GenerarReporte({ handleClose }) {
     // PRODUCTOS
 
     if (dato.OpcionEoS === 'Inventario') {
-      var wb = XLSX.utils.book_new(),
-        ws = XLSX.utils.json_to_sheet(productos);
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(productos);
       XLSX.utils.book_append_sheet(wb, ws, `${dato.OpcionEoS}`);
       XLSX.writeFile(wb, `Report-${dato.Fecha}-${dato.OpcionEoS}.xlsx`);
       return;
     }
     //ENTRADA -  SALIDA
-    var data = [];
-    var otro = [];
+    let data = [];
+    let otro = [];
     if (dato.OpcionEoS === 'Entrada') {
       data = [...entradas];
       otro = [...proveedores];
@@ -79,14 +74,14 @@ export default function GenerarReporte({ handleClose }) {
       case 'Day':
         ValorFecha = 10;
         Reporte = data.filter(
-          (entra) => entra.created_at?.slice(0, ValorFecha) == dato.Fecha
+          (entra) => entra.created_at?.slice(0, ValorFecha) === dato.Fecha
         );
         break;
       case 'Month':
         ValorFecha = 7;
         Reporte = data.filter(
           (entra) =>
-            entra.created_at?.slice(0, ValorFecha) ==
+            entra.created_at?.slice(0, ValorFecha) ===
             dato.Fecha.slice(0, ValorFecha)
         );
         break;
@@ -94,22 +89,24 @@ export default function GenerarReporte({ handleClose }) {
         ValorFecha = 4;
         Reporte = data.filter(
           (entra) =>
-            entra.created_at?.slice(0, ValorFecha) ==
+            entra.created_at?.slice(0, ValorFecha) ===
             dato.Fecha.slice(0, ValorFecha)
         );
 
         break;
+      default:
+        return;
     }
 
-    //console.log(Reporte);
+    console.log(Reporte);
     //console.log(data, IdAusar, otro);
 
     const AEA = [];
     if (dato.OpcionEoS === 'Entrada') {
-      Reporte.map((report) => {
+      Reporte.forEach((report) => {
         let aMostrar = [];
-        const user = usuarios.find((u) => u.id == report.IdUsuario);
-        const proveedor = otro.find((u) => u.id == report.IdProveedor);
+        const user = usuarios.find((u) => u.id === +report.IdUsuario);
+        const proveedor = otro.find((u) => u.id === +report.IdProveedor);
 
         aMostrar = {
           ...aMostrar,
@@ -123,10 +120,10 @@ export default function GenerarReporte({ handleClose }) {
         AEA.push(aMostrar);
       });
     } else {
-      Reporte.map((report) => {
+      Reporte.forEach((report) => {
         let aMostrar = [];
-        const user = usuarios.find((u) => u.id == report.IdUsuario);
-        const cliente = otro.find((u) => u.id == report.IdCliente);
+        const user = usuarios.find((u) => u.id === +report.IdUsuario);
+        const cliente = otro.find((u) => u.id === +report.IdCliente);
 
         aMostrar = {
           ...aMostrar,
@@ -143,7 +140,7 @@ export default function GenerarReporte({ handleClose }) {
     }
 
     console.log(AEA);
-    if (AEA.length != 0) {
+    if (AEA.length !== 0) {
       seterror(false);
       var wb = XLSX.utils.book_new(),
         ws = XLSX.utils.json_to_sheet(AEA);

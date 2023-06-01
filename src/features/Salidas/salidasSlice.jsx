@@ -38,9 +38,9 @@ export const createSalida = createAsyncThunk(
     const { data } = await apiSistema.post('salida/create', datos, config);
     const IdSalida = data.Salida.id;
     //console.log(data);
-    productoSalida.map((pe) => {
+    productoSalida.forEach((pe) => {
       dispatch(createProductoSalida({ IdSalida, pe }));
-      const ParaAgregar = productos.find((pro) => pro.id == pe.IdProducto);
+      const ParaAgregar = productos.find((pro) => pro.id === +pe.IdProducto);
       const pro = { ...ParaAgregar };
       pro.Stock = pro.Stock - parseInt(pe.Cantidad);
       dispatch(updateProductos(pro));
@@ -73,28 +73,27 @@ export const salidasSlice = createSlice({
   name: 'Salidas',
   initialState: {
     salidas: [],
-    filtrado: [],
     id: null,
     error: null,
     loading: false,
   },
-  reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
-    },
-    filtrar: (state, action) => {
-      var tablaBusqueda = state.salidas.filter((elemento) => {
-        if (
-          elemento.NumeroDocumento.toString()
-            .toLowerCase()
-            .includes(action.payload.toLowerCase())
-        ) {
-          return elemento;
-        }
-      });
-      state.filtrado = tablaBusqueda;
-    },
-  },
+  // reducers: {
+  //   increment: (state /* action */) => {
+  //     state.counter += 1;
+  //   },
+  //   filtrar: (state, action) => {
+  //     var tablaBusqueda = state.salidas.filter((elemento) => {
+  //       if (
+  //         elemento.NumeroDocumento.toString()
+  //           .toLowerCase()
+  //           .includes(action.payload.toLowerCase())
+  //       ) {
+  //         return elemento;
+  //       }
+  //     });
+  //     state.filtrado = tablaBusqueda;
+  //   },
+  // },
   extraReducers: {
     ///GET
     [getSalidas.pending]: (state) => {
@@ -104,7 +103,6 @@ export const salidasSlice = createSlice({
       state.loading = false;
       const volteado = payload.ListaSalidas.reverse();
       state.salidas = volteado;
-      state.filtrado = volteado;
     },
     [getSalidas.rejected]: (state) => {
       state.loading = false;
@@ -117,7 +115,6 @@ export const salidasSlice = createSlice({
       state.loading = false;
       const volteado = payload.ListaSalidas.reverse();
       state.salidas = volteado;
-      state.filtrado = volteado;
       state.id = payload.Salida.id;
     },
     [createSalida.rejected]: (state) => {
@@ -130,7 +127,6 @@ export const salidasSlice = createSlice({
     [deleteSalidas.fulfilled]: (state, { payload }) => {
       state.loading = false;
       const volteado = payload.ListaSalidas.reverse();
-      state.salidas = volteado;
       state.filtrado = volteado;
     },
     [deleteSalidas.rejected]: (state) => {
@@ -138,4 +134,4 @@ export const salidasSlice = createSlice({
     },
   },
 });
-export const { increment, filtrar } = salidasSlice.actions;
+// export const { increment, filtrar } = salidasSlice.actions;

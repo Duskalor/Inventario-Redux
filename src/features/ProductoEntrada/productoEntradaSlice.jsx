@@ -86,6 +86,7 @@ export const EditProductoEntrada = createAsyncThunk(
     return data;
   }
 );
+
 export const DeleteProductoEntrada = createAsyncThunk(
   'delete/postProductosEntrada',
   async (id, { getState }) => {

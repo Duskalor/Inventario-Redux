@@ -15,7 +15,10 @@ import Permiso from './Permiso';
 import { getpermisos } from './permisosSlice';
 
 export default function ListaPermisos() {
-  const { permisos } = useSelector((state) => state.Permisos);
+  const { permisos } = useSelector(
+    (state) => state.Permisos,
+    (prevData, nextData) => prevData.productos === nextData.productos
+  );
   // console.log(permisos);
   const dispatch = useDispatch();
   useEffect(() => {

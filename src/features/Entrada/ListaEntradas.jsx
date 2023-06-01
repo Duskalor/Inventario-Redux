@@ -22,8 +22,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 
 export default function ListaEntradas() {
-  const { entradas } = useSelector((state) => state.Entradas);
-  const { productos } = useSelector((state) => state.Productos);
+  const { entradas } = useSelector(
+    (state) => state.Entradas,
+    (prevData, nextData) => prevData.entradas === nextData.entradas
+  );
+  const { productos } = useSelector(
+    (state) => state.Productos,
+    (prevData, nextData) => prevData.productos === nextData.productos
+  );
   const [Busqueda, setBusqueda] = useState('');
 
   const dispatch = useDispatch();

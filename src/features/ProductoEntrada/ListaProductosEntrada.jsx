@@ -11,7 +11,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetalleEntradas } from './productoEntradaSlice';
 import ProductoEntradaVista from './ProductoEntradaVista';
-import ProductosEntrada from './ProductosEntrada';
 // import { getpermisos } from './permisosSlice';
 
 export default function ListaProductosEntrada({ codigo }) {

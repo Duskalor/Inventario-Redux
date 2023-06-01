@@ -88,21 +88,21 @@ export const productosSlice = createSlice({
     borrarProductos: (state /* action */) => {
       state.productos = [];
     },
-    filtrar: (state, action) => {
-      var tablaBusqueda = state.productos.filter((elemento) => {
-        if (
-          elemento.Codigo.toString()
-            .toLowerCase()
-            .includes(action.payload.toLowerCase()) ||
-          elemento.Descripcion.toString()
-            .toLowerCase()
-            .includes(action.payload.toLowerCase())
-        ) {
-          return elemento;
-        }
-      });
-      state.filtrado = tablaBusqueda;
-    },
+    // filtrar: (state, action) => {
+    //   var tablaBusqueda = state.productos.filter((elemento) => {
+    //     if (
+    //       elemento.Codigo.toString()
+    //         .toLowerCase()
+    //         .includes(action.payload.toLowerCase()) ||
+    //       elemento.Descripcion.toString()
+    //         .toLowerCase()
+    //         .includes(action.payload.toLowerCase())
+    //     ) {
+    //       return elemento;
+    //     }
+    //   });
+    //   state.filtrado = tablaBusqueda;
+    // },
   },
   extraReducers: {
     //GET
@@ -152,4 +152,4 @@ export const productosSlice = createSlice({
     },
   },
 });
-export const { borrarProductos, filtrar } = productosSlice.actions;
+export const { borrarProductos } = productosSlice.actions;

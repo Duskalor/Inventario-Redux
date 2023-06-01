@@ -45,13 +45,17 @@ export default function FormEditEntrada({ handleClose, id }) {
     },
   });
   const onSubmit = (datos) => {
+    // verifica si hay productos para agregar
     if (productoEntradaEdit.length !== 0) {
+      // verifica existencia si los productos ya existen
       productoEntradaEdit.forEach((pe) => {
         const Existencia = ProDucEntra.find(
           (pro) => pro.IdProducto === pe.IdProducto
         );
+        // si el producto existe antes de editar se tiene q editar el productoEntrada
         if (Existencia) {
           dispatch(updateProductoEntrada({ Existencia, pe }));
+          // si la cantidad previa es menor resta el Stock del productos
           if (Existencia.Cantidad < pe.Cantidad) {
             const productoAeditar = productos.find(
               (pro) => pro.id === +pe.IdProducto
@@ -61,6 +65,7 @@ export default function FormEditEntrada({ handleClose, id }) {
 
             dispatch(updateProductos(pro));
           }
+          // si la cantidad previa es mayor suma el Stock del productos
 
           if (Existencia.Cantidad > pe.Cantidad) {
             const productoAeditar = productos.find(
@@ -71,6 +76,7 @@ export default function FormEditEntrada({ handleClose, id }) {
 
             dispatch(updateProductos(pro));
           }
+          // si el no producto existe se tiene q agregar el productoEntrada
         } else {
           dispatch(EditProductoEntrada({ pe }));
           const productoAeditar = productos.find(
@@ -82,7 +88,8 @@ export default function FormEditEntrada({ handleClose, id }) {
           dispatch(updateProductos(pro));
         }
       });
-
+      // verifica existencia comparando el nuevo conjunto de productos con el anterior
+      // los q no existe se procede a eliminar y actualizar el stock
       ProDucEntra.forEach((pe) => {
         const Existencia = productoEntradaEdit.find(
           (pro) => pro.IdProducto === +pe.IdProducto
@@ -99,28 +106,20 @@ export default function FormEditEntrada({ handleClose, id }) {
         }
       });
 
+      // después de terminar con los productos ahora toca calular la cantidad y precio  total
+      // de los productos para agregarlos
       datos.id = id;
-      //console.log(datos);
-
-      /////
       let total = 0;
-      productoEntradaEdit.forEach(function (a) {
-        total += parseInt(a.Cantidad);
-      });
+      productoEntradaEdit.forEach((a) => (total += parseInt(a.Cantidad)));
       let Precio = 0;
-      productoEntradaEdit.forEach(function (a) {
-        Precio += parseInt(a.SubTotal);
-      });
-      //console.log(productoEntradaEdit);
-      datos = { ...datos, CantidadProductos: total };
-      datos = { ...datos, MontoTotal: Precio };
+      productoEntradaEdit.forEach((a) => (Precio += parseInt(a.SubTotal)));
+
+      datos = { ...datos, CantidadProductos: total, MontoTotal: Precio };
 
       dispatch(updateEntradas(datos));
 
-      //dispatch(getProductos());
       handleClose();
     }
-    //console.log(datos);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

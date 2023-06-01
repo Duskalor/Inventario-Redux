@@ -12,15 +12,18 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filtrar, getProductos } from './productosSlice';
+import { getProductos } from './productosSlice';
 import SearchIcon from '@mui/icons-material/Search';
-import { titulos } from '../style';
+import { centrar, titulos } from '../style';
 
 export default function ListaProductos() {
-  const { productos, filtrado } = useSelector((state) => state.Productos);
-  //console.log(productos);
+  const { productos } = useSelector(
+    (state) => state.Productos,
+    (prevData, nextData) => prevData.productos === nextData.productos
+  );
+  // console.log(productos);
   const [Busqueda, setBusqueda] = useState('');
 
   //console.log(filtrado);
@@ -29,11 +32,20 @@ export default function ListaProductos() {
   useEffect(() => {
     dispatch(getProductos());
   }, [dispatch]);
+
   const handleChange = (e) => {
     setBusqueda(e.target.value);
-    dispatch(filtrar(e.target.value));
   };
 
+  const productosFiltrados = useMemo(() => {
+    return Busqueda !== '' && Busqueda !== null
+      ? productos.filter((pro) =>
+          pro.Codigo.toLowerCase().includes(Busqueda.toLowerCase())
+        )
+      : productos;
+  }, [productos, Busqueda]);
+
+  // console.log({ productosFiltrados });
   return (
     <div>
       <Box
@@ -63,7 +75,7 @@ export default function ListaProductos() {
         />
       </Box>
 
-      {filtrado.length != 0 ? (
+      {productos.length !== 0 ? (
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
             <TableHead>
@@ -79,9 +91,17 @@ export default function ListaProductos() {
             </TableHead>
 
             <TableBody>
-              {filtrado.map((producto, id) => (
-                <Productos key={id} productos={producto} />
-              ))}
+              {productosFiltrados.length > 0 ? (
+                productosFiltrados.map((producto, id) => (
+                  <Productos key={id} productos={producto} />
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell sx={{ ...centrar, fontSize: '2rem' }} colSpan={7}>
+                    El codigo no existe
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
@@ -95,7 +115,7 @@ export default function ListaProductos() {
           variant='h4'
           component='h2'
         >
-          No Existe el Codigo o Producto
+          No hay productos ingresados
         </Typography>
       )}
     </div>

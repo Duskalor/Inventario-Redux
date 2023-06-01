@@ -10,7 +10,11 @@ import { ModalEdit } from './ModalEdit';
 
 export default function Entradas({ entrada }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
-  const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
+  const { productoEntradaBD } = useSelector(
+    (state) => state.ProductoEntrada,
+    (prevData, nextData) =>
+      prevData.productoEntradaBD === nextData.productoEntradaBD
+  );
   const { proveedores } = useSelector((state) => state.Proveedor);
   const { productos } = useSelector((state) => state.Productos);
   const dispatch = useDispatch();
@@ -43,6 +47,7 @@ export default function Entradas({ entrada }) {
         pro.Stock = pro.Stock - pe.Cantidad;
         dispatch(updateProductos(pro));
       });
+      // eliminando estado
       dispatch(deleteEntradas(id));
       dispatch(borrarEstado());
     }

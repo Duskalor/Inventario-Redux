@@ -4,7 +4,6 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { style } from '../style';
-import { useSelector } from 'react-redux';
 import GenerarReporte from './GenerarReporte';
 
 export default function LayoutReports() {
@@ -46,8 +45,6 @@ export default function LayoutReports() {
           }}
         >
           <GenerarReporte handleClose={handleClose} />
-
-          {/* <ChildModal /> */}
         </Box>
       </Modal>
     </div>

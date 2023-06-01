@@ -5,14 +5,9 @@ import Button from '@mui/material/Button';
 import ListaEntradas from './ListaEntradas';
 import { style } from '../style';
 import FormNuevaEntrada from './FormNuevaEntrada';
-import {
-  borrarEstado,
-  getDetalleEntradas,
-} from '../ProductoEntrada/productoEntradaSlice';
+import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
 import { useDispatch } from 'react-redux';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { getEntradas } from './entradaSlice';
-import { getProductos } from '../Productos/productosSlice';
 export function ChildModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);

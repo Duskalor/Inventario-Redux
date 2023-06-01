@@ -2,7 +2,7 @@ import { TableCell, TableRow } from '@mui/material';
 import { useSelector } from 'react-redux';
 export default function ItemsForPrint({ producto }) {
   const { productos } = useSelector((state) => state.Productos);
-  const DatoProducto = productos.find((pro) => pro.id == producto.IdProducto);
+  const DatoProducto = productos.find((pro) => pro.id === +producto.IdProducto);
 
   return (
     producto && (

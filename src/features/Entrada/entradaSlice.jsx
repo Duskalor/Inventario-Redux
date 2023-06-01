@@ -86,7 +86,6 @@ export const updateEntradas = createAsyncThunk(
         Authorization: `Bearer ${Auth.userToken}`,
       },
     };
-    //console.log({ id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal });
     const { data } = await apiSistema.put(
       `entrada/update/${id}`,
       {
@@ -112,81 +111,64 @@ export const entradaSlice = createSlice({
     error: false,
     loading: false,
   },
-  reducers: {
-    // borrarEntrada: (state, payload) => {
-    //   // console.log(payload);
-    //   state.entradas = [];
-    // },
-    // filtrar: (state, action) => {
-    //   const tablaBusqueda = state.entradas.filter((elemento) => {
-    //     if (
-    //       elemento.NumeroDocumento.toString()
-    //         .toLowerCase()
-    //         .includes(action.payload.toLowerCase())
-    //     ) {
-    //       return elemento;
-    //     }
-    //   });
-    //   state.filtrado = tablaBusqueda;
-    // },
-  },
-  extraReducers: {
-    ///GET
-    [getEntradas.pending]: (state) => {
-      state.loading = true;
-    },
-    [getEntradas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaEntradas.reverse();
-      state.entradas = volteado;
-      state.filtrado = volteado;
-    },
-    [getEntradas.rejected]: (state) => {
-      state.loading = false;
-    },
-    //CREATE
-    [createEntradas.pending]: (state) => {
-      state.loading = true;
-    },
-    [createEntradas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaEntradas.reverse();
-      state.entradas = volteado;
-      state.filtrado = volteado;
-      state.id = payload.Entrada.id;
-    },
-    [createEntradas.rejected]: (state, action) => {
-      state.loading = false;
-      console.log(action.error);
-    },
-    //DELETE
-    [deleteEntradas.pending]: (state) => {
-      state.loading = true;
-    },
-    [deleteEntradas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaEntradas.reverse();
-      state.entradas = volteado;
-      state.filtrado = volteado;
-    },
-    [deleteEntradas.rejected]: (state) => {
-      state.loading = false;
-    },
 
-    //UPDATE
-    [updateEntradas.pending]: (state) => {
-      state.loading = true;
-    },
-    [updateEntradas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaEntradas.reverse();
-      state.entradas = volteado;
-      state.filtrado = volteado;
-    },
-    [updateEntradas.rejected]: (state) => {
-      state.loading = false;
-    },
+  extraReducers: (build) => {
+    //  getEntradas
+
+    build
+      .addCase(getEntradas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEntradas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaEntradas.reverse();
+        state.entradas = volteado;
+      })
+      .addCase(getEntradas.rejected, (state) => {
+        state.loading = false;
+      })
+
+      /// createEntradas
+
+      .addCase(createEntradas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createEntradas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaEntradas.reverse();
+        state.entradas = volteado;
+        state.id = payload.Entrada.id;
+      })
+      .addCase(createEntradas.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // deleteEntradas
+
+      .addCase(deleteEntradas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteEntradas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaEntradas.reverse();
+        state.entradas = volteado;
+      })
+      .addCase(deleteEntradas.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // updateEntradas
+
+      .addCase(updateEntradas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateEntradas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaEntradas.reverse();
+        state.entradas = volteado;
+      })
+      .addCase(updateEntradas.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
-
-// export const { borrarEntrada, filtrar } = entradaSlice.actions;
