@@ -79,52 +79,94 @@ export const UsuariosSlice = createSlice({
       state.counter += 1;
     },
   },
-  extraReducers: {
-    ///GET
-    [getUsuarios.pending]: (state) => {
-      state.loading = true;
-    },
-    [getUsuarios.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.usuarios = payload.ListaUsuarios;
-    },
-    [getUsuarios.rejected]: (state) => {
-      state.loading = false;
-    },
-    //CREATE
-    [createUsuarios.pending]: (state) => {
-      state.loading = true;
-    },
-    [createUsuarios.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.usuarios = payload.ListaUsuarios;
-    },
-    [createUsuarios.rejected]: (state) => {
-      state.loading = false;
-    },
-    //DELETE
-    [deleteUsuarios.pending]: (state) => {
-      state.loading = true;
-    },
-    [deleteUsuarios.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.usuarios = payload.ListaUsuarios;
-    },
-    [deleteUsuarios.rejected]: (state) => {
-      state.loading = false;
-    },
 
-    //UPDATE
-    [updateUsuarios.pending]: (state) => {
-      state.loading = true;
-    },
-    [updateUsuarios.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.usuarios = payload.ListaUsuarios;
-    },
-    [updateUsuarios.rejected]: (state) => {
-      state.loading = false;
-    },
+  extraReducers: (build) => {
+    build
+      ///GET
+      .addCase(getUsuarios.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUsuarios.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.usuarios = payload.ListaUsuarios;
+      })
+      .addCase(getUsuarios.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // create
+      .addCase(createUsuarios.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createUsuarios.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.usuarios = payload.ListaUsuarios;
+      })
+      .addCase(createUsuarios.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // delete
+
+      .addCase(deleteUsuarios.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteUsuarios.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.usuarios = payload.ListaUsuarios;
+      })
+      .addCase(deleteUsuarios.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // update
+      .addCase(updateUsuarios.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUsuarios.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.usuarios = payload.ListaUsuarios;
+      })
+      .addCase(updateUsuarios.rejected, (state) => {
+        state.loading = false;
+      });
   },
+  // extraReducers: {
+
+  //   //CREATE
+  //   [createUsuarios.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [createUsuarios.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.usuarios = payload.ListaUsuarios;
+  //   },
+  //   [createUsuarios.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //DELETE
+  //   [deleteUsuarios.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [deleteUsuarios.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.usuarios = payload.ListaUsuarios;
+  //   },
+  //   [deleteUsuarios.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+
+  //   //UPDATE
+  //   [updateUsuarios.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [updateUsuarios.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.usuarios = payload.ListaUsuarios;
+  //   },
+  //   [updateUsuarios.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  // },
 });
 export const { increment } = UsuariosSlice.actions;

@@ -137,63 +137,99 @@ export const productosSalidaSlice = createSlice({
     },
 
     borrarItemEdit: (state, { payload }) => {
-      // console.log(payload);
       state.productoSalidaEdit = state.productoSalidaEdit.filter(
         (item) => item.IdProducto !== payload
       );
     },
     GuardarDatos: (state, { payload }) => {
-      // console.log(payload);
       state.productoSalidaEdit = payload;
     },
 
     GuardarEstadoEdit: (state, { payload }) => {
-      if (!payload.IdProducto == '') {
+      if (!payload.IdProducto === '') {
         state.productoSalidaEdit = [...state.productoSalidaEdit, payload];
       }
     },
-    BorrarEstadoEdit: (state, { payload }) => {
+    BorrarEstadoEdit: (state) => {
       state.productoSalidaBD = [];
     },
   },
+  extraReducers: (build) => {
+    // get
+    build
+      .addCase(getDetalleSalida.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getDetalleSalida.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productoSalidaBD = payload.ListadetallesSalida;
+      })
+      .addCase(getDetalleSalida.rejected, (state) => {
+        state.loading = false;
+      })
 
-  extraReducers: {
-    ///GET
-    [getDetalleSalida.pending]: (state) => {
-      state.loading = true;
-    },
-    [getDetalleSalida.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      //console.log(payload);
-      state.productoSalidaBD = payload.ListadetallesSalida;
-    },
-    [getDetalleSalida.rejected]: (state) => {
-      state.loading = false;
-    },
+      // create
 
-    [createProductoSalida.pending]: (state) => {
-      state.loading = true;
-    },
-    [createProductoSalida.fulfilled]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
-    [createProductoSalida.rejected]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
-    [DeleteProductoEntrada.pending]: (state) => {
-      state.loading = true;
-    },
-    [DeleteProductoEntrada.fulfilled]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
-    [DeleteProductoEntrada.rejected]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
+      .addCase(createProductoSalida.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createProductoSalida.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productoSalidaBD = payload.ListadetallesSalida;
+      })
+      .addCase(createProductoSalida.rejected, (state) => {
+        state.loading = false;
+      })
+
+      //delete
+      .addCase(DeleteProductoEntrada.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(DeleteProductoEntrada.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productoSalidaBD = payload.ListadetallesSalida;
+      })
+      .addCase(DeleteProductoEntrada.rejected, (state) => {
+        state.loading = false;
+      });
   },
+  // extraReducers: {
+  //   ///GET
+  //   [getDetalleSalida.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [getDetalleSalida.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     //console.log(payload);
+  //     state.productoSalidaBD = payload.ListadetallesSalida;
+  //   },
+  //   [getDetalleSalida.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+
+  //   [createProductoSalida.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [createProductoSalida.fulfilled]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  //   [createProductoSalida.rejected]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  //   [DeleteProductoEntrada.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [DeleteProductoEntrada.fulfilled]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  //   [DeleteProductoEntrada.rejected]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  // },
 });
 export const {
   GuardarEstado,

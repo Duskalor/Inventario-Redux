@@ -77,61 +77,76 @@ export const salidasSlice = createSlice({
     error: null,
     loading: false,
   },
-  // reducers: {
-  //   increment: (state /* action */) => {
-  //     state.counter += 1;
+
+  extraReducers: (build) => {
+    //get
+    build
+      .addCase(getSalidas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSalidas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaSalidas.reverse();
+        state.salidas = volteado;
+      })
+      .addCase(getSalidas.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // create
+
+      .addCase(createSalida.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createSalida.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaSalidas.reverse();
+        state.salidas = volteado;
+      })
+      .addCase(createSalida.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // delete
+      .addCase(deleteSalidas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteSalidas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const volteado = payload.ListaSalidas.reverse();
+        state.salidas = volteado;
+      })
+      .addCase(deleteSalidas.rejected, (state) => {
+        state.loading = false;
+      });
+  },
+  // extraReducers: {
+  //   ///GET
+
+  //   //CREATE
+  //   [createSalida.pending]: (state) => {
+  //     state.loading = true;
   //   },
-  //   filtrar: (state, action) => {
-  //     var tablaBusqueda = state.salidas.filter((elemento) => {
-  //       if (
-  //         elemento.NumeroDocumento.toString()
-  //           .toLowerCase()
-  //           .includes(action.payload.toLowerCase())
-  //       ) {
-  //         return elemento;
-  //       }
-  //     });
-  //     state.filtrado = tablaBusqueda;
+  //   [createSalida.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     const volteado = payload.ListaSalidas.reverse();
+  //     state.salidas = volteado;
+  //     state.id = payload.Salida.id;
+  //   },
+  //   [createSalida.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //DELETE
+  //   [deleteSalidas.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [deleteSalidas.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     const volteado = payload.ListaSalidas.reverse();
+  //     state.filtrado = volteado;
+  //   },
+  //   [deleteSalidas.rejected]: (state) => {
+  //     state.loading = false;
   //   },
   // },
-  extraReducers: {
-    ///GET
-    [getSalidas.pending]: (state) => {
-      state.loading = true;
-    },
-    [getSalidas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaSalidas.reverse();
-      state.salidas = volteado;
-    },
-    [getSalidas.rejected]: (state) => {
-      state.loading = false;
-    },
-    //CREATE
-    [createSalida.pending]: (state) => {
-      state.loading = true;
-    },
-    [createSalida.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaSalidas.reverse();
-      state.salidas = volteado;
-      state.id = payload.Salida.id;
-    },
-    [createSalida.rejected]: (state) => {
-      state.loading = false;
-    },
-    //DELETE
-    [deleteSalidas.pending]: (state) => {
-      state.loading = true;
-    },
-    [deleteSalidas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      const volteado = payload.ListaSalidas.reverse();
-      state.filtrado = volteado;
-    },
-    [deleteSalidas.rejected]: (state) => {
-      state.loading = false;
-    },
-  },
 });
-// export const { increment, filtrar } = salidasSlice.actions;

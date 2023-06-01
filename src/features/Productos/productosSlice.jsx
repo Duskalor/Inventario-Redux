@@ -88,68 +88,108 @@ export const productosSlice = createSlice({
     borrarProductos: (state /* action */) => {
       state.productos = [];
     },
-    // filtrar: (state, action) => {
-    //   var tablaBusqueda = state.productos.filter((elemento) => {
-    //     if (
-    //       elemento.Codigo.toString()
-    //         .toLowerCase()
-    //         .includes(action.payload.toLowerCase()) ||
-    //       elemento.Descripcion.toString()
-    //         .toLowerCase()
-    //         .includes(action.payload.toLowerCase())
-    //     ) {
-    //       return elemento;
-    //     }
-    //   });
-    //   state.filtrado = tablaBusqueda;
-    // },
   },
-  extraReducers: {
-    //GET
-    [getProductos.pending]: (state) => {
-      state.loading = true;
-    },
-    [getProductos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.productos = payload.ListaProductos;
-      state.filtrado = payload.ListaProductos;
-    },
-    [getProductos.rejected]: (state) => {
-      state.loading = false;
-    },
-    // CREATE
-    [createProducto.pending]: (state) => {
-      state.loading = true;
-    },
-    [createProducto.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.productos = payload.ListaProductos;
-    },
-    [createProducto.rejected]: (state) => {
-      state.loading = false;
-    },
-    // DELETE
-    [deleteProductos.pending]: (state) => {
-      state.loading = true;
-    },
-    [deleteProductos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.productos = payload.ListaProductos;
-    },
-    [deleteProductos.rejected]: (state) => {
-      state.loading = false;
-    },
-    // UPDATE
-    [updateProductos.pending]: (state) => {
-      state.loading = true;
-    },
-    [updateProductos.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.productos = payload.ListaProductos;
-    },
-    [updateProductos.rejected]: (state) => {
-      state.loading = false;
-    },
+
+  extraReducers: (build) => {
+    // get
+    build
+      .addCase(getProductos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProductos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productos = payload.ListaProductos;
+      })
+      .addCase(getProductos.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // create
+
+      .addCase(createProducto.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createProducto.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productos = payload.ListaProductos;
+      })
+      .addCase(createProducto.rejected, (state) => {
+        state.loading = false;
+      })
+
+      //delete
+
+      .addCase(deleteProductos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProductos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productos = payload.ListaProductos;
+      })
+      .addCase(deleteProductos.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // update
+
+      .addCase(updateProductos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProductos.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productos = payload.ListaProductos;
+      })
+      .addCase(updateProductos.rejected, (state) => {
+        state.loading = false;
+      });
   },
+
+  // extraReducers: {
+  //   //GET
+  //   [getProductos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [getProductos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.productos = payload.ListaProductos;
+  //     state.filtrado = payload.ListaProductos;
+  //   },
+  //   [getProductos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   // CREATE
+  //   [createProducto.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [createProducto.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.productos = payload.ListaProductos;
+  //   },
+  //   [createProducto.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   // DELETE
+  //   [deleteProductos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [deleteProductos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.productos = payload.ListaProductos;
+  //   },
+  //   [deleteProductos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   // UPDATE
+  //   [updateProductos.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [updateProductos.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.productos = payload.ListaProductos;
+  //   },
+  //   [updateProductos.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  // },
 });
 export const { borrarProductos } = productosSlice.actions;
