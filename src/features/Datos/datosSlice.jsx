@@ -48,39 +48,65 @@ export const datosSlice = createSlice({
     id: '',
     pending: false,
   },
-  reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
-    },
-  },
 
-  extraReducers: {
-    [getDatos.pending]: (state) => {
-      state.pending = true;
-    },
-    [getDatos.fulfilled]: (state, action) => {
-      state.pending = false;
-      state.id = action.payload.Datos[0].id;
-      state.RazonSocial = action.payload.Datos[0].RazonSocial;
-      state.Direccion = action.payload.Datos[0].Direccion;
-      state.Ruc = action.payload.Datos[0].Ruc;
-    },
-    [getDatos.rejected]: (state) => {
-      state.pending = false;
-    },
-    [updateDatos.pending]: (state) => {
-      state.pending = true;
-    },
-    [updateDatos.fulfilled]: (state, action) => {
-      state.pending = false;
-      state.id = action.payload.Datos[0].id;
-      state.RazonSocial = action.payload.Datos[0].RazonSocial;
-      state.Direccion = action.payload.Datos[0].Direccion;
-      state.Ruc = action.payload.Datos[0].Ruc;
-    },
-    [updateDatos.rejected]: (state) => {
-      state.pending = false;
-    },
+  extraReducers: (build) => {
+    build
+      // Get
+      .addCase(getDatos.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(getDatos.fulfilled, (state, action) => {
+        state.pending = false;
+        state.id = action.payload.Datos[0].id;
+        state.RazonSocial = action.payload.Datos[0].RazonSocial;
+        state.Direccion = action.payload.Datos[0].Direccion;
+        state.Ruc = action.payload.Datos[0].Ruc;
+      })
+      .addCase(getDatos.rejected, (state) => {
+        state.pending = false;
+      })
+
+      // UPDATE
+      .addCase(updateDatos.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(updateDatos.fulfilled, (state, action) => {
+        state.pending = false;
+        state.id = action.payload.Datos[0].id;
+        state.RazonSocial = action.payload.Datos[0].RazonSocial;
+        state.Direccion = action.payload.Datos[0].Direccion;
+        state.Ruc = action.payload.Datos[0].Ruc;
+      })
+      .addCase(updateDatos.rejected, (state) => {
+        state.pending = false;
+      });
   },
+  // extraReducers: {
+  //   [getDatos.pending]: (state) => {
+  //     state.pending = true;
+  //   },
+  //   [getDatos.fulfilled]: (state, action) => {
+  //     state.pending = false;
+  //     state.id = action.payload.Datos[0].id;
+  //     state.RazonSocial = action.payload.Datos[0].RazonSocial;
+  //     state.Direccion = action.payload.Datos[0].Direccion;
+  //     state.Ruc = action.payload.Datos[0].Ruc;
+  //   },
+  //   [getDatos.rejected]: (state) => {
+  //     state.pending = false;
+  //   },
+  //   [updateDatos.pending]: (state) => {
+  //     state.pending = true;
+  //   },
+  //   [updateDatos.fulfilled]: (state, action) => {
+  //     state.pending = false;
+  //     state.id = action.payload.Datos[0].id;
+  //     state.RazonSocial = action.payload.Datos[0].RazonSocial;
+  //     state.Direccion = action.payload.Datos[0].Direccion;
+  //     state.Ruc = action.payload.Datos[0].Ruc;
+  //   },
+  //   [updateDatos.rejected]: (state) => {
+  //     state.pending = false;
+  //   },
+  // },
 });
-export const { increment } = datosSlice.actions;

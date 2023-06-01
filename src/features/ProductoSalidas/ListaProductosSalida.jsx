@@ -22,7 +22,7 @@ export default function ListaProductosSalida({ codigo = null, montoTotal }) {
   const dispatch = useDispatch();
 
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
-  const { salidas } = useSelector((state) => state.Salida);
+  const { salidas } = useSelector((state) => state.Salidas);
 
   const codigoDocumento = salidas.find(
     (salida) => salida.NumeroDocumento === codigo

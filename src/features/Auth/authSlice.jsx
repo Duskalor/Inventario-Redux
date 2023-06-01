@@ -24,19 +24,25 @@ export const logout = createAsyncThunk(
   'Logout/LogoutUser',
   async (_, { getState }) => {
     const { Auth } = getState();
-
     const config = {
       headers: {
         Authorization: `Bearer ${Auth.userToken}`,
       },
     };
-    localStorage.clear();
+
     // localStorage.removeItem('userToken');
     // localStorage.removeItem('userId');
     // localStorage.removeItem('success');
     //console.log(localStorage);
-    const { data } = await apiSistema.get('logout', config);
-    return data;
+    try {
+      const { data } = await apiSistema.get('logout', config);
+      localStorage.clear();
+      return data;
+    } catch (error) {
+      localStorage.clear();
+      console.log(error);
+      return { success: false, mensaje: 'Se cerro correctamente' };
+    }
   }
 );
 export const getUserDetails = createAsyncThunk(
@@ -99,8 +105,10 @@ export const authSlice = createSlice({
         state.userToken = null;
         state.user = [];
       })
-      .addCase(logout.rejected, (state) => {
+      .addCase(logout.rejected, (state, { payload }) => {
+        // console.log(payload);
         state.loading = true;
+        localStorage.clear();
       })
       // getUserDetails cases
       .addCase(getUserDetails.pending, (state) => {

@@ -12,7 +12,6 @@ export const getClientes = createAsyncThunk(
       },
     };
     const { data } = await apiSistema.get('cliente', config);
-    //console.log(data);
     return data;
   }
 );
@@ -73,57 +72,99 @@ export const ClientesSlice = createSlice({
     error: null,
     loading: false,
   },
-  reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
-    },
-  },
-  extraReducers: {
-    ///GET
-    [getClientes.pending]: (state) => {
-      state.loading = true;
-    },
-    [getClientes.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.clientes = payload.ListaDeclientes;
-    },
-    [getClientes.rejected]: (state) => {
-      state.loading = false;
-    },
-    //CREATE
-    [createClientes.pending]: (state) => {
-      state.loading = true;
-    },
-    [createClientes.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.clientes = payload.ListaDeclientes;
-    },
-    [createClientes.rejected]: (state) => {
-      state.loading = false;
-    },
-    //DELETE
-    [deleteClientes.pending]: (state) => {
-      state.loading = true;
-    },
-    [deleteClientes.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.clientes = payload.ListaDeclientes;
-    },
-    [deleteClientes.rejected]: (state) => {
-      state.loading = false;
-    },
 
-    //UPDATE
-    [updateClientes.pending]: (state) => {
-      state.loading = true;
-    },
-    [updateClientes.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.clientes = payload.ListaDeclientes;
-    },
-    [updateClientes.rejected]: (state) => {
-      state.loading = false;
-    },
+  extraReducers: (build) => {
+    build
+      ///GET
+      .addCase(getClientes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getClientes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.clientes = payload.ListaDeclientes;
+      })
+      .addCase(getClientes.rejected, (state) => {
+        state.loading = false;
+      })
+      ///CREATE
+      .addCase(createClientes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createClientes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.clientes = payload.ListaDeclientes;
+      })
+      .addCase(createClientes.rejected, (state) => {
+        state.loading = false;
+      })
+      ///DELETE
+      .addCase(deleteClientes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteClientes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.clientes = payload.ListaDeclientes;
+      })
+      .addCase(deleteClientes.rejected, (state) => {
+        state.loading = false;
+      })
+      ///UPDATE
+      .addCase(updateClientes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateClientes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.clientes = payload.ListaDeclientes;
+      })
+      .addCase(updateClientes.rejected, (state) => {
+        state.loading = false;
+      });
   },
+  // extraReducers: {
+  //   ///GET
+  //   [getClientes.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [getClientes.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.clientes = payload.ListaDeclientes;
+  //   },
+  //   [getClientes.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //CREATE
+  //   [createClientes.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [createClientes.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.clientes = payload.ListaDeclientes;
+  //   },
+  //   [createClientes.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  //   //DELETE
+  //   [deleteClientes.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [deleteClientes.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.clientes = payload.ListaDeclientes;
+  //   },
+  //   [deleteClientes.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+
+  //   //UPDATE
+  //   [updateClientes.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [updateClientes.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.clientes = payload.ListaDeclientes;
+  //   },
+  //   [updateClientes.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+  // },
 });
-export const { increment } = ClientesSlice.actions;

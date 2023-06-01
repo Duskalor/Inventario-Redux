@@ -20,6 +20,7 @@ export default function Layout() {
   const UserPermiso = permisos.find(
     (permiso) => permiso.id === user.IdPermisos
   );
+
   const dispatch = useDispatch();
   return (
     <Box
@@ -29,10 +30,10 @@ export default function Layout() {
       }}
     >
       <Typography variant='h4' align='center' mt={7} ml={4}>
-        Sistema De Inventario {RazonSocial}
+        Sistema De Almacén {RazonSocial}
       </Typography>
       <Typography variant='h4' align='center' mt={4} mr={4}>
-        Bienvenido {user.FullName}
+        Bienvenido {user.FullName} - {UserPermiso?.Descripcion}
       </Typography>
       <LayoutReports />
       <Box

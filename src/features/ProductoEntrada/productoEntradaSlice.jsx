@@ -150,44 +150,82 @@ export const productoEntradaSlice = createSlice({
       // state.productoEntradaBD = [];
     },
   },
-
-  extraReducers: {
-    ///GET
-    [getDetalleEntradas.pending]: (state) => {
-      state.loading = true;
-    },
-    [getDetalleEntradas.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      //console.log(payload);
-      state.productoEntradaBD = payload.ListaDetalleEntrada;
-    },
-    [getDetalleEntradas.rejected]: (state) => {
-      state.loading = false;
-    },
-
-    [createProductoEntrada.pending]: (state) => {
-      state.loading = true;
-    },
-    [createProductoEntrada.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.productoEntradaBD = payload.ListaDetalleEntrada;
-    },
-    [createProductoEntrada.rejected]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
-    [DeleteProductoEntrada.pending]: (state) => {
-      state.loading = true;
-    },
-    [DeleteProductoEntrada.fulfilled]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
-    [DeleteProductoEntrada.rejected]: (state, action) => {
-      state.loading = false;
-      //console.log(action);
-    },
+  extraReducers: (build) => {
+    ///  GET
+    build
+      .addCase(getDetalleEntradas.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getDetalleEntradas.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        //console.log(payload);
+        state.productoEntradaBD = payload.ListaDetalleEntrada;
+      })
+      .addCase(getDetalleEntradas.rejected, (state) => {
+        state.loading = false;
+      })
+      //  CREATE
+      .addCase(createProductoEntrada.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createProductoEntrada.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productoEntradaBD = payload.ListaDetalleEntrada;
+      })
+      .addCase(createProductoEntrada.rejected, (state) => {
+        state.loading = false;
+      })
+      // DELETE
+      .addCase(DeleteProductoEntrada.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(DeleteProductoEntrada.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        //console.log(payload);
+        state.productoEntradaBD = payload.ListaDetalleEntrada;
+      })
+      .addCase(DeleteProductoEntrada.rejected, (state) => {
+        state.loading = false;
+      });
   },
+
+  // extraReducers: {
+  //   ///GET
+  //   [getDetalleEntradas.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [getDetalleEntradas.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     //console.log(payload);
+  //     state.productoEntradaBD = payload.ListaDetalleEntrada;
+  //   },
+  //   [getDetalleEntradas.rejected]: (state) => {
+  //     state.loading = false;
+  //   },
+
+  //   [createProductoEntrada.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [createProductoEntrada.fulfilled]: (state, { payload }) => {
+  //     state.loading = false;
+  //     state.productoEntradaBD = payload.ListaDetalleEntrada;
+  //   },
+  //   [createProductoEntrada.rejected]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  //   [DeleteProductoEntrada.pending]: (state) => {
+  //     state.loading = true;
+  //   },
+  //   [DeleteProductoEntrada.fulfilled]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  //   [DeleteProductoEntrada.rejected]: (state, action) => {
+  //     state.loading = false;
+  //     //console.log(action);
+  //   },
+  // },
 });
 export const {
   GuardarEstado,

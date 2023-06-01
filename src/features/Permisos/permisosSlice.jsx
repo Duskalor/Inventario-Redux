@@ -54,33 +54,12 @@ export const updatepermisos = createAsyncThunk(
         Authorization: `Bearer ${Auth.userToken}`,
       },
     };
-    const {
-      Descripcion,
-      Clientes,
-      Configuracion,
-      Entradas,
-      Permisos,
-      Productos,
-      Proveedores,
-      Salidas,
-      Usuarios,
-    } = dato;
+
     const { data } = await apiSistema.put(
       `permisos/update/${id}`,
-      {
-        Descripcion,
-        Clientes,
-        Configuracion,
-        Entradas,
-        Permisos,
-        Productos,
-        Proveedores,
-        Salidas,
-        Usuarios,
-      },
+      dato,
       config
     );
-    //console.log(data);
     return data;
   }
 );
@@ -141,51 +120,4 @@ export const permisosSlice = createSlice({
         state.loading = true;
       });
   },
-  // extraReducers: {
-  //   ///GET
-  //   [getpermisos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [getpermisos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.permisos = payload.Listapermisos;
-  //   },
-  //   [getpermisos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   //CREATE
-  //   [createpermisos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [createpermisos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.permisos = payload.Listapermisos;
-  //   },
-  //   [createpermisos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   //DELETE
-  //   [deletepermisos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [deletepermisos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.permisos = payload.Listapermisos;
-  //   },
-  //   [deletepermisos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-
-  //   //UPDATE
-  //   [updatepermisos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [updatepermisos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.permisos = payload.Listapermisos;
-  //   },
-  //   [updatepermisos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  // },
 });
