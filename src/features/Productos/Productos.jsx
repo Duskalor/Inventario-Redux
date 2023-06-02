@@ -1,4 +1,4 @@
-import { Button, TableCell, TableRow } from '@mui/material';
+import { Box, Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
@@ -10,8 +10,8 @@ export default function Productos({ productos }) {
     Categoria,
     Codigo,
     Descripcion,
-    PrecioCompra,
-    PrecioVenta,
+    // PrecioCompra,
+    // PrecioVenta,
     Stock,
   } = productos;
   //console.log(clientes);
@@ -23,17 +23,27 @@ export default function Productos({ productos }) {
   };
 
   return (
-    <TableRow>
-      <TableCell>{Codigo}</TableCell>
+    <TableRow
+      sx={{
+        '&>td>div': { display: 'flex', justifyContent: 'center' },
+      }}
+    >
+      <TableCell>
+        <Box>{Codigo}</Box>
+      </TableCell>
       <TableCell>{Descripcion}</TableCell>
       <TableCell>{Categoria}</TableCell>
-      <TableCell>{PrecioCompra}</TableCell>
-      <TableCell>{PrecioVenta}</TableCell>
-      <TableCell>{Stock}</TableCell>
+      {/* <TableCell>{PrecioCompra}</TableCell>
+      <TableCell>{PrecioVenta}</TableCell> */}
+      <TableCell>
+        <Box>{Stock}</Box>
+      </TableCell>
 
       <TableCell>
-        <ModalEdit id={id} />
-        <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        <Box>
+          <ModalEdit id={id} />
+          <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        </Box>
       </TableCell>
     </TableRow>
   );

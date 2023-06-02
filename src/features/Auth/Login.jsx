@@ -1,19 +1,14 @@
-import {
-  Box,
-  Button,
-  Input,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
-import React from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { style, titulos } from '../style';
-import { login } from './authSlice';
+import { login, setError } from './authSlice';
+import { BoxError } from '../../components/BoxError';
+import { BoxContainer } from '../../components/BoxContainer';
 
 export default function Login() {
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.Auth);
   const {
     register,
     handleSubmit,
@@ -21,6 +16,9 @@ export default function Login() {
   } = useForm();
   const onSubmit = (dato) => {
     dispatch(login(dato));
+  };
+  const handleChange = () => {
+    dispatch(setError());
   };
 
   return (
@@ -30,17 +28,13 @@ export default function Login() {
           login
         </Typography>
 
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+        <BoxContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <TextField
                 type='text'
                 {...register('Usuario', {
+                  onChange: handleChange,
                   required: true,
                 })}
                 label='Usuario'
@@ -48,43 +42,40 @@ export default function Login() {
               />
 
               {errors.Usuario?.type === 'required' && (
-                <p>El Campo es requirido </p>
+                <BoxError>El Campo es requirido </BoxError>
               )}
             </div>
-            <div>
+            <Box>
               <TextField
                 sx={{
                   margin: '20px 0 0 0',
                 }}
                 type='password'
                 {...register('password', {
+                  onChange: handleChange,
                   required: true,
                 })}
                 label='Password'
                 variant='outlined'
               />
               {errors.password?.type === 'required' && (
-                <p>El Campo es requirido </p>
+                <BoxError>El Campo es requirido </BoxError>
               )}
-            </div>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
+            </Box>
+            <BoxContainer sx={{ flexDirection: 'column' }}>
+              {error && <BoxError>{error}</BoxError>}
               <Button
                 sx={{
-                  margin: '20px 0 0 0',
+                  mt: '1rem',
                 }}
                 variant='contained'
                 type='submit'
               >
                 Ingresar
               </Button>
-            </Box>
+            </BoxContainer>
           </form>
-        </Box>
+        </BoxContainer>
       </div>
     </Box>
   );

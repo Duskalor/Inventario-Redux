@@ -12,10 +12,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductoSalidaVista from './ProductoSalidaVista';
 import { getDetalleSalida } from './productosSalidaSlice';
-// import { getDetalleEntradas } from './productoEntradaSlice';
-// import ProductoEntradaVista from './ProductoEntradaVista';
-// import ProductosEntrada from './ProductosEntrada';
-// import { getpermisos } from './permisosSlice';
 
 export default function ListaProductosSalida({ codigo = null, montoTotal }) {
   // console.log(codigo);
@@ -30,7 +26,6 @@ export default function ListaProductosSalida({ codigo = null, montoTotal }) {
   const listaProductosSalida = productoSalidaBD.filter(
     (proSalida) => proSalida.IdSalida === codigoDocumento.id
   );
-  //console.log(listaProductosSalida);
   useEffect(() => {
     dispatch(getDetalleSalida());
   }, [dispatch]);

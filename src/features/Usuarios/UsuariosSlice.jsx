@@ -75,8 +75,10 @@ export const UsuariosSlice = createSlice({
     loading: false,
   },
   reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
+    LogoutUsuario: (state /* action */) => {
+      state.usuarios = [];
+      state.error = null;
+      state.loading = false;
     },
   },
 
@@ -131,42 +133,5 @@ export const UsuariosSlice = createSlice({
         state.loading = false;
       });
   },
-  // extraReducers: {
-
-  //   //CREATE
-  //   [createUsuarios.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [createUsuarios.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.usuarios = payload.ListaUsuarios;
-  //   },
-  //   [createUsuarios.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   //DELETE
-  //   [deleteUsuarios.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [deleteUsuarios.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.usuarios = payload.ListaUsuarios;
-  //   },
-  //   [deleteUsuarios.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-
-  //   //UPDATE
-  //   [updateUsuarios.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [updateUsuarios.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.usuarios = payload.ListaUsuarios;
-  //   },
-  //   [updateUsuarios.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  // },
 });
-export const { increment } = UsuariosSlice.actions;
+export const { increment, LogoutUsuario } = UsuariosSlice.actions;

@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
+import { logoutProductos } from '../Productos/productosSlice';
+import { LogoutUsuario } from '../Usuarios/UsuariosSlice';
+import { LogoutPermisos } from '../Permisos/permisosSlice';
 const success = localStorage.getItem('success')
   ? localStorage.getItem('success')
   : false;
@@ -11,34 +14,33 @@ const userId = localStorage.getItem('userId')
   : null;
 
 export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
-  const { data } = await apiSistema.post('login', userAuth);
-  //console.log(data);
-  localStorage.setItem('userToken', data.userToken);
-  localStorage.setItem('userId', data.User.id);
-  localStorage.setItem('success', data.success);
-  // console.log(localStorage, data);
-
-  return data;
+  try {
+    const { data } = await apiSistema.post('login', userAuth);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 });
 export const logout = createAsyncThunk(
   'Logout/LogoutUser',
-  async (_, { getState }) => {
+  async (_, { getState, dispatch }) => {
     const { Auth } = getState();
     const config = {
       headers: {
         Authorization: `Bearer ${Auth.userToken}`,
       },
     };
-
-    // localStorage.removeItem('userToken');
-    // localStorage.removeItem('userId');
-    // localStorage.removeItem('success');
-    //console.log(localStorage);
     try {
       const { data } = await apiSistema.get('logout', config);
       localStorage.clear();
+      dispatch(logoutProductos());
+      dispatch(LogoutUsuario());
+      dispatch(LogoutPermisos());
       return data;
     } catch (error) {
+      dispatch(logoutProductos());
+      dispatch(LogoutUsuario());
+      dispatch(LogoutPermisos());
       localStorage.clear();
       console.log(error);
       return { success: false, mensaje: 'Se cerro correctamente' };
@@ -75,8 +77,8 @@ export const authSlice = createSlice({
     loading: false,
   },
   reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
+    setError: (state) => {
+      state.error = null;
     },
   },
   extraReducers: (build) => {
@@ -84,15 +86,25 @@ export const authSlice = createSlice({
     build
       .addCase(login.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.userToken = payload.userToken;
-        state.success = payload.success;
-        state.user = payload.User;
+        if (!payload.success) {
+          state.error = payload.mensaje;
+        } else {
+          localStorage.setItem('userToken', payload.userToken);
+          localStorage.setItem('userId', payload.User.id);
+          localStorage.setItem('success', payload.success);
+
+          state.loading = false;
+          state.userToken = payload.userToken;
+          state.success = payload.success;
+          state.user = payload.User;
+        }
       })
-      .addCase(login.rejected, (state) => {
+      .addCase(login.rejected, (state, { payload }) => {
         state.loading = true;
+        console.log(payload);
       })
       // logout cases
       .addCase(logout.pending, (state) => {
@@ -123,51 +135,6 @@ export const authSlice = createSlice({
         state.loading = true;
       });
   },
-
-  // extraReducers: {
-  //   //Login
-  //   [login.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [login.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     //console.log(payload);
-  //     state.userToken = payload.userToken;
-  //     state.success = payload.success;
-  //     state.user = payload.User;
-  //   },
-  //   [login.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   //Logout
-  //   [logout.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [logout.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     //console.log(payload.User);
-  //     state.success = payload.success;
-  //     state.userId = null;
-  //     state.userToken = null;
-  //     state.user = [];
-  //   },
-  //   [logout.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-
-  //   //GET USER DETAILS
-  //   [getUserDetails.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [getUserDetails.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     //console.log(payload);
-  //     state.success = payload.success;
-  //     state.user = payload.User;
-  //   },
-  //   [getUserDetails.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  // },
 });
-export const { increment } = authSlice.actions;
+
+export const { setError } = authSlice.actions;

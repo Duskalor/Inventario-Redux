@@ -115,14 +115,7 @@ export const productosSalidaSlice = createSlice({
   },
   reducers: {
     GuardarEstado: (state, { payload }) => {
-      //console.log(payload);
-      if (
-        !payload.IdProducto == '' &&
-        payload.Cantidad > 0 &&
-        payload.PrecioVenta > 0
-      ) {
-        state.productoSalida = [...state.productoSalida, payload];
-      }
+      state.productoSalida = [...state.productoSalida, payload];
     },
     borrarEstado: (state) => {
       //console.log(payload);
@@ -193,43 +186,6 @@ export const productosSalidaSlice = createSlice({
         state.loading = false;
       });
   },
-  // extraReducers: {
-  //   ///GET
-  //   [getDetalleSalida.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [getDetalleSalida.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     //console.log(payload);
-  //     state.productoSalidaBD = payload.ListadetallesSalida;
-  //   },
-  //   [getDetalleSalida.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-
-  //   [createProductoSalida.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [createProductoSalida.fulfilled]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  //   [createProductoSalida.rejected]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  //   [DeleteProductoEntrada.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [DeleteProductoEntrada.fulfilled]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  //   [DeleteProductoEntrada.rejected]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  // },
 });
 export const {
   GuardarEstado,

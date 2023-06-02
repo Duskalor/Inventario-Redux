@@ -1,4 +1,4 @@
-import { Button, TableCell, TableRow } from '@mui/material';
+import { Box, Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
@@ -12,7 +12,7 @@ export default function Permiso({ permisos }) {
     Usuarios,
     Entradas,
     Productos,
-    Clientes,
+    Almacenes,
     Proveedores,
     Permisos,
     Configuracion,
@@ -27,31 +27,39 @@ export default function Permiso({ permisos }) {
   };
 
   return (
-    <TableRow>
+    <TableRow
+      sx={{
+        '&>td>div': {
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'row',
+        },
+      }}
+    >
       <TableCell>{Descripcion}</TableCell>
       <TableCell>
-        {Salidas === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Salidas === 1 ? <CheckRoundedIcon /> : <ClearIcon />} </Box>
       </TableCell>
       <TableCell>
-        {Usuarios === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Usuarios === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
-        {Entradas === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Entradas === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
-        {Productos === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Productos === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
-        {Clientes === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Almacenes === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
-        {Proveedores === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Proveedores === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
-        {Permisos === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Permisos === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
-        {Configuracion === 1 ? <CheckRoundedIcon /> : <ClearIcon />}
+        <Box>{Configuracion === 1 ? <CheckRoundedIcon /> : <ClearIcon />}</Box>
       </TableCell>
       <TableCell>
         <ModalEdit id={id} />

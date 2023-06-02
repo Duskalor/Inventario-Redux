@@ -1,11 +1,4 @@
-import {
-  Autocomplete,
-  Button,
-  Input,
-  InputLabel,
-  NativeSelect,
-  TextField,
-} from '@mui/material';
+import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -38,9 +31,9 @@ export default function FormNuevoProductoSalida() {
       (pro) => pro.IdProducto === productosAgregados.IdProducto
     );
     if (
-      productosAgregados.PrecioVenta &&
-      productosAgregados.Cantidad &&
-      productosAgregados.IdProducto
+      productosAgregados.PrecioVenta !== '' &&
+      productosAgregados.Cantidad !== '' &&
+      productosAgregados.IdProducto !== ''
     ) {
       if (!Verificar) dispatch(GuardarEstado(productosAgregados));
     }
@@ -53,15 +46,6 @@ export default function FormNuevoProductoSalida() {
       SubTotal: '',
     });
   };
-
-  // const handleTag = ({ target }, fieldName) => {
-  //   const { value } = target;
-  //   //console.log(fieldName, value[0]);
-  //   setProductosAgregados({
-  //     ...productosAgregados,
-  //     [fieldName]: value[0],
-  //   });
-  // };
 
   return (
     <>

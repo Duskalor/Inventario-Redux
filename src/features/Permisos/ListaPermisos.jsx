@@ -21,7 +21,7 @@ export default function ListaPermisos() {
   useEffect(() => {
     dispatch(getpermisos());
   }, []);
-
+  console.log({ permisos });
   return (
     <div>
       <Typography sx={titulos} variant='h4' component='h2'>
@@ -30,13 +30,17 @@ export default function ListaPermisos() {
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
-            <TableRow>
+            <TableRow
+              sx={{
+                '&>th': { textAlign: 'center' },
+              }}
+            >
               <TableCell>Descripción</TableCell>
               <TableCell>Salidas</TableCell>
               <TableCell>Usuarios</TableCell>
               <TableCell>Entradas</TableCell>
               <TableCell>Productos</TableCell>
-              <TableCell>Clientes</TableCell>
+              <TableCell>Almacenes</TableCell>
               <TableCell>Proveedores</TableCell>
               <TableCell>Permisos</TableCell>
               <TableCell>Configuración</TableCell>

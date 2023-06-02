@@ -71,6 +71,13 @@ export const permisosSlice = createSlice({
     error: null,
     loading: false,
   },
+  reducers: {
+    LogoutPermisos: (state) => {
+      state.permisos = [];
+      state.error = null;
+      state.loading = false;
+    },
+  },
   extraReducers: (build) => {
     // getpermisos
     build
@@ -121,3 +128,5 @@ export const permisosSlice = createSlice({
       });
   },
 });
+
+export const { LogoutPermisos } = permisosSlice.actions;

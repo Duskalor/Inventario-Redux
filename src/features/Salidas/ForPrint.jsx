@@ -25,7 +25,7 @@ export default function ForPrint({ ToPrint }) {
   const Datos = useSelector((state) => state.Datos);
   const dispatch = useDispatch();
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
-  const Productos = productoSalidaBD.filter((pro) => pro.IdSalida == id);
+  const Productos = productoSalidaBD.filter((pro) => pro.IdSalida === id);
   //console.log(Productos);
   const componentRef = useRef();
   const handlePrint = useReactToPrint({

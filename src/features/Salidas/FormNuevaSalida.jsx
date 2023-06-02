@@ -2,7 +2,6 @@ import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoSalida from '../ProductoSalidas/FormNuevoProductoSalida';
-import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
 import { createSalida } from './salidasSlice';
 // import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
 // import { createEntradas } from './entradaSlice';
@@ -24,7 +23,7 @@ export default function FormNuevaSalida({ handleClose }) {
 
   const onSubmit = (datos) => {
     //console.log(productoSalida.length);
-    if (!productoSalida.length == 0) {
+    if (!productoSalida.length === 0) {
       let total = 0;
       productoSalida.forEach(function (a) {
         total += parseInt(a.Cantidad);

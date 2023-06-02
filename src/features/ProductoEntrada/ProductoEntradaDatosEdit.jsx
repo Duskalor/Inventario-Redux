@@ -9,7 +9,7 @@ export default function ProductoEntradaDatosEdit({ producto }) {
 
   const { productos } = useSelector((state) => state.Productos);
 
-  const ListaProductos = productos.find((pro) => pro.id == IdProducto);
+  const ListaProductos = productos.find((pro) => pro.id === +IdProducto);
   //.log(ListaProductos);
   const dispatch = useDispatch();
   const deleteItem = (id) => {

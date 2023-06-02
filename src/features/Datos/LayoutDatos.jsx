@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import FormEditDatos from './FormEditDatos';
-import { CircularProgress, Typography } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import { useSelector } from 'react-redux';
 import { style } from '../style';

@@ -8,7 +8,6 @@ export default function FormNuevaEntrada({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { proveedores } = useSelector((state) => state.Proveedor);
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
-  const { productos } = useSelector((state) => state.Productos);
 
   // USE STATE
 

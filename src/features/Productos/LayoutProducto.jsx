@@ -18,7 +18,18 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Producto</Button>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
+          '&>button': { m: '1rem' },
+        }}
+      >
+        <Button variant='contained' onClick={handleOpen}>
+          Nuevo Producto
+        </Button>
+      </Box>
       <Modal
         hideBackdrop
         open={open}
@@ -34,6 +45,7 @@ export function ChildModal() {
     </React.Fragment>
   );
 }
+
 export default function LayoutProducto() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -63,7 +75,6 @@ export default function LayoutProducto() {
       >
         <Box sx={{ ...style, width: 800, borderRadius: 4 }}>
           <ListaProductos />
-          <ChildModal />
         </Box>
       </Modal>
     </div>

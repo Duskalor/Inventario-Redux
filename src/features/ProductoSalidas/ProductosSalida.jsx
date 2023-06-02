@@ -8,7 +8,7 @@ export default function ProductosSalida({ producto }) {
 
   const { productos } = useSelector((state) => state.Productos);
   //console.log(producto, productos);
-  const ListaProductos = productos.find((pro) => pro.id == IdProducto);
+  const ListaProductos = productos.find((pro) => pro.id === +IdProducto);
   //console.log(ListaProductos);
   const dispatch = useDispatch();
   const deleteItem = (id) => {

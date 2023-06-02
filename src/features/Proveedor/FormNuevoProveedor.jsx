@@ -1,4 +1,4 @@
-import { Button, Input, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -23,13 +23,6 @@ export default function FormNuevoProveedor({ handleClose }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Nuevo Proveedor</h1>
       <div>
-        {/* <label>Nombre</label>
-        <Input
-          type='text'
-          {...register('FullName', {
-            required: true,
-          })}
-        /> */}
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -44,12 +37,6 @@ export default function FormNuevoProveedor({ handleClose }) {
         {errors.FullName?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        {/* <label>RUC</label>
-        <Input
-          type='number'
-          {...register('Ruc', { required: true, maxLength: 11, minLength: 11 })}
-        /> */}
-
         <TextField
           sx={{
             margin: '10px 0 0 0',

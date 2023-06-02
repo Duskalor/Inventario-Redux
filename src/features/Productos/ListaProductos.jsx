@@ -17,17 +17,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductos } from './productosSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import { centrar, titulos } from '../style';
+import { ChildModal } from './LayoutProducto';
 
 export default function ListaProductos() {
   const { productos } = useSelector(
     (state) => state.Productos,
     (prevData, nextData) => prevData.productos === nextData.productos
   );
-  // console.log(productos);
   const [Busqueda, setBusqueda] = useState('');
 
-  //console.log(filtrado);
-  //console.log(productos);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductos());
@@ -45,7 +43,6 @@ export default function ListaProductos() {
       : productos;
   }, [productos, Busqueda]);
 
-  // console.log({ productosFiltrados });
   return (
     <div>
       <Box
@@ -56,7 +53,7 @@ export default function ListaProductos() {
         <Typography sx={titulos} variant='h4' component='h2'>
           PRODUCTOS
         </Typography>
-
+        <ChildModal />
         <TextField
           sx={{
             display: 'flex',
@@ -79,12 +76,16 @@ export default function ListaProductos() {
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
             <TableHead>
-              <TableRow>
+              <TableRow
+                sx={{
+                  '&>th': { textAlign: 'center' },
+                }}
+              >
                 <TableCell>Código</TableCell>
                 <TableCell>Descripción</TableCell>
                 <TableCell>Categoría</TableCell>
-                <TableCell>Precio Compra </TableCell>
-                <TableCell>Precio Venta </TableCell>
+                {/* <TableCell>Precio Compra </TableCell>
+                <TableCell>Precio Venta </TableCell> */}
                 <TableCell>Stock </TableCell>
                 <TableCell>Acciones </TableCell>
               </TableRow>

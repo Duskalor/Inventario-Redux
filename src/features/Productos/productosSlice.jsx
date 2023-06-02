@@ -80,13 +80,17 @@ export const productosSlice = createSlice({
   name: 'Productos',
   initialState: {
     productos: [],
-    filtrado: [],
     error: null,
     loading: false,
   },
   reducers: {
     borrarProductos: (state /* action */) => {
       state.productos = [];
+    },
+    logoutProductos: (state /* action */) => {
+      state.productos = [];
+      state.error = null;
+      state.loading = false;
     },
   },
 
@@ -143,53 +147,5 @@ export const productosSlice = createSlice({
         state.loading = false;
       });
   },
-
-  // extraReducers: {
-  //   //GET
-  //   [getProductos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [getProductos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.productos = payload.ListaProductos;
-  //     state.filtrado = payload.ListaProductos;
-  //   },
-  //   [getProductos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   // CREATE
-  //   [createProducto.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [createProducto.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.productos = payload.ListaProductos;
-  //   },
-  //   [createProducto.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   // DELETE
-  //   [deleteProductos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [deleteProductos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.productos = payload.ListaProductos;
-  //   },
-  //   [deleteProductos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   // UPDATE
-  //   [updateProductos.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [updateProductos.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.productos = payload.ListaProductos;
-  //   },
-  //   [updateProductos.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  // },
 });
-export const { borrarProductos } = productosSlice.actions;
+export const { borrarProductos, logoutProductos } = productosSlice.actions;

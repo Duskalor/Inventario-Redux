@@ -4,7 +4,7 @@ export default function ProductoSalidaVista({ producto }) {
   const { IdProducto, PrecioVenta, Cantidad, SubTotal } = producto;
   const { productos } = useSelector((state) => state.Productos);
 
-  const ListaProductos = productos.find((pro) => pro.id == IdProducto);
+  const ListaProductos = productos.find((pro) => pro.id === +IdProducto);
 
   return (
     producto && (

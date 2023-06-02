@@ -1,4 +1,4 @@
-import { Button, Input, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -22,14 +22,6 @@ export default function FormNuevoProducto({ handleClose }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Nuevo Producto</h1>
       <div>
-        {/* <label>Codigo</label>
-        <Input
-          type='text'
-          {...register('Codigo', {
-            required: true,
-          })}
-        /> */}
-
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -45,14 +37,6 @@ export default function FormNuevoProducto({ handleClose }) {
         {errors.Codigo?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        {/* <label>Descripcion</label>
-        <Input
-          type='text'
-          {...register('Descripcion', {
-            required: true,
-          })}
-        /> */}
-
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -70,14 +54,6 @@ export default function FormNuevoProducto({ handleClose }) {
       </div>
 
       <div>
-        {/* <label>Categoria</label>
-        <Input
-          type='text'
-          {...register('Categoria', {
-            required: true,
-          })}
-        /> */}
-
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -93,14 +69,6 @@ export default function FormNuevoProducto({ handleClose }) {
         {errors.Categoria?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        {/* <label>PrecioCompra</label>
-        <Input
-          type='number'
-          {...register('PrecioCompra', {
-            required: true,
-          })}
-        /> */}
-
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -117,14 +85,6 @@ export default function FormNuevoProducto({ handleClose }) {
         )}
       </div>
       <div>
-        {/* <label>PrecioVenta</label>
-        <Input
-          type='number'
-          {...register('PrecioVenta', {
-            required: true,
-          })}
-        /> */}
-
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -141,13 +101,6 @@ export default function FormNuevoProducto({ handleClose }) {
         )}
       </div>
       <div>
-        {/* <label>Stock</label>
-        <Input
-          type='number'
-          {...register('Stock', {
-            required: true,
-          })}
-        /> */}
         <TextField
           sx={{
             margin: '10px 0 0 0',
