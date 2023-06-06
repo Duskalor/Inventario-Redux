@@ -23,15 +23,9 @@ export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
 });
 export const logout = createAsyncThunk(
   'Logout/LogoutUser',
-  async (_, { getState, dispatch }) => {
-    const { Auth } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
+  async (_, { dispatch }) => {
     try {
-      const { data } = await apiSistema.get('logout', config);
+      const { data } = await apiSistema.get('logout');
       localStorage.clear();
       dispatch(logoutProductos());
       dispatch(LogoutUsuario());
@@ -51,18 +45,12 @@ export const getUserDetails = createAsyncThunk(
   'get/getUserDetails',
   async (_, { getState }) => {
     const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.get(
-      `user/details/${Auth.userId}`,
-      config
-    );
-    //console.log(data);
-    return data;
+    try {
+      const { data } = await apiSistema.get(`user/details/${Auth.userId}`);
+      return data;
+    } catch (error) {
+      console.log(error.response.status);
+    }
   }
 );
 
@@ -118,7 +106,6 @@ export const authSlice = createSlice({
         state.user = [];
       })
       .addCase(logout.rejected, (state, { payload }) => {
-        // console.log(payload);
         state.loading = true;
         localStorage.clear();
       })
@@ -132,7 +119,7 @@ export const authSlice = createSlice({
         state.user = payload.User;
       })
       .addCase(getUserDetails.rejected, (state) => {
-        state.loading = true;
+        state.loading = false;
       });
   },
 });

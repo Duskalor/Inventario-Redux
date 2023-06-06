@@ -7,7 +7,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -18,13 +20,16 @@ import { getProductos } from './productosSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import { centrar, titulos } from '../style';
 import { ChildModal } from './LayoutProducto';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
+import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 
 export default function ListaProductos() {
-  const { productos } = useSelector(
-    (state) => state.Productos,
-    (prevData, nextData) => prevData.productos === nextData.productos
-  );
+  const { productos, loading } = useSelector((state) => state.Productos);
+  const { id } = useUserLogin();
   const [Busqueda, setBusqueda] = useState('');
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,12 +41,29 @@ export default function ListaProductos() {
   };
 
   const productosFiltrados = useMemo(() => {
+    setPage(0);
     return Busqueda !== '' && Busqueda !== null
       ? productos.filter((pro) =>
           pro.Codigo.toLowerCase().includes(Busqueda.toLowerCase())
         )
       : productos;
   }, [productos, Busqueda]);
+
+  const emptyRows =
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - productosFiltrados.length)
+      : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const PaginationData = [...productosFiltrados].reverse();
 
   return (
     <div>
@@ -73,7 +95,12 @@ export default function ListaProductos() {
       </Box>
 
       {productos.length !== 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            height: '600px',
+          }}
+        >
           <Table arial-label='simple tables'>
             <TableHead>
               <TableRow
@@ -81,11 +108,12 @@ export default function ListaProductos() {
                   '&>th': { textAlign: 'center' },
                 }}
               >
-                <TableCell>Código</TableCell>
-                <TableCell>Descripción</TableCell>
-                <TableCell>Categoría</TableCell>
-                {/* <TableCell>Precio Compra </TableCell>
-                <TableCell>Precio Venta </TableCell> */}
+                <TableCell sx={{ width: '70px' }}>Código</TableCell>
+                <TableCell sx={{ width: '420px' }}>Descripción</TableCell>
+                <TableCell sx={{ width: '140px' }}>Categoría</TableCell>
+                {roles.admin === id && (
+                  <TableCell sx={{ width: '70px' }}>Status </TableCell>
+                )}
                 <TableCell>Stock </TableCell>
                 <TableCell>Acciones </TableCell>
               </TableRow>
@@ -93,7 +121,13 @@ export default function ListaProductos() {
 
             <TableBody>
               {productosFiltrados.length > 0 ? (
-                productosFiltrados.map((producto, id) => (
+                (rowsPerPage > 0
+                  ? PaginationData.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : productosFiltrados
+                ).map((producto, id) => (
                   <Productos key={id} productos={producto} />
                 ))
               ) : (
@@ -103,7 +137,43 @@ export default function ListaProductos() {
                   </TableCell>
                 </TableRow>
               )}
+              {emptyRows > 0 && productosFiltrados.length > 0 && (
+                <TableRow
+                  style={{
+                    height: 69.5 * emptyRows,
+                  }}
+                >
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
             </TableBody>
+            {productosFiltrados.length > 0 && (
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[
+                      7,
+                      10,
+                      25,
+                      { label: 'All', value: -1 },
+                    ]}
+                    colSpan={6}
+                    count={productosFiltrados.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        'aria-label': 'filas por paginas',
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            )}
           </Table>
         </TableContainer>
       ) : (
@@ -116,7 +186,11 @@ export default function ListaProductos() {
           variant='h4'
           component='h2'
         >
-          No hay productos ingresados
+          {loading ? (
+            <HourglassBottomIcon sx={{ fontSize: 60 }} />
+          ) : (
+            <p>No hay productos ingresados</p>
+          )}
         </Typography>
       )}
     </div>

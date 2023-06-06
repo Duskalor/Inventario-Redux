@@ -2,10 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import ListaProductos from './ListaProductos';
-import FormNuevoProducto from './FormNuevoProducto';
-import InventoryIcon from '@mui/icons-material/Inventory';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import { style } from '../style';
+import ListaAlmacenes from './ListaAlmacenes';
+import FormNuevoAlmacen from './FormNuevoAlmacen';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -26,8 +26,8 @@ export function ChildModal() {
           '&>button': { m: '1rem' },
         }}
       >
-        <Button variant='contained' onClick={handleOpen}>
-          Nuevo Producto
+        <Button onClick={handleOpen} variant='contained'>
+          Nuevo Almacen
         </Button>
       </Box>
       <Modal
@@ -38,23 +38,14 @@ export function ChildModal() {
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 250, borderRadius: 4 }}>
-          <FormNuevoProducto handleClose={handleClose} />
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button onClick={handleClose}>Cerrar</Button>
-          </Box>
+          <FormNuevoAlmacen handleClose={handleClose} />
+          <Button onClick={handleClose}>Cerrar</Button>
         </Box>
       </Modal>
     </React.Fragment>
   );
 }
-
-export default function LayoutProducto() {
+export default function LayoutAlmacenes() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -72,8 +63,8 @@ export default function LayoutProducto() {
           flexDirection: 'column',
         }}
       >
-        <InventoryIcon sx={{ fontSize: 60 }} />
-        Productos
+        <AssignmentIcon sx={{ fontSize: 60 }} />
+        Almacenes
       </Button>
       <Modal
         open={open}
@@ -81,8 +72,8 @@ export default function LayoutProducto() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 1200, borderRadius: 4 }}>
-          <ListaProductos />
+        <Box sx={{ ...style, width: 850, borderRadius: 4 }}>
+          <ListaAlmacenes />
         </Box>
       </Modal>
     </div>

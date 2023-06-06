@@ -1,65 +1,29 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getpermisos = createAsyncThunk(
-  'get/getpermisos',
-  async (_, { getState }) => {
-    const { Auth } = getState();
+export const getpermisos = createAsyncThunk('get/getpermisos', async (_) => {
+  const { data } = await apiSistema.get('permisos');
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.get('permisos', config);
-
-    return data;
-  }
-);
+  return data;
+});
 export const createpermisos = createAsyncThunk(
   'create/postpermisos',
-  async (nuevo, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth?.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post('permisos/create', nuevo, config);
+  async (nuevo) => {
+    const { data } = await apiSistema.post('permisos/create', nuevo);
     return data;
   }
 );
 export const deletepermisos = createAsyncThunk(
   'delete/postpermisos',
-  async (id, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.delete(`permisos/delete/${id}`, config);
+  async (id) => {
+    const { data } = await apiSistema.delete(`permisos/delete/${id}`);
     return data;
   }
 );
 export const updatepermisos = createAsyncThunk(
   'update/postpermisos',
-  async ({ id, dato }, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-
-    const { data } = await apiSistema.put(
-      `permisos/update/${id}`,
-      dato,
-      config
-    );
+  async ({ id, dato }) => {
+    const { data } = await apiSistema.put(`permisos/update/${id}`, dato);
     return data;
   }
 );

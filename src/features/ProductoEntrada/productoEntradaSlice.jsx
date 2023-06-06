@@ -3,104 +3,49 @@ import { apiSistema } from '../../Api/ApiSistema';
 
 export const getDetalleEntradas = createAsyncThunk(
   'get/getDetalleEntradas',
-  async (_, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.get('detalleEntrada', config);
-    //console.log(data);
+  async () => {
+    const { data } = await apiSistema.get('detalleEntrada');
     return data;
   }
 );
 export const createProductoEntrada = createAsyncThunk(
   'create/postProductoEntrada',
-  async (nuevo, { getState }) => {
-    const { Auth } = getState();
-    //console.log(nuevo);
+  async (nuevo) => {
     const { IdEntrada } = nuevo;
-    const { IdProducto, PrecioCompra, Cantidad, SubTotal } = nuevo.pe;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post(
-      'detalleEntrada/create',
-      { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
-      config
-    );
+    const newProductoEntrada = nuevo.pe;
+
+    const { data } = await apiSistema.post('detalleEntrada/create', {
+      ...newProductoEntrada,
+      IdEntrada,
+    });
     return data;
   }
 );
 
 export const updateProductoEntrada = createAsyncThunk(
   'update/postProductoEntrada',
-  async ({ Existencia, pe }, { getState }) => {
-    const { Auth } = getState();
+  async ({ Existencia, updateProductoEntrada }) => {
     const id = Existencia.id;
-    const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.put(
-      `detalleEntrada/update/${id}`,
-      {
-        id,
-        IdEntrada,
-        IdProducto,
-        PrecioCompra,
-        Cantidad,
-        SubTotal,
-      },
-      config
-    );
+    const { data } = await apiSistema.put(`detalleEntrada/update/${id}`, {
+      ...updateProductoEntrada,
+      id,
+    });
     return data;
   }
 );
 
 export const EditProductoEntrada = createAsyncThunk(
   'create/postProductoEntrada',
-  async ({ pe }, { getState }) => {
-    const { Auth } = getState();
-    //console.log(nuevo);
-
-    const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
-    //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post(
-      'detalleEntrada/create',
-      { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
-      config
-    );
+  async ({ pe }) => {
+    const { data } = await apiSistema.post('detalleEntrada/create', pe);
     return data;
   }
 );
 
 export const DeleteProductoEntrada = createAsyncThunk(
   'delete/postProductosEntrada',
-  async (id, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.delete(
-      `detalleEntrada/delete/${id}`,
-      config
-    );
+  async (id) => {
+    const { data } = await apiSistema.delete(`detalleEntrada/delete/${id}`);
     return data;
   }
 );
@@ -188,44 +133,6 @@ export const productoEntradaSlice = createSlice({
         state.loading = false;
       });
   },
-
-  // extraReducers: {
-  //   ///GET
-  //   [getDetalleEntradas.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [getDetalleEntradas.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     //console.log(payload);
-  //     state.productoEntradaBD = payload.ListaDetalleEntrada;
-  //   },
-  //   [getDetalleEntradas.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-
-  //   [createProductoEntrada.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [createProductoEntrada.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.productoEntradaBD = payload.ListaDetalleEntrada;
-  //   },
-  //   [createProductoEntrada.rejected]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  //   [DeleteProductoEntrada.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [DeleteProductoEntrada.fulfilled]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  //   [DeleteProductoEntrada.rejected]: (state, action) => {
-  //     state.loading = false;
-  //     //console.log(action);
-  //   },
-  // },
 });
 export const {
   GuardarEstado,

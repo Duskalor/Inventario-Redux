@@ -68,7 +68,7 @@ export default function FormNuevoProducto({ handleClose }) {
 
         {errors.Categoria?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
-      <div>
+      {/* <div>
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -99,7 +99,7 @@ export default function FormNuevoProducto({ handleClose }) {
         {errors.PrecioVenta?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div>
+      </div> */}
       <div>
         <TextField
           sx={{
@@ -115,7 +115,15 @@ export default function FormNuevoProducto({ handleClose }) {
         {errors.Stock?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
 
-      <Button type='submit'>Crear</Button>
+      <Button
+        sx={{
+          mt: '1rem',
+        }}
+        type='submit'
+        variant='contained'
+      >
+        Crear
+      </Button>
     </form>
   );
 }

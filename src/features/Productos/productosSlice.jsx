@@ -1,77 +1,48 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiSistema } from '../../Api/ApiSistema';
 
-export const getProductos = createAsyncThunk(
-  'get/getProductos',
-  async (_, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.get('producto', config);
-    return data;
-  }
-);
+export const getProductos = createAsyncThunk('get/getProductos', async () => {
+  const { data } = await apiSistema.get('producto');
+  return data;
+});
 
 export const createProducto = createAsyncThunk(
   'create/PostProducto',
-  async (nuevo, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post('producto/create', nuevo, config);
+  async (nuevo) => {
+    const { data } = await apiSistema.post('producto/create', nuevo);
     return data;
   }
 );
 
 export const deleteProductos = createAsyncThunk(
   'delete/postProductos',
-  async (id, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.delete(`producto/delete/${id}`, config);
+  async (id) => {
+    const { data } = await apiSistema.delete(`producto/delete/${id}`);
     return data;
   }
 );
 
 export const updateProductos = createAsyncThunk(
   'update/postProductos',
-  async (datos, { getState }) => {
-    const { id, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock } =
-      datos;
-    console.log({ datos });
-    const { Auth } = getState();
+  async (datos) => {
+    const {
+      id,
+      Categoria,
+      Descripcion,
+      PrecioCompra,
+      PrecioVenta,
+      Stock,
+      active,
+    } = datos;
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-
-    const { data } = await apiSistema.put(
-      `producto/update/${id}`,
-      {
-        Categoria,
-        Descripcion,
-        PrecioCompra,
-        PrecioVenta,
-        Stock,
-      },
-      config
-    );
+    const { data } = await apiSistema.put(`producto/update/${id}`, {
+      Categoria,
+      Descripcion,
+      PrecioCompra,
+      PrecioVenta,
+      Stock,
+      active,
+    });
     return data;
   }
 );
@@ -128,6 +99,7 @@ export const productosSlice = createSlice({
       })
       .addCase(deleteProductos.fulfilled, (state, { payload }) => {
         state.loading = false;
+        console.log({ payload });
         state.productos = payload.ListaProductos;
       })
       .addCase(deleteProductos.rejected, (state) => {

@@ -8,8 +8,9 @@ export default function FormEditProducto({ handleClose, id }) {
   //console.log(id);
   const { productos } = useSelector((state) => state.Productos);
 
-  const { Codigo, Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock } =
-    productos.find((producto) => producto.id === id);
+  const { Codigo, Categoria, Descripcion, Stock, active } = productos.find(
+    (producto) => producto.id === id
+  );
   const {
     register,
     handleSubmit,
@@ -19,20 +20,18 @@ export default function FormEditProducto({ handleClose, id }) {
     defaultValues: {
       Categoria: Categoria,
       Descripcion: Descripcion,
-      PrecioCompra: PrecioCompra,
-      PrecioVenta: PrecioVenta,
+      active: active,
       Stock: Stock,
     },
   });
   const onSubmit = (dato) => {
-    const { Categoria, Descripcion, PrecioCompra, PrecioVenta, Stock } = dato;
+    const { Categoria, Descripcion, active, Stock } = dato;
     dispatch(
       updateProductos({
         id,
         Categoria,
         Descripcion,
-        PrecioCompra,
-        PrecioVenta,
+        active,
         Stock,
       })
     );
@@ -69,28 +68,9 @@ export default function FormEditProducto({ handleClose, id }) {
         {errors.Categoria?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
-        <label>PrecioCompra</label>
-        <Input
-          type='number'
-          {...register('PrecioCompra', {
-            required: true,
-          })}
-        />
-        {errors.PrecioCompra?.type === 'required' && (
-          <p>El Campo es requirido </p>
-        )}
-      </div>
-      <div>
-        <label>PrecioVenta</label>
-        <Input
-          type='number'
-          {...register('PrecioVenta', {
-            required: true,
-          })}
-        />
-        {errors.PrecioVenta?.type === 'required' && (
-          <p>El Campo es requirido </p>
-        )}
+        <label>Active</label>
+        <Input type='checkbox' {...register('active')} />
+        {errors.active?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
       <div>
         <label>Stock</label>

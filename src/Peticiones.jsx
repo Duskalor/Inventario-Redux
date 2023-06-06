@@ -22,6 +22,7 @@ export function Peticions(Dispatch) {
   Dispatch(getpermisos());
   Dispatch(getProveedor());
   Dispatch(getClientes());
+  /////
   // Dispatch(getSalidas());
   // Dispatch(getProductos());
   // Dispatch(getDetalleEntradas());

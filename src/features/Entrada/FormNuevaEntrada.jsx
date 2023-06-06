@@ -1,17 +1,18 @@
 import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
-import { createEntradas } from './entradaSlice';
+// import { createEntradas } from './entradaSlice';
+import EmptyTextarea from '../../components/TextArea';
 
 export default function FormNuevaEntrada({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
-  const { proveedores } = useSelector((state) => state.Proveedor);
-  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  // const { proveedores } = useSelector((state) => state.Proveedor);
+  // const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
 
   // USE STATE
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -21,17 +22,18 @@ export default function FormNuevaEntrada({ handleClose }) {
   const onSubmit = async (datos) => {
     // console.log({ productoEntrada });
     // verificando existencia de productos generar la entrada
-    if (productoEntrada.length !== 0) {
-      let total = 0;
-      productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
-      let Precio = 0;
-      productoEntrada.forEach((a) => (Precio += parseInt(a.SubTotal)));
+    console.log(datos);
+    // if (productoEntrada.length !== 0) {
+    //   let total = 0;
+    //   productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
+    //   let Precio = 0;
+    //   productoEntrada.forEach((a) => (Precio += parseInt(a.SubTotal)));
 
-      datos = { ...datos, CantidadProductos: total };
-      datos = { ...datos, MontoTotal: Precio };
-      dispatch(createEntradas({ datos, productoEntrada }));
-      handleClose();
-    }
+    //   datos = { ...datos, CantidadProductos: total };
+    //   datos = { ...datos, MontoTotal: Precio };
+    //   dispatch(createEntradas({ datos, productoEntrada }));
+    //   handleClose();
+    // }
   };
 
   return (
@@ -73,6 +75,11 @@ export default function FormNuevaEntrada({ handleClose }) {
         </NativeSelect>
         {errors.IdUsuario?.type === 'required' && <p>El Campo es requirido </p>}
       </div>
+
+      <div>
+        <EmptyTextarea type='input' {...register('razon-salida')} />
+      </div>
+      {/*       
       <div>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Proveedor
@@ -90,7 +97,7 @@ export default function FormNuevaEntrada({ handleClose }) {
         {errors.IdProveedor?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div>
+      </div> */}
 
       <hr />
       <FormNuevoProductoEntrada />

@@ -11,21 +11,27 @@ import {
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { titulos } from '../style';
-import Permiso from './Permiso';
-import { getpermisos } from './permisosSlice';
+import Almacen from './Almacen';
+import { getAlmacenes } from './almacenesSlice';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { ChildModal } from './LayoutAlmacenes';
 
-export default function ListaPermisos() {
-  const { permisos } = useSelector((state) => state.Permisos);
-  // console.log(permisos);
+export default function ListaAlmacenes() {
+  const { almacenes } = useSelector((state) => state.Almacenes);
+  const { id } = useUserLogin();
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getpermisos());
-  }, []);
+    if (almacenes.length === 0) dispatch(getAlmacenes());
+  }, [dispatch]);
+
   return (
     <div>
+      {/* <h1>Almacenes</h1> */}
       <Typography sx={titulos} variant='h4' component='h2'>
-        PERMISOS
+        Almacenes
       </Typography>
+      <ChildModal />
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
@@ -34,21 +40,16 @@ export default function ListaPermisos() {
                 '&>th': { textAlign: 'center' },
               }}
             >
-              <TableCell>Descripción</TableCell>
-              <TableCell>Salidas</TableCell>
-              <TableCell>Usuarios</TableCell>
-              <TableCell>Entradas</TableCell>
-              <TableCell>Productos</TableCell>
-              <TableCell>Almacenes</TableCell>
-              <TableCell>Proveedores</TableCell>
-              <TableCell>Permisos</TableCell>
-              <TableCell>Configuración</TableCell>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Dirección</TableCell>
+              {roles.admin === id && <TableCell>Status </TableCell>}
+              <TableCell>Ubicación</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {permisos.map((permiso, id) => (
-              <Permiso key={id} permisos={permiso} />
+            {almacenes.map((almacen) => (
+              <Almacen key={almacen.id} almacen={almacen} />
             ))}
           </TableBody>
         </Table>

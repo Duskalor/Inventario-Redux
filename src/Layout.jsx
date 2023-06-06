@@ -11,6 +11,7 @@ import LayoutProveedores from './features/Proveedor/LayoutProveedores';
 import LayoutReports from './features/Report/LayoutReports';
 import LayoutSalida from './features/Salidas/LayoutSalida';
 import LayoutUsuarios from './features/Usuarios/LayoutUsuarios';
+import LayoutAlmacenes from './features/Almacenes/LayoutAlmacenes';
 
 export default function Layout() {
   const { RazonSocial } = useSelector((state) => state.Datos);
@@ -22,6 +23,7 @@ export default function Layout() {
   );
 
   const dispatch = useDispatch();
+
   return (
     <Box
       sx={{
@@ -29,10 +31,10 @@ export default function Layout() {
         flexDirection: 'column',
       }}
     >
-      <Typography variant='h4' align='center' mt={7} ml={4}>
+      <Typography variant='h4' align='center' mt={7}>
         Sistema De Almacén {RazonSocial}
       </Typography>
-      <Typography variant='h4' align='center' mt={4} mr={4}>
+      <Typography variant='h4' align='center' mt={4}>
         Bienvenido {user.FullName} - {UserPermiso?.Descripcion}
       </Typography>
       <LayoutReports />
@@ -67,6 +69,11 @@ export default function Layout() {
           {UserPermiso?.Productos === 1 && (
             <Grid item xs='auto' sm={2} md={2}>
               <LayoutProducto />
+            </Grid>
+          )}
+          {UserPermiso?.Almacenes === 1 && (
+            <Grid item xs='auto' sm={2} md={2}>
+              <LayoutAlmacenes />
             </Grid>
           )}
           {UserPermiso?.Proveedores === 1 && (

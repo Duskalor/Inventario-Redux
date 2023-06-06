@@ -11,34 +11,19 @@ import {
   updateProductos,
 } from '../Productos/productosSlice';
 
-export const getEntradas = createAsyncThunk(
-  'get/getEntradas',
-  async (_, { getState }) => {
-    const { Auth } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.get('entrada', config);
-    return data;
-  }
-);
+export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
+  const { data } = await apiSistema.get('entrada');
+  return data;
+});
 
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
   async ({ datos, productoEntrada }, { dispatch, getState }) => {
     const {
-      Auth,
       Productos: { productos },
     } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post('entrada/create', datos, config);
+    const { data } = await apiSistema.post('entrada/create', datos);
     const IdEntrada = data.Entrada.id;
 
     productoEntrada.forEach((pe) => {
@@ -61,15 +46,8 @@ export const createEntradas = createAsyncThunk(
 );
 export const deleteEntradas = createAsyncThunk(
   'delete/postEntradas',
-  async (id, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.delete(`entrada/delete/${id}`, config);
+  async (id) => {
+    const { data } = await apiSistema.delete(`entrada/delete/${id}`);
     return data;
   }
 );
@@ -77,25 +55,14 @@ export const updateEntradas = createAsyncThunk(
   'update/postEntradas',
   async (
     { id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal },
-    { dispatch, getState }
+    { dispatch }
   ) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.put(
-      `entrada/update/${id}`,
-      {
-        IdUsuario,
-        IdProveedor,
-        CantidadProductos,
-        MontoTotal,
-      },
-      config
-    );
+    const { data } = await apiSistema.put(`entrada/update/${id}`, {
+      IdUsuario,
+      IdProveedor,
+      CantidadProductos,
+      MontoTotal,
+    });
     dispatch(BorrarEstadoEdit());
     dispatch(getDetalleEntradas());
 
@@ -128,7 +95,7 @@ export const entradaSlice = createSlice({
         state.loading = false;
       })
 
-      /// createEntradas
+      // createEntradas
 
       .addCase(createEntradas.pending, (state) => {
         state.loading = true;

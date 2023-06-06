@@ -3,6 +3,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
 import { deleteProductos } from './productosSlice';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { BoxStatus } from '../../components/BoxStatus';
 
 export default function Productos({ productos }) {
   const {
@@ -10,10 +12,12 @@ export default function Productos({ productos }) {
     Categoria,
     Codigo,
     Descripcion,
+    active,
     // PrecioCompra,
     // PrecioVenta,
     Stock,
   } = productos;
+  const { id: idUser } = useUserLogin();
   //console.log(clientes);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
@@ -23,28 +27,37 @@ export default function Productos({ productos }) {
   };
 
   return (
-    <TableRow
-      sx={{
-        '&>td>div': { display: 'flex', justifyContent: 'center' },
-      }}
-    >
-      <TableCell>
-        <Box>{Codigo}</Box>
-      </TableCell>
-      <TableCell>{Descripcion}</TableCell>
-      <TableCell>{Categoria}</TableCell>
-      {/* <TableCell>{PrecioCompra}</TableCell>
-      <TableCell>{PrecioVenta}</TableCell> */}
-      <TableCell>
-        <Box>{Stock}</Box>
-      </TableCell>
+    <>
+      <TableRow
+        sx={{
+          '&>td>div': { display: 'flex', justifyContent: 'center' },
+          '&>td': { height: '30px' },
+        }}
+      >
+        <TableCell>
+          <Box>{Codigo}</Box>
+        </TableCell>
+        <TableCell>{Descripcion}</TableCell>
+        <TableCell>{Categoria}</TableCell>
+        {/* <TableCell>{PrecioCompra}</TableCell> */}
+        {roles.admin === idUser && (
+          <TableCell>
+            <BoxStatus active={active}>
+              {active ? <Box>Active</Box> : <Box>No active</Box>}
+            </BoxStatus>
+          </TableCell>
+        )}
+        <TableCell>
+          <Box>{Stock}</Box>
+        </TableCell>
 
-      <TableCell>
-        <Box>
-          <ModalEdit id={id} />
-          <Button onClick={() => deleteItem(id)}>Eliminar</Button>
-        </Box>
-      </TableCell>
-    </TableRow>
+        <TableCell>
+          <Box>
+            {roles.admin === idUser && <ModalEdit id={id} />}
+            <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+          </Box>
+        </TableCell>
+      </TableRow>
+    </>
   );
 }

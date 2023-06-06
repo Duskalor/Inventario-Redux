@@ -65,7 +65,7 @@ export const updateClientes = createAsyncThunk(
   }
 );
 
-export const ClientesSlice = createSlice({
+export const clientesSlice = createSlice({
   name: 'Clientes',
   initialState: {
     clientes: [],
@@ -120,51 +120,4 @@ export const ClientesSlice = createSlice({
         state.loading = false;
       });
   },
-  // extraReducers: {
-  //   ///GET
-  //   [getClientes.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [getClientes.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.clientes = payload.ListaDeclientes;
-  //   },
-  //   [getClientes.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   //CREATE
-  //   [createClientes.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [createClientes.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.clientes = payload.ListaDeclientes;
-  //   },
-  //   [createClientes.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  //   //DELETE
-  //   [deleteClientes.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [deleteClientes.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.clientes = payload.ListaDeclientes;
-  //   },
-  //   [deleteClientes.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-
-  //   //UPDATE
-  //   [updateClientes.pending]: (state) => {
-  //     state.loading = true;
-  //   },
-  //   [updateClientes.fulfilled]: (state, { payload }) => {
-  //     state.loading = false;
-  //     state.clientes = payload.ListaDeclientes;
-  //   },
-  //   [updateClientes.rejected]: (state) => {
-  //     state.loading = false;
-  //   },
-  // },
 });
