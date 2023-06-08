@@ -2,7 +2,9 @@ import Productos from './Productos';
 import {
   Box,
   InputAdornment,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -26,11 +28,16 @@ import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 
 export default function ListaProductos() {
   const { productos, loading } = useSelector((state) => state.Productos);
-  const { id } = useUserLogin();
+  const { almacenes } = useSelector((state) => state.Almacenes);
+  const { id, IdAlmacenes } = useUserLogin();
+  // const { usuarios } = useSelector((state) => state.Usuarios);
+  // const userActual = usuarios.find((user) => user.id === id);
+
   const [Busqueda, setBusqueda] = useState('');
+  const [BusquedaDescription, setBusquedaDescription] = useState('Codigo');
+  const [filterAlmacen, setFilterAlmacen] = useState(IdAlmacenes);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductos());
@@ -40,14 +47,25 @@ export default function ListaProductos() {
     setBusqueda(e.target.value);
   };
 
+  const productosFiltradosAlmacen = useMemo(() => {
+    setPage(0);
+    return filterAlmacen !== 'All' && Busqueda !== null
+      ? productos.filter((pro) => {
+          return pro.IdAlmacenes === +filterAlmacen;
+        })
+      : productos;
+  }, [productos, filterAlmacen]);
+
   const productosFiltrados = useMemo(() => {
     setPage(0);
     return Busqueda !== '' && Busqueda !== null
-      ? productos.filter((pro) =>
-          pro.Codigo.toLowerCase().includes(Busqueda.toLowerCase())
+      ? productosFiltradosAlmacen.filter((pro) =>
+          pro[BusquedaDescription].toLowerCase().includes(
+            Busqueda.toLowerCase()
+          )
         )
-      : productos;
-  }, [productos, Busqueda]);
+      : productosFiltradosAlmacen;
+  }, [productosFiltradosAlmacen, Busqueda, BusquedaDescription]);
 
   const emptyRows =
     page > 0
@@ -63,7 +81,14 @@ export default function ListaProductos() {
     setPage(0);
   };
 
-  const PaginationData = [...productosFiltrados].reverse();
+  const handleOnchangeUbicacion = (e) => {
+    setPage(0);
+    setFilterAlmacen(e.target.value);
+  };
+
+  const handleOnchangeFilterName = (e) => {
+    setBusquedaDescription(e.target.value);
+  };
 
   return (
     <div>
@@ -75,10 +100,57 @@ export default function ListaProductos() {
         <Typography sx={titulos} variant='h4' component='h2'>
           PRODUCTOS
         </Typography>
-        <ChildModal />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            '&>button': { m: '1rem' },
+          }}
+        >
+          <Box justifyContent='center' alignItems='center' display='flex'>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '2rem',
+              }}
+            >
+              {/* ubicacion  */}
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={filterAlmacen}
+                label='ubicacion'
+                onChange={handleOnchangeUbicacion}
+              >
+                {almacenes.map((almacen) => {
+                  return (
+                    <MenuItem key={almacen.id} value={almacen.id}>
+                      {almacen.ubicacion}
+                    </MenuItem>
+                  );
+                })}
+                <MenuItem value={'All'}>Todos</MenuItem>
+              </Select>
+              {/* filter */}
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={BusquedaDescription}
+                label='filter'
+                onChange={handleOnchangeFilterName}
+              >
+                <MenuItem value={'Codigo'}>Codigo</MenuItem>
+                <MenuItem value={'Descripcion'}>Descripcion</MenuItem>
+              </Select>
+            </Box>
+          </Box>
+          <ChildModal />
+        </Box>
         <TextField
           sx={{
             display: 'flex',
+            my: '1rem',
           }}
           id='input-with-icon-textfield'
           value={Busqueda}
@@ -111,6 +183,7 @@ export default function ListaProductos() {
                 <TableCell sx={{ width: '70px' }}>Código</TableCell>
                 <TableCell sx={{ width: '420px' }}>Descripción</TableCell>
                 <TableCell sx={{ width: '140px' }}>Categoría</TableCell>
+                <TableCell>Ubicación</TableCell>
                 {roles.admin === id && (
                   <TableCell sx={{ width: '70px' }}>Status </TableCell>
                 )}
@@ -122,10 +195,12 @@ export default function ListaProductos() {
             <TableBody>
               {productosFiltrados.length > 0 ? (
                 (rowsPerPage > 0
-                  ? PaginationData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
+                  ? [...productosFiltrados]
+                      .reverse()
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
                   : productosFiltrados
                 ).map((producto, id) => (
                   <Productos key={id} productos={producto} />
@@ -157,7 +232,7 @@ export default function ListaProductos() {
                       25,
                       { label: 'All', value: -1 },
                     ]}
-                    colSpan={6}
+                    colSpan={7}
                     count={productosFiltrados.length}
                     rowsPerPage={rowsPerPage}
                     page={page}

@@ -18,18 +18,9 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          width: '100%',
-          '&>button': { m: '1rem' },
-        }}
-      >
-        <Button variant='contained' onClick={handleOpen}>
-          Nuevo Producto
-        </Button>
-      </Box>
+      <Button variant='contained' onClick={handleOpen}>
+        Nuevo Producto
+      </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -81,7 +72,7 @@ export default function LayoutProducto() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 1200, borderRadius: 4 }}>
+        <Box sx={{ ...style, width: 1250, borderRadius: 4 }}>
           <ListaProductos />
         </Box>
       </Modal>

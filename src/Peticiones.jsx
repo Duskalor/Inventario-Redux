@@ -6,6 +6,7 @@ import { getpermisos } from './features/Permisos/permisosSlice';
 import { getProveedor } from './features/Proveedor/ProveedorSlice';
 import { getUsuarios } from './features/Usuarios/UsuariosSlice';
 import Layout from './Layout';
+import { getAlmacenes } from './features/Almacenes/almacenesSlice';
 
 export default function Peticiones() {
   const Dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function Peticiones() {
 
 export function Peticions(Dispatch) {
   Dispatch(getDatos());
+  Dispatch(getAlmacenes());
   Dispatch(getUsuarios());
   Dispatch(getpermisos());
   Dispatch(getProveedor());

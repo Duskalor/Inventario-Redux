@@ -99,7 +99,7 @@ export const productosSlice = createSlice({
       })
       .addCase(deleteProductos.fulfilled, (state, { payload }) => {
         state.loading = false;
-        console.log({ payload });
+        // console.log({ payload });
         state.productos = payload.ListaProductos;
       })
       .addCase(deleteProductos.rejected, (state) => {

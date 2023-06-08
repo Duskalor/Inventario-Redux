@@ -8,16 +8,12 @@ export default function ProductoSalidaVista({ producto }) {
 
   return (
     producto && (
-      <TableRow>
-        <TableCell sx={{ textAlign: 'center' }}>
-          {ListaProductos.Codigo}
-        </TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>
-          {ListaProductos.Descripcion}
-        </TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>{PrecioVenta}</TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>{Cantidad}</TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>{SubTotal}</TableCell>
+      <TableRow sx={{ '&>td': { textAlign: 'center' } }}>
+        <TableCell>{ListaProductos.Codigo}</TableCell>
+        <TableCell>{ListaProductos.Descripcion}</TableCell>
+        <TableCell>{PrecioVenta}</TableCell>
+        <TableCell>{Cantidad}</TableCell>
+        <TableCell>{SubTotal}</TableCell>
       </TableRow>
     )
   );

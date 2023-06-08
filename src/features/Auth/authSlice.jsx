@@ -57,7 +57,7 @@ export const getUserDetails = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'Auth',
   initialState: {
-    user: [],
+    user: {},
     userId,
     success,
     userToken,

@@ -17,7 +17,11 @@ export default function Layout() {
   const { RazonSocial } = useSelector((state) => state.Datos);
   const { user } = useSelector((state) => state.Auth);
   const { permisos } = useSelector((state) => state.Permisos);
+  const { almacenes } = useSelector((state) => state.Almacenes);
 
+  const NameAlmacen = almacenes.find(
+    (almacen) => almacen.id === user.IdAlmacenes
+  );
   const UserPermiso = permisos.find(
     (permiso) => permiso.id === user.IdPermisos
   );
@@ -35,7 +39,8 @@ export default function Layout() {
         Sistema De Almacén {RazonSocial}
       </Typography>
       <Typography variant='h4' align='center' mt={4}>
-        Bienvenido {user.FullName} - {UserPermiso?.Descripcion}
+        Bienvenido {user.FullName} - {UserPermiso?.Descripcion} -{' '}
+        {NameAlmacen?.ubicacion}
       </Typography>
       <LayoutReports />
       <Box
