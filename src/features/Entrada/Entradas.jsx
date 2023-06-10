@@ -15,14 +15,14 @@ export default function Entradas({ entrada }) {
     (prevData, nextData) =>
       prevData.productoEntradaBD === nextData.productoEntradaBD
   );
-  const { proveedores } = useSelector((state) => state.Proveedor);
+  // const { proveedores } = useSelector((state) => state.Proveedor);
   const { productos } = useSelector((state) => state.Productos);
   const dispatch = useDispatch();
 
   const {
     NumeroDocumento,
     CantidadProductos,
-    IdProveedor,
+    // IdProveedor,
     IdUsuario,
     MontoTotal,
     id,
@@ -30,9 +30,9 @@ export default function Entradas({ entrada }) {
   // obteniendo al usuario para listarlo
   const usuario = usuarios.find((user) => user.id === IdUsuario);
   // obteniendo al proveedor para listarlo
-  const proveedor = proveedores.find(
-    (proveedor) => proveedor.id === IdProveedor
-  );
+  // const proveedor = proveedores.find(
+  //   (proveedor) => proveedor.id === IdProveedor
+  // );
   // obteniendo los productos para modificar el stock
   const ParaEliminar = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
 
@@ -59,7 +59,7 @@ export default function Entradas({ entrada }) {
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
       <TableCell sx={centrar}>{usuario.FullName}</TableCell>
-      <TableCell sx={centrar}>{proveedor.FullName}</TableCell>
+      {/* <TableCell sx={centrar}>{proveedor.FullName}</TableCell> */}
       <TableCell sx={centrar}>{CantidadProductos}</TableCell>
       <TableCell sx={centrar}>{MontoTotal}</TableCell>
       <TableCell sx={centrar}>

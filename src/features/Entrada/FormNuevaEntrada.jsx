@@ -1,18 +1,26 @@
-import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
-// import { createEntradas } from './entradaSlice';
+import { createEntradas } from './entradaSlice';
 import EmptyTextarea from '../../components/TextArea';
-
+import { BoxError } from '../../components/BoxError';
 export default function FormNuevaEntrada({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
+  const TextArea = EmptyTextarea();
   // const { proveedores } = useSelector((state) => state.Proveedor);
-  // const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
 
   // USE STATE
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -20,26 +28,26 @@ export default function FormNuevaEntrada({ handleClose }) {
   } = useForm();
 
   const onSubmit = async (datos) => {
-    // console.log({ productoEntrada });
     // verificando existencia de productos generar la entrada
-    console.log(datos);
-    // if (productoEntrada.length !== 0) {
-    //   let total = 0;
-    //   productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
-    //   let Precio = 0;
-    //   productoEntrada.forEach((a) => (Precio += parseInt(a.SubTotal)));
+    if (productoEntrada.length !== 0) {
+      //   let Precio = 0;
+      //   productoEntrada.forEach((a) => (Precio += parseInt(a.SubTotal)));
+      //   datos = { ...datos, MontoTotal: Precio };
 
-    //   datos = { ...datos, CantidadProductos: total };
-    //   datos = { ...datos, MontoTotal: Precio };
-    //   dispatch(createEntradas({ datos, productoEntrada }));
-    //   handleClose();
-    // }
+      let total = 0;
+      productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
+      datos = { ...datos, CantidadProductos: total };
+      dispatch(createEntradas({ datos, productoEntrada }));
+      handleClose();
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Nueva Entrada</h1>
-      <div>
+      <Typography textAlign='center' variant='h1'>
+        Nueva Entrada
+      </Typography>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Codigo Documento
         </InputLabel>
@@ -52,10 +60,10 @@ export default function FormNuevaEntrada({ handleClose }) {
           name='NumeroDocumento'
         />
         {errors.NumeroDocumento?.type === 'required' && (
-          <p>El Campo es requirido </p>
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </div>
-      <div>
+      </Box>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Usuario
         </InputLabel>
@@ -73,14 +81,22 @@ export default function FormNuevaEntrada({ handleClose }) {
             );
           })}
         </NativeSelect>
-        {errors.IdUsuario?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
+        {errors.IdUsuario?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+      </Box>
 
-      <div>
-        <EmptyTextarea type='input' {...register('razon-salida')} />
-      </div>
+      <Box>
+        <TextArea
+          sx={{ my: '2rem' }}
+          aria-label='empty textarea'
+          placeholder='Razón del ingreso'
+          type='input'
+          {...register('razonSalida')}
+        />
+      </Box>
       {/*       
-      <div>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Proveedor
         </InputLabel>
@@ -97,7 +113,7 @@ export default function FormNuevaEntrada({ handleClose }) {
         {errors.IdProveedor?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div> */}
+      </Box> */}
 
       <hr />
       <FormNuevoProductoEntrada />

@@ -6,6 +6,8 @@ import ListaProductos from './ListaProductos';
 import FormNuevoProducto from './FormNuevoProducto';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { style } from '../style';
+import { ButtonLayout } from '../../components/ButtonLayout';
+import { useTheme } from '@emotion/react';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -18,9 +20,7 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button variant='contained' onClick={handleOpen}>
-        Nuevo Producto
-      </Button>
+      <Button onClick={handleOpen}>Nuevo Producto</Button>
       <Modal
         hideBackdrop
         open={open}
@@ -28,7 +28,14 @@ export function ChildModal() {
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
-        <Box sx={{ ...style, width: 250, borderRadius: 4 }}>
+        <Box
+          sx={{
+            ...style,
+            width: 250,
+            borderRadius: 4,
+            borderColor: 'rgba(255,255,255,0.2)',
+          }}
+        >
           <FormNuevoProducto handleClose={handleClose} />
           <Box
             sx={{
@@ -55,27 +62,27 @@ export default function LayoutProducto() {
   };
 
   return (
-    <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <InventoryIcon sx={{ fontSize: 60 }} />
+    <Box sx={{}}>
+      <ButtonLayout onClick={handleOpen}>
+        <InventoryIcon sx={{ fontSize: 65 }} />
         Productos
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 1250, borderRadius: 4 }}>
+        <Box
+          sx={{
+            ...style,
+            width: 1250,
+            borderRadius: 4,
+          }}
+        >
           <ListaProductos />
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

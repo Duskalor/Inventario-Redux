@@ -29,7 +29,7 @@ export default function Productos({ productos }) {
       <TableRow
         sx={{
           '&>td>div': { display: 'flex', justifyContent: 'center' },
-          '&>td': { height: '30px' },
+          '&>td': { height: '30px', color: 'white' },
         }}
       >
         <TableCell>

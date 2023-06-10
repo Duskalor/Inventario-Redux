@@ -24,7 +24,8 @@ apiSistema.interceptors.response.use(
 
     if (
       token &&
-      (error.response.status === 401 || error.response.status === 500)
+      error.response.status === 401
+      //||  error.response.status === 500
     ) {
       localStorage.clear();
     }

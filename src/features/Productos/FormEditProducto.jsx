@@ -1,4 +1,4 @@
-import { Button, Input } from '@mui/material';
+import { Box, Button, Input } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProductos } from './productosSlice';
@@ -40,11 +40,11 @@ export default function FormEditProducto({ handleClose, id }) {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      <Box>
         <label>Codigo</label>
         <Input type='text' value={Codigo} />
-      </div>
-      <div>
+      </Box>
+      <Box>
         <label>Descripcion</label>
         <Input
           type='text'
@@ -55,9 +55,9 @@ export default function FormEditProducto({ handleClose, id }) {
         {errors.Descripcion?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div>
+      </Box>
 
-      <div>
+      <Box>
         <label>Categoria</label>
         <Input
           type='text'
@@ -66,13 +66,13 @@ export default function FormEditProducto({ handleClose, id }) {
           })}
         />
         {errors.Categoria?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-      <div>
+      </Box>
+      <Box>
         <label>Active</label>
         <Input type='checkbox' {...register('active')} />
         {errors.active?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-      <div>
+      </Box>
+      <Box>
         <label>Stock</label>
         <Input
           type='number'
@@ -81,7 +81,7 @@ export default function FormEditProducto({ handleClose, id }) {
           })}
         />
         {errors.Stock?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
+      </Box>
 
       <Button type='submit'>Guardar</Button>
     </form>

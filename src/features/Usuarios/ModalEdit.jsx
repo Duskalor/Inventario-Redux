@@ -24,7 +24,14 @@ export function ModalEdit({ id }) {
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
-        <Box sx={{ ...style, width: 200 }}>
+        <Box
+          borderRadius={4}
+          sx={{
+            ...style,
+            width: 200,
+            borderColor: 'rgba(255,255,255,0.2)',
+          }}
+        >
           <FormEditUsuario handleClose={handleClose} id={id} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>

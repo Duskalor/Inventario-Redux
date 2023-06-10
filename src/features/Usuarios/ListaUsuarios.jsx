@@ -1,4 +1,5 @@
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -13,10 +14,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { titulos } from '../style';
 import Usuarios from './Usuarios';
 import { getUsuarios } from './UsuariosSlice';
+import { ChildModal } from './LayoutUsuarios';
 
 export default function ListaUsuarios() {
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { permisos } = useSelector((state) => state.Permisos);
+  const { almacenes } = useSelector((state) => state.Almacenes);
+
   //console.log(permisos);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,20 +31,47 @@ export default function ListaUsuarios() {
       <Typography sx={titulos} variant='h4' component='h2'>
         USUARIOS
       </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          m: '1rem',
+        }}
+      >
+        <ChildModal />
+      </Box>
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
-            <TableRow>
-              <TableCell>Full Nombre</TableCell>
+            <TableRow
+              sx={{
+                '&>th>div': { textAlign: 'center' },
+              }}
+            >
+              <TableCell> Nombre</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Usuario</TableCell>
-              <TableCell>Permisos</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell>
+                <Box>Usuario</Box>
+              </TableCell>
+              <TableCell>
+                <Box>Permisos</Box>
+              </TableCell>
+              <TableCell>
+                <Box>Almacen</Box>
+              </TableCell>
+              <TableCell>
+                <Box>Acciones</Box>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {usuarios.map((usuario, id) => (
-              <Usuarios key={id} usuarios={usuario} permisos={permisos} />
+              <Usuarios
+                key={id}
+                usuarios={usuario}
+                permisos={permisos}
+                almacenes={almacenes}
+              />
             ))}
           </TableBody>
         </Table>

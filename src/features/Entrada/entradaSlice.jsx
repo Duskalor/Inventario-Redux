@@ -22,7 +22,7 @@ export const createEntradas = createAsyncThunk(
     const {
       Productos: { productos },
     } = getState();
-
+    console.log({ datos });
     const { data } = await apiSistema.post('entrada/create', datos);
     const IdEntrada = data.Entrada.id;
 
@@ -88,8 +88,7 @@ export const entradaSlice = createSlice({
       })
       .addCase(getEntradas.fulfilled, (state, { payload }) => {
         state.loading = false;
-        const volteado = payload.ListaEntradas.reverse();
-        state.entradas = volteado;
+        state.entradas = payload.ListaEntradas;
       })
       .addCase(getEntradas.rejected, (state) => {
         state.loading = false;
@@ -102,8 +101,7 @@ export const entradaSlice = createSlice({
       })
       .addCase(createEntradas.fulfilled, (state, { payload }) => {
         state.loading = false;
-        const volteado = payload.ListaEntradas.reverse();
-        state.entradas = volteado;
+        state.entradas = payload.ListaEntradas;
         state.id = payload.Entrada.id;
       })
       .addCase(createEntradas.rejected, (state) => {
@@ -117,8 +115,7 @@ export const entradaSlice = createSlice({
       })
       .addCase(deleteEntradas.fulfilled, (state, { payload }) => {
         state.loading = false;
-        const volteado = payload.ListaEntradas.reverse();
-        state.entradas = volteado;
+        state.entradas = payload.ListaEntradas;
       })
       .addCase(deleteEntradas.rejected, (state) => {
         state.loading = false;
@@ -131,8 +128,7 @@ export const entradaSlice = createSlice({
       })
       .addCase(updateEntradas.fulfilled, (state, { payload }) => {
         state.loading = false;
-        const volteado = payload.ListaEntradas.reverse();
-        state.entradas = volteado;
+        state.entradas = payload.ListaEntradas;
       })
       .addCase(updateEntradas.rejected, (state) => {
         state.loading = false;

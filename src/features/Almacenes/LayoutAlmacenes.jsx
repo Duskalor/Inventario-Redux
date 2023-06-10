@@ -6,6 +6,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { style } from '../style';
 import ListaAlmacenes from './ListaAlmacenes';
 import FormNuevoAlmacen from './FormNuevoAlmacen';
+import { ButtonLayout } from '../../components/ButtonLayout';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -56,16 +57,10 @@ export default function LayoutAlmacenes() {
 
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <AssignmentIcon sx={{ fontSize: 60 }} />
+      <ButtonLayout onClick={handleOpen}>
+        <AssignmentIcon sx={{ fontSize: 65 }} />
         Almacenes
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}

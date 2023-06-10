@@ -1,6 +1,7 @@
 import Productos from './Productos';
 import {
   Box,
+  CircularProgress,
   InputAdornment,
   MenuItem,
   Paper,
@@ -24,14 +25,13 @@ import { centrar, titulos } from '../style';
 import { ChildModal } from './LayoutProducto';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import { useTheme } from '@emotion/react';
 
 export default function ListaProductos() {
   const { productos, loading } = useSelector((state) => state.Productos);
   const { almacenes } = useSelector((state) => state.Almacenes);
   const { id, IdAlmacenes } = useUserLogin();
-  // const { usuarios } = useSelector((state) => state.Usuarios);
-  // const userActual = usuarios.find((user) => user.id === id);
+  const { palette } = useTheme();
 
   const [Busqueda, setBusqueda] = useState('');
   const [BusquedaDescription, setBusquedaDescription] = useState('Codigo');
@@ -91,7 +91,7 @@ export default function ListaProductos() {
   };
 
   return (
-    <div>
+    <Box>
       <Box
         sx={{
           justifyContent: 'space-evenly ',
@@ -140,8 +140,8 @@ export default function ListaProductos() {
                 label='filter'
                 onChange={handleOnchangeFilterName}
               >
-                <MenuItem value={'Codigo'}>Codigo</MenuItem>
-                <MenuItem value={'Descripcion'}>Descripcion</MenuItem>
+                <MenuItem value='Codigo'>Codigo</MenuItem>
+                <MenuItem value='Descripcion'>Descripcion</MenuItem>
               </Select>
             </Box>
           </Box>
@@ -151,6 +151,7 @@ export default function ListaProductos() {
           sx={{
             display: 'flex',
             my: '1rem',
+            // color: 'white',
           }}
           id='input-with-icon-textfield'
           value={Busqueda}
@@ -177,7 +178,7 @@ export default function ListaProductos() {
             <TableHead>
               <TableRow
                 sx={{
-                  '&>th': { textAlign: 'center' },
+                  '&>th': { textAlign: 'center', color: 'white' },
                 }}
               >
                 <TableCell sx={{ width: '70px' }}>Código</TableCell>
@@ -215,7 +216,7 @@ export default function ListaProductos() {
               {emptyRows > 0 && productosFiltrados.length > 0 && (
                 <TableRow
                   style={{
-                    height: 69.5 * emptyRows,
+                    height: 66 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -262,12 +263,12 @@ export default function ListaProductos() {
           component='h2'
         >
           {loading ? (
-            <HourglassBottomIcon sx={{ fontSize: 60 }} />
+            <CircularProgress sx={{ fontSize: 65 }} />
           ) : (
             <p>No hay productos ingresados</p>
           )}
         </Typography>
       )}
-    </div>
+    </Box>
   );
 }

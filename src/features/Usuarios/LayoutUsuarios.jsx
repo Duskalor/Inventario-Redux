@@ -6,6 +6,7 @@ import FormNuevoUsuario from './FormNuevoUsuario';
 import ListaUsuarios from './ListaUsuarios';
 import { style } from '../style';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
+import { ButtonLayout } from '../../components/ButtonLayout';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -18,7 +19,9 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Usuario</Button>
+      <Button onClick={handleOpen} variant='contained'>
+        Nuevo Usuario
+      </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -26,7 +29,14 @@ export function ChildModal() {
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
-        <Box sx={{ ...style, width: 230, borderRadius: 4 }}>
+        <Box
+          sx={{
+            ...style,
+            width: 230,
+            borderRadius: 4,
+            borderColor: 'rgba(255,255,255,0.2)',
+          }}
+        >
           <FormNuevoUsuario handleClose={handleClose} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>
@@ -45,16 +55,10 @@ export default function LayoutUsuarios() {
 
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <SelfImprovementIcon sx={{ fontSize: 60 }} />
+      <ButtonLayout onClick={handleOpen}>
+        <SelfImprovementIcon sx={{ fontSize: 65 }} />
         Usuarios
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}
@@ -63,7 +67,6 @@ export default function LayoutUsuarios() {
       >
         <Box sx={{ ...style, width: 900, borderRadius: 4 }}>
           <ListaUsuarios />
-          <ChildModal />
         </Box>
       </Modal>
     </div>

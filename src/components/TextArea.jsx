@@ -59,10 +59,5 @@ export default function EmptyTextarea() {
   `
   );
 
-  return (
-    <StyledTextarea
-      aria-label='empty textarea'
-      placeholder='Razón del ingreso'
-    />
-  );
+  return StyledTextarea;
 }

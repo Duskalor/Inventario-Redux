@@ -8,6 +8,7 @@ import FormNuevaEntrada from './FormNuevaEntrada';
 import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
 import { useDispatch } from 'react-redux';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { ButtonLayout } from '../../components/ButtonLayout';
 export function ChildModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -58,16 +59,10 @@ export default function LayoutEntrada() {
 
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <ArrowDownwardIcon sx={{ fontSize: 60 }} />
+      <ButtonLayout onClick={handleOpen}>
+        <ArrowDownwardIcon sx={{ fontSize: 65 }} />
         Entradas
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}

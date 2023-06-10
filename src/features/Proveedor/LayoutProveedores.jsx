@@ -6,6 +6,7 @@ import ListaProveedores from './ListaProveedores';
 import FormNuevoProveedor from './FormNuevoProveedor';
 import { style } from '../style';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
+import { ButtonLayout } from '../../components/ButtonLayout';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -45,16 +46,10 @@ export default function LayoutProveedores() {
 
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <TransferWithinAStationIcon sx={{ fontSize: 60 }} />
+      <ButtonLayout onClick={handleOpen}>
+        <TransferWithinAStationIcon sx={{ fontSize: 65 }} />
         Proveedores
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}

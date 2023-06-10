@@ -54,7 +54,6 @@ export const permisosSlice = createSlice({
       })
       .addCase(getpermisos.rejected, (state, { error }) => {
         state.loading = true;
-        console.log(error.message);
       })
       // createpermisos
       .addCase(createpermisos.pending, (state) => {

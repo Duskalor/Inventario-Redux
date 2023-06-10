@@ -6,6 +6,7 @@ import FormNuevoCliente from './FormNuevoCliente';
 import ListaCliente from './ListaCliente';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { style } from '../style';
+import { ButtonLayout } from '../../components/ButtonLayout';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -45,16 +46,10 @@ export default function LayoutClientes() {
 
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <AccountCircleIcon sx={{ fontSize: 60 }} />
+      <ButtonLayout onClick={handleOpen}>
+        <AccountCircleIcon sx={{ fontSize: 65 }} />
         Clientes
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}

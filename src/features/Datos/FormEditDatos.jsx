@@ -1,15 +1,16 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { titulos } from '../style';
 import { updateDatos } from './datosSlice';
+import { BoxError } from '../../components/BoxError';
 
 export default function FormEditCliente({ handleClose }) {
   const dispatch = useDispatch();
   const { Datos } = useSelector((state) => state);
   const { RazonSocial, Direccion, Ruc, id } = Datos;
-  // console.log(Datos);
+  const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
@@ -26,9 +27,17 @@ export default function FormEditCliente({ handleClose }) {
   //console.log(datosParaEditar);
   const onSubmit = (dato) => {
     const { RazonSocial, Direccion, Ruc } = dato;
-    dispatch(updateDatos({ id, RazonSocial, Direccion, Ruc }));
-    handleClose();
-    reset();
+    if (
+      Datos.Direccion !== Direccion &&
+      Datos.Ruc !== Ruc &&
+      Datos.RazonSocial !== RazonSocial
+    ) {
+      dispatch(updateDatos({ id, RazonSocial, Direccion, Ruc }));
+      handleClose();
+      reset();
+    } else {
+      setError('datos iguales');
+    }
   };
   return (
     <Box>
@@ -43,7 +52,7 @@ export default function FormEditCliente({ handleClose }) {
         }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          <Box>
             <TextField
               sx={{
                 margin: '10px 0 0 0',
@@ -51,22 +60,24 @@ export default function FormEditCliente({ handleClose }) {
               type='text'
               {...register('RazonSocial', {
                 required: true,
+                onChange: () => error !== null && setError(null),
               })}
               label='Razón Social'
               variant='outlined'
             />
 
             {errors.RazonSocial?.type === 'required' && (
-              <p>El Campo es requirido </p>
+              <BoxError>El Campo es requirido </BoxError>
             )}
-          </div>
-          <div>
+          </Box>
+          <Box>
             <TextField
               sx={{
                 margin: '20px 0 0 0',
               }}
               type='number'
               {...register('Ruc', {
+                onChange: () => error !== null && setError(null),
                 required: true,
                 maxLength: 11,
                 minLength: 11,
@@ -76,14 +87,14 @@ export default function FormEditCliente({ handleClose }) {
             />
             {errors.Ruc?.type === 'required' && <p>El Campo es requirido </p>}
             {errors.Ruc?.type === 'maxLength' && (
-              <p>El debe tener 11 digitos </p>
+              <BoxError>El debe tener 11 digitos </BoxError>
             )}
             {errors.Ruc?.type === 'minLength' && (
-              <p>El debe tener 11 digitos </p>
+              <BoxError>El debe tener 11 digitos </BoxError>
             )}
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <TextField
               sx={{
                 margin: '20px 0 0 0',
@@ -91,29 +102,33 @@ export default function FormEditCliente({ handleClose }) {
               type='text'
               {...register('Direccion', {
                 required: true,
+                onChange: () => error !== null && setError(null),
               })}
               label='Dirección'
               variant='outlined'
             />
             {errors.Direccion?.type === 'required' && (
-              <p>El Campo es requirido </p>
+              <BoxError>El Campo es requirido </BoxError>
             )}
-          </div>
+          </Box>
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'center',
             }}
           >
-            <Button
-              sx={{
-                margin: '20px 0 0 0',
-              }}
-              type='submit'
-              variant='contained'
-            >
-              Guardar
-            </Button>
+            <Box>
+              {error && <BoxError>{error}</BoxError>}
+              <Button
+                sx={{
+                  margin: '10px 0 0 0',
+                }}
+                type='submit'
+                variant='contained'
+              >
+                Guardar
+              </Button>
+            </Box>
           </Box>
         </form>
       </Box>

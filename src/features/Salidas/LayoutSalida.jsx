@@ -8,6 +8,7 @@ import ListaSalidas from './ListaSalidas';
 import FormNuevaSalida from './FormNuevaSalida';
 import { borrarEstado } from '../ProductoSalidas/productosSalidaSlice';
 import { useDispatch } from 'react-redux';
+import { ButtonLayout } from '../../components/ButtonLayout';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -22,7 +23,7 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nueva Venta</Button>
+      <Button onClick={handleOpen}>Nueva Salida</Button>
       <Modal
         hideBackdrop
         open={open}
@@ -51,16 +52,10 @@ export default function LayoutSalida() {
   };
 
   return (
-    <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <ArrowUpwardIcon sx={{ fontSize: 60 }} /> Salidas
-      </Button>
+    <Box>
+      <ButtonLayout onClick={handleOpen}>
+        <ArrowUpwardIcon sx={{ fontSize: 65 }} /> Salidas
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}
@@ -72,6 +67,6 @@ export default function LayoutSalida() {
           <ChildModal />
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

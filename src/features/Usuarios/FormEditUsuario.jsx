@@ -1,15 +1,17 @@
-import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
+import { Box, Button, Input, InputLabel, NativeSelect } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUsuarios } from './UsuariosSlice';
+import { BoxError } from '../../components/BoxError';
 
 export default function FormEditUsuario({ handleClose, id }) {
   const dispatch = useDispatch();
-  //console.log(id);
+
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { permisos } = useSelector((state) => state.Permisos);
-  //console.log(clientes);
-  const { FullName, Email, Usuario, IdPermisos } = usuarios.find(
+  const { almacenes } = useSelector((state) => state.Almacenes);
+
+  const { FullName, Email, Usuario, IdPermisos, IdAlmacenes } = usuarios.find(
     (Usuario) => Usuario.id === id
   );
   const { Descripcion } = permisos.find((permiso) => permiso.id === IdPermisos);
@@ -25,21 +27,22 @@ export default function FormEditUsuario({ handleClose, id }) {
       email: Email,
       Usuario: Usuario,
       IdPermisos: IdPermisos,
+      IdAlmacenes: IdAlmacenes,
     },
   });
 
-  //console.log(datosParaEditar);
   const onSubmit = (dato) => {
-    const { FullName, email, Usuario, IdPermisos } = dato;
-    dispatch(updateUsuarios({ id, FullName, email, Usuario, IdPermisos }));
+    dispatch(updateUsuarios({ id, ...dato }));
     handleClose();
     reset();
-    //console.log(dato);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Nombre</label>
+      <Box>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Nombre
+        </InputLabel>
         <Input
           type='text'
           name='FullName'
@@ -47,40 +50,68 @@ export default function FormEditUsuario({ handleClose, id }) {
             required: true,
           })}
         />
-        {errors.FullName?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-      <div>
-        <label>Email</label>
+        {errors.FullName?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+      </Box>
+      <Box>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Email
+        </InputLabel>
         <Input
           name='Email'
           type='email'
-          {...register('email', { required: true })}
+          {...register('email', {
+            required: true,
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Formato Incorrecto',
+            },
+          })}
         />
-        {errors.email?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-      <div>
-        <label>Usuario</label>
+        {errors.email?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+        {errors.email?.type === 'pattern' && (
+          <BoxError>{errors.email.message}</BoxError>
+        )}
+      </Box>
+      <Box>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Usuario
+        </InputLabel>
         <Input
           name='Usuario'
           type='text'
           {...register('Usuario', { required: true })}
         />
-        {errors.Usuario?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-
-      {/* <div>
-        <label>Permiso</label>
-        <Input
-          type='number'
-          {...register('IdPermisos', {
+        {errors.Usuario?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+      </Box>
+      {/* Almacen */}
+      <Box>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+          Almacenes
+        </InputLabel>
+        <NativeSelect
+          {...register('IdAlmacenes', {
             required: true,
           })}
-        />
-        {errors.IdPermisos?.type === 'required' && (
-          <p>El Campo es requirido </p>
+        >
+          {almacenes.map((almacen) => {
+            return (
+              <option key={almacen.id} value={almacen.id}>
+                {almacen.ubicacion}
+              </option>
+            );
+          })}
+        </NativeSelect>
+        {errors.IdAlmacenes?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </div> */}
-      <div>
+      </Box>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Permiso
         </InputLabel>
@@ -99,9 +130,9 @@ export default function FormEditUsuario({ handleClose, id }) {
           })}
         </NativeSelect>
         {errors.IdPermisos?.type === 'required' && (
-          <p>El Campo es requirido </p>
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </div>
+      </Box>
 
       <Button type='submit'>Guardar</Button>
     </form>

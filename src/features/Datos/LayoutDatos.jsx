@@ -1,15 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
 import FormEditDatos from './FormEditDatos';
-import { CircularProgress } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
-import { useSelector } from 'react-redux';
 import { style } from '../style';
+import { ButtonLayout } from '../../components/ButtonLayout';
 export default function LayoutDatos() {
   const [open, setOpen] = React.useState(false);
-  const { pending } = useSelector((state) => state.Datos);
 
   const handleOpen = () => {
     setOpen(true);
@@ -20,17 +17,11 @@ export default function LayoutDatos() {
   // ;
 
   return (
-    <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <BusinessIcon sx={{ fontSize: 60 }} />
+    <Box>
+      <ButtonLayout onClick={handleOpen}>
+        <BusinessIcon sx={{ fontSize: 65 }} />
         Datos
-      </Button>
+      </ButtonLayout>
 
       <Modal
         open={open}
@@ -39,13 +30,9 @@ export default function LayoutDatos() {
         aria-describedby='parent-modal-description'
       >
         <Box sx={{ ...style, width: 400, borderRadius: 4 }}>
-          {!pending ? (
-            <FormEditDatos handleClose={handleClose} />
-          ) : (
-            <CircularProgress />
-          )}
+          <FormEditDatos handleClose={handleClose} />
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

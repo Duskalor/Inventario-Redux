@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { style } from '../style';
 import GenerarReporte from './GenerarReporte';
+import { ButtonLayout } from '../../components/ButtonLayout';
 
 export default function LayoutReports() {
   const [open, setOpen] = React.useState(false);
@@ -17,20 +18,10 @@ export default function LayoutReports() {
   };
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          top: '70%',
-          left: '50%',
-          pt: 1,
-          transform: 'translate(-50%, -0.50%)',
-        }}
-      >
-        <AssignmentIcon sx={{ fontSize: 45 }} />
+      <ButtonLayout onClick={handleOpen}>
+        <AssignmentIcon sx={{ fontSize: 65 }} />
         Reportes
-      </Button>
+      </ButtonLayout>
       <Modal
         open={open}
         onClose={handleClose}

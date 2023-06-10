@@ -22,9 +22,10 @@ export const datosSlice = createSlice({
   initialState: {
     Direccion: '',
     RazonSocial: '',
-    Ruc: '',
-    id: '',
+    Ruc: null,
+    id: null,
     pending: false,
+    success: false,
   },
 
   extraReducers: (build) => {
@@ -32,6 +33,7 @@ export const datosSlice = createSlice({
       // Get
       .addCase(getDatos.pending, (state) => {
         state.pending = true;
+        state.success = false;
       })
       .addCase(getDatos.fulfilled, (state, action) => {
         state.pending = false;
@@ -39,9 +41,11 @@ export const datosSlice = createSlice({
         state.RazonSocial = action.payload.Datos[0].RazonSocial;
         state.Direccion = action.payload.Datos[0].Direccion;
         state.Ruc = action.payload.Datos[0].Ruc;
+        state.success = true;
       })
       .addCase(getDatos.rejected, (state, action) => {
         state.pending = false;
+        state.success = false;
       })
 
       // UPDATE
