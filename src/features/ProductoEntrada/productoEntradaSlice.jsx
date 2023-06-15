@@ -24,7 +24,8 @@ export const createProductoEntrada = createAsyncThunk(
 
 export const updateProductoEntrada = createAsyncThunk(
   'update/postProductoEntrada',
-  async ({ Existencia, updateProductoEntrada }) => {
+  async ({ Existencia, pe: updateProductoEntrada }) => {
+    console.log({ Existencia, updateProductoEntrada });
     const id = Existencia.id;
     const { data } = await apiSistema.put(`detalleEntrada/update/${id}`, {
       ...updateProductoEntrada,
@@ -56,12 +57,11 @@ export const productoEntradaSlice = createSlice({
     productoEntradaBD: [],
     productoEntrada: [],
     productoEntradaEdit: [],
-    change: false,
+    // change: false,
     loading: false,
   },
   reducers: {
     GuardarEstado: (state, { payload }) => {
-      // console.log(payload);
       state.productoEntrada = [...state.productoEntrada, payload];
     },
     borrarEstado: (state) => {

@@ -52,7 +52,6 @@ export default function Layout() {
             p={5}
             mx={4}
           >
-            {/* <Grid container spacing={2} columns={{ xs: 4, sm: 4, md: 8 }}> */}
             {UserPermiso?.Configuracion === 1 && (
               <Grid item md={2}>
                 <LayoutDatos />

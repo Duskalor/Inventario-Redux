@@ -1,16 +1,29 @@
-import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoSalida from '../ProductoSalidas/FormNuevoProductoSalida';
 import { createSalida } from './salidasSlice';
 // import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
-// import { createEntradas } from './entradaSlice';
+import { BoxError } from '../../components/BoxError';
+import { useState } from 'react';
+import EmptyTextarea from '../../components/TextArea';
+import { useUserLogin } from '../../utils/useUserLogin';
 
 export default function FormNuevaSalida({ handleClose }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
-  const { clientes } = useSelector((state) => state.Clientes);
+  // const { clientes } = useSelector((state) => state.Clientes);
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
-  const { productos } = useSelector((state) => state.Productos);
+  const [errorsItems, setErrorsItems] = useState(null);
+  const TextArea = EmptyTextarea();
+  const [errorText, setErrorText] = useState(null);
+  const { IdAlmacenes } = useUserLogin();
 
   // USE STATE
 
@@ -22,85 +35,82 @@ export default function FormNuevaSalida({ handleClose }) {
   } = useForm();
 
   const onSubmit = (datos) => {
-    //console.log(productoSalida.length);
-    if (!productoSalida.length === 0) {
-      let total = 0;
-      productoSalida.forEach(function (a) {
-        total += parseInt(a.Cantidad);
-      });
-      let Precio = 0;
-      productoSalida.forEach(function (a) {
-        Precio += parseInt(a.SubTotal);
-      });
+    if (productoSalida.length === 0)
+      return setErrorsItems('Agregue algún producto');
 
-      datos = { ...datos, CantidadProductos: total };
-      datos = { ...datos, MontoTotal: Precio };
-      dispatch(createSalida({ datos, productoSalida, productos }));
-      handleClose();
-      //console.log(datos);
-    }
+    let total = 0;
+    productoSalida.forEach(function (a) {
+      total += parseInt(a.Cantidad);
+    });
+
+    datos = { ...datos, CantidadProductos: total };
+    // console.log(datos);
+    dispatch(createSalida({ datos, productoSalida, IdAlmacenes }));
+    handleClose();
+  };
+
+  const handleControlText = (e) => {
+    setErrorText(null);
+    e.target.value.length > 255 && setErrorText('Máximo 255 caracteres');
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Nueva Venta</h1>
-      <div>
+      <Typography variant='h1' textAlign='center'>
+        Nueva Salida
+      </Typography>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Codigo Documento
         </InputLabel>
 
         <Input
           type='text'
-          {...register('NumeroDocumento', {
-            required: true,
-          })}
+          {...register('NumeroDocumento', { required: true })}
           name='NumeroDocumento'
         />
         {errors.NumeroDocumento?.type === 'required' && (
-          <p>El Campo es requirido </p>
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </div>
-      <div>
+      </Box>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Vendedor
+          Usuario
         </InputLabel>
-        <NativeSelect
-          {...register('IdUsuario', {
-            required: true,
-          })}
-        >
+        <NativeSelect {...register('IdUsuario', { required: true })}>
           <option aria-label='None' value='' />
-          {usuarios.map((usuario) => {
-            return (
-              <option key={usuario.id} value={usuario.id}>
-                {usuario.FullName}
-              </option>
-            );
-          })}
+          {usuarios.map(({ id, FullName }) => (
+            <option key={id} value={id}>
+              {FullName}
+            </option>
+          ))}
         </NativeSelect>
-        {errors.IdUsuario?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-      <div>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Cliente
-        </InputLabel>
-        <NativeSelect {...register('IdCliente', { required: true })}>
-          <option aria-label='None' value='' />
-          {clientes.map((cliente) => {
-            return (
-              <option key={cliente.id} value={cliente.id}>
-                {cliente.FullName}
-              </option>
-            );
-          })}
-        </NativeSelect>
-        {errors.IdProveedor?.type === 'required' && (
-          <p>El Campo es requirido </p>
+        {errors.IdUsuario?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </div>
-
+      </Box>
+      <Box>
+        <TextArea
+          sx={{ my: '2rem' }}
+          aria-label='empty textarea'
+          placeholder='Razón del ingreso'
+          type='input'
+          maxRows={3}
+          {...register('razonSalida', {
+            required: 'true',
+            onChange: handleControlText,
+          })}
+        />
+        {errors.razonSalida?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+        {errorText && <BoxError>{errorText}</BoxError>}
+      </Box>
       <hr />
-      <FormNuevoProductoSalida />
+      <FormNuevoProductoSalida
+        errorsItems={errorsItems}
+        setErrorsItems={setErrorsItems}
+      />
       <hr />
       <Button type='submit'>Crear</Button>
     </form>

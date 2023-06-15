@@ -3,103 +3,34 @@ import { apiSistema } from '../../Api/ApiSistema';
 
 export const getDetalleSalida = createAsyncThunk(
   'get/getDetalleSalida',
-  async (_, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.get('detalleSalida', config);
-    //console.log(data);
+  async () => {
+    const { data } = await apiSistema.get('detalleSalida');
     return data;
   }
 );
 export const createProductoSalida = createAsyncThunk(
   'create/postProductoSalida',
-  async (nuevo, { getState }) => {
-    const { Auth } = getState();
-    //console.log(nuevo);
-    const { IdSalida } = nuevo;
-    const { IdProducto, PrecioVenta, Cantidad, SubTotal } = nuevo.pe;
-    //console.log(IdSalida, IdProducto, PrecioVenta, Cantidad, SubTotal);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.post(
-      'detalleSalida/create',
-      { IdSalida, IdProducto, PrecioVenta, Cantidad, SubTotal },
-      config
-    );
+  async ({ IdSalida, pe: newData }) => {
+    const { data } = await apiSistema.post('detalleSalida/create', {
+      ...newData,
+      IdSalida,
+    });
     return data;
   }
 );
 
 export const CrearProductoSalida = createAsyncThunk(
   'update/postProductoSalida',
-  async ({ pe }, { getState }) => {
-    const { Auth } = getState();
-    const { id, IdSalida, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.put(
-      `detalleSalida/update/${id}`,
-      {
-        id,
-        IdSalida,
-        IdProducto,
-        PrecioCompra,
-        Cantidad,
-        SubTotal,
-      },
-      config
-    );
+  async ({ pe: { id, ...rest } }) => {
+    const { data } = await apiSistema.put(`detalleSalida/update/${id}`, rest);
     return data;
   }
 );
 
-// export const EditProductoEntrada = createAsyncThunk(
-//   'edit/postProductoEntrada',
-//   async ({ pe }, { getState }) => {
-//     const { Auth } = getState();
-//     //console.log(nuevo);
-
-//     const { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal } = pe;
-//     //console.log(IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal);
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${Auth.userToken}`,
-//       },
-//     };
-//     const { data } = await apiSistema.post(
-//       'detalleSalida/create',
-//       { IdEntrada, IdProducto, PrecioCompra, Cantidad, SubTotal },
-//       config
-//     );
-//     return data;
-//   }
-// );
 export const DeleteProductoEntrada = createAsyncThunk(
   'delete/postProductosEntrada',
-  async (id, { getState }) => {
-    const { Auth } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Auth.userToken}`,
-      },
-    };
-    const { data } = await apiSistema.delete(
-      `detalleSalida/delete/${id}`,
-      config
-    );
+  async (id) => {
+    const { data } = await apiSistema.delete(`detalleSalida/delete/${id}`);
     return data;
   }
 );
@@ -155,7 +86,7 @@ export const productosSalidaSlice = createSlice({
       })
       .addCase(getDetalleSalida.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.productoSalidaBD = payload.ListadetallesSalida;
+        state.productoSalidaBD = payload.ListaDetalleSalida;
       })
       .addCase(getDetalleSalida.rejected, (state) => {
         state.loading = false;
@@ -168,7 +99,7 @@ export const productosSalidaSlice = createSlice({
       })
       .addCase(createProductoSalida.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.productoSalidaBD = payload.ListadetallesSalida;
+        state.productoSalidaBD = payload.ListaDetalleSalida;
       })
       .addCase(createProductoSalida.rejected, (state) => {
         state.loading = false;
@@ -180,7 +111,7 @@ export const productosSalidaSlice = createSlice({
       })
       .addCase(DeleteProductoEntrada.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.productoSalidaBD = payload.ListadetallesSalida;
+        state.productoSalidaBD = payload.ListaDetalleSalida;
       })
       .addCase(DeleteProductoEntrada.rejected, (state) => {
         state.loading = false;

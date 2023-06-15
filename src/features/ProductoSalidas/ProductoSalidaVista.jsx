@@ -11,9 +11,9 @@ export default function ProductoSalidaVista({ producto }) {
       <TableRow sx={{ '&>td': { textAlign: 'center' } }}>
         <TableCell>{ListaProductos.Codigo}</TableCell>
         <TableCell>{ListaProductos.Descripcion}</TableCell>
-        <TableCell>{PrecioVenta}</TableCell>
+        {/* <TableCell>{PrecioVenta}</TableCell> */}
         <TableCell>{Cantidad}</TableCell>
-        <TableCell>{SubTotal}</TableCell>
+        {/* <TableCell>{SubTotal}</TableCell> */}
       </TableRow>
     )
   );

@@ -12,7 +12,7 @@ export const style = {
   pb: 3,
 };
 
-export const centrar = { textAlign: 'center' };
+export const centrar = { '&>td': { textAlign: 'center' } };
 
 export const titulos = {
   display: 'flex',

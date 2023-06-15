@@ -25,13 +25,13 @@ import { centrar, titulos } from '../style';
 import { ChildModal } from './LayoutProducto';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import { useTheme } from '@emotion/react';
+// import { useTheme } from '@emotion/react';
 
 export default function ListaProductos() {
   const { productos, loading } = useSelector((state) => state.Productos);
   const { almacenes } = useSelector((state) => state.Almacenes);
   const { id, IdAlmacenes } = useUserLogin();
-  const { palette } = useTheme();
+  // const { palette } = useTheme();
 
   const [Busqueda, setBusqueda] = useState('');
   const [BusquedaDescription, setBusquedaDescription] = useState('Codigo');

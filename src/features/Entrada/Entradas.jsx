@@ -1,4 +1,4 @@
-import { Button, TableCell, TableRow } from '@mui/material';
+import { Box, Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LayoutProductosEntrada } from '../ProductoEntrada/LayoutProductosEntrada';
@@ -7,6 +7,8 @@ import { updateProductos } from '../Productos/productosSlice';
 import { centrar } from '../style';
 import { deleteEntradas } from './entradaSlice';
 import { ModalEdit } from './ModalEdit';
+import { BoxStatus } from '../../components/BoxStatus';
+import { BoxContainer } from '../../components/BoxContainer';
 
 export default function Entradas({ entrada }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
@@ -15,24 +17,21 @@ export default function Entradas({ entrada }) {
     (prevData, nextData) =>
       prevData.productoEntradaBD === nextData.productoEntradaBD
   );
-  // const { proveedores } = useSelector((state) => state.Proveedor);
   const { productos } = useSelector((state) => state.Productos);
   const dispatch = useDispatch();
 
   const {
     NumeroDocumento,
     CantidadProductos,
-    // IdProveedor,
     IdUsuario,
-    MontoTotal,
+    active,
     id,
+    razonEntrada,
   } = entrada;
+
   // obteniendo al usuario para listarlo
   const usuario = usuarios.find((user) => user.id === IdUsuario);
-  // obteniendo al proveedor para listarlo
-  // const proveedor = proveedores.find(
-  //   (proveedor) => proveedor.id === IdProveedor
-  // );
+
   // obteniendo los productos para modificar el stock
   const ParaEliminar = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
 
@@ -54,17 +53,28 @@ export default function Entradas({ entrada }) {
   };
 
   return (
-    <TableRow>
-      <TableCell sx={centrar}>
+    <TableRow sx={{ '& td': { textAlign: 'center' } }}>
+      <TableCell>
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
-      <TableCell sx={centrar}>{usuario.FullName}</TableCell>
-      {/* <TableCell sx={centrar}>{proveedor.FullName}</TableCell> */}
-      <TableCell sx={centrar}>{CantidadProductos}</TableCell>
-      <TableCell sx={centrar}>{MontoTotal}</TableCell>
-      <TableCell sx={centrar}>
-        <ModalEdit id={id} />
-        <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+      <TableCell>{usuario.FullName}</TableCell>
+      <TableCell sx={{ width: '77px' }}>
+        <BoxStatus active={active}>
+          {active ? <Box>Active</Box> : <Box>No active</Box>}
+        </BoxStatus>
+      </TableCell>
+
+      <TableCell sx={{ width: '100px', wordWrap: 'break-word' }}>
+        {razonEntrada === '' ? 'Sin Razón' : razonEntrada}
+      </TableCell>
+
+      <TableCell sx={{ width: '77px' }}>{CantidadProductos}</TableCell>
+
+      <TableCell>
+        <BoxContainer>
+          <ModalEdit id={id} />
+          <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        </BoxContainer>
       </TableCell>
     </TableRow>
   );

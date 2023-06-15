@@ -13,7 +13,6 @@ import ProductoEntradaDatosEdit from './ProductoEntradaDatosEdit';
 export default function ProductoEntradaEdit() {
   const { productoEntradaEdit } = useSelector((state) => state.ProductoEntrada);
 
-  //console.log(productoEntradaEdit);
   return (
     <div>
       {productoEntradaEdit && (
@@ -23,9 +22,7 @@ export default function ProductoEntradaEdit() {
               <TableRow>
                 <TableCell>Codigo</TableCell>
                 <TableCell>Producto</TableCell>
-                <TableCell>Precio de Compra</TableCell>
                 <TableCell>Cantidad</TableCell>
-                <TableCell>SubTotal</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>

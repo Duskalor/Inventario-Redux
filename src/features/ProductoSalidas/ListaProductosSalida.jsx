@@ -23,9 +23,11 @@ export default function ListaProductosSalida({ codigo = null, montoTotal }) {
   const codigoDocumento = salidas.find(
     (salida) => salida.NumeroDocumento === codigo
   );
+
   const listaProductosSalida = productoSalidaBD.filter(
     (proSalida) => proSalida.IdSalida === codigoDocumento.id
   );
+
   useEffect(() => {
     dispatch(getDetalleSalida());
   }, [dispatch]);
@@ -36,14 +38,10 @@ export default function ListaProductosSalida({ codigo = null, montoTotal }) {
       <TableContainer component={Paper} style={{ maxHeight: 700 }}>
         <Table arial-label='simple tables'>
           <TableHead>
-            <TableRow>
-              <TableCell sx={{ textAlign: 'center' }}>Codigo</TableCell>
-              <TableCell sx={{ textAlign: 'center' }}>Producto</TableCell>
-              <TableCell sx={{ textAlign: 'center' }}>
-                Precio de Compra
-              </TableCell>
-              <TableCell sx={{ textAlign: 'center' }}>Cantidad</TableCell>
-              <TableCell sx={{ textAlign: 'center' }}>SubTotal</TableCell>
+            <TableRow sx={{ '& th': { textAlign: 'center' } }}>
+              <TableCell>Codigo</TableCell>
+              <TableCell>Producto</TableCell>
+              <TableCell>Cantidad</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -53,10 +51,6 @@ export default function ListaProductosSalida({ codigo = null, montoTotal }) {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Typography align='right' variant='subtitle1' mt={2} mr={3}>
-        TOTAL : S/. {montoTotal}
-      </Typography>
     </div>
   );
 }

@@ -1,12 +1,11 @@
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
 import { BoxContainer } from './BoxContainer';
-import { ButtonLogout } from './ButtonLogout';
 
 export const TitleSystem = ({ UserPermiso, user }) => {
   const { almacenes, loading } = useSelector((state) => state.Almacenes);
+  const { RazonSocial } = useSelector((state) => state.Datos);
   const isSmall = useMediaQuery('(max-width:600px)');
   const NameAlmacen = almacenes.find(
     (almacen) => almacen.id === user.IdAlmacenes
@@ -30,17 +29,13 @@ export const TitleSystem = ({ UserPermiso, user }) => {
             height: '73px',
           }}
         />
-        <Typography variant='h3'>Legion Tech</Typography>
+        <Typography variant='h3'>{RazonSocial}</Typography>
       </BoxContainer>
       <BoxContainer px={3} alignItems='center'>
-        {!loading && UserPermiso ? (
+        {!loading && UserPermiso && (
           <Typography variant='h3'>
             Bienvenido {user.FullName} - {UserPermiso?.Descripcion} -&nbsp;
             {NameAlmacen?.ubicacion}
-          </Typography>
-        ) : (
-          <Typography variant='h3'>
-            <CircularProgress />
           </Typography>
         )}
       </BoxContainer>

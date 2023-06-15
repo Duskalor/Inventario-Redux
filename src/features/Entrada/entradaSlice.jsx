@@ -18,12 +18,15 @@ export const getEntradas = createAsyncThunk('get/getEntradas', async () => {
 
 export const createEntradas = createAsyncThunk(
   'create/postEntradas',
-  async ({ datos, productoEntrada }, { dispatch, getState }) => {
+  async ({ datos, productoEntrada, IdAlmacenes }, { dispatch, getState }) => {
     const {
       Productos: { productos },
     } = getState();
-    console.log({ datos });
-    const { data } = await apiSistema.post('entrada/create', datos);
+
+    const { data } = await apiSistema.post('entrada/create', {
+      ...datos,
+      IdAlmacenes,
+    });
     const IdEntrada = data.Entrada.id;
 
     productoEntrada.forEach((pe) => {
@@ -40,7 +43,6 @@ export const createEntradas = createAsyncThunk(
     dispatch(getProductos());
     dispatch(BorrarEstadoEdit());
 
-    console.log({ data });
     return data;
   }
 );
@@ -53,19 +55,11 @@ export const deleteEntradas = createAsyncThunk(
 );
 export const updateEntradas = createAsyncThunk(
   'update/postEntradas',
-  async (
-    { id, CantidadProductos, IdProveedor, IdUsuario, MontoTotal },
-    { dispatch }
-  ) => {
-    const { data } = await apiSistema.put(`entrada/update/${id}`, {
-      IdUsuario,
-      IdProveedor,
-      CantidadProductos,
-      MontoTotal,
-    });
+  async ({ id, ...Rest }, { dispatch }) => {
+    // console.log(Rest);
+    const { data } = await apiSistema.put(`entrada/update/${id}`, Rest);
     dispatch(BorrarEstadoEdit());
     dispatch(getDetalleEntradas());
-
     return data;
   }
 );

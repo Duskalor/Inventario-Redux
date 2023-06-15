@@ -24,25 +24,8 @@ export const deleteProductos = createAsyncThunk(
 
 export const updateProductos = createAsyncThunk(
   'update/postProductos',
-  async (datos) => {
-    const {
-      id,
-      Categoria,
-      Descripcion,
-      PrecioCompra,
-      PrecioVenta,
-      Stock,
-      active,
-    } = datos;
-
-    const { data } = await apiSistema.put(`producto/update/${id}`, {
-      Categoria,
-      Descripcion,
-      PrecioCompra,
-      PrecioVenta,
-      Stock,
-      active,
-    });
+  async ({ id, ...Rest }) => {
+    const { data } = await apiSistema.put(`producto/update/${id}`, Rest);
     return data;
   }
 );

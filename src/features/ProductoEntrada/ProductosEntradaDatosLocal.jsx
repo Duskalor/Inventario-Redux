@@ -22,9 +22,9 @@ export default function ProductosEntradaDatosLocal() {
               <TableRow>
                 <TableCell>Codigo</TableCell>
                 <TableCell>Producto</TableCell>
-                <TableCell>Precio de Compra</TableCell>
+                {/* <TableCell>Precio de Compra</TableCell> */}
                 <TableCell>Cantidad</TableCell>
-                <TableCell>SubTotal</TableCell>
+                {/* <TableCell>SubTotal</TableCell> */}
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>

@@ -1,4 +1,5 @@
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -7,16 +8,14 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProductosEntrada from './ProductosEntrada';
-// import { getpermisos } from './permisosSlice';
 
 export default function ProductosEntradaDatosLocal() {
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
-  //console.log(productoEntrada);
 
   return (
-    <div>
+    <Box>
       {productoEntrada && (
         <TableContainer component={Paper}>
           <Table arial-label='simple tables'>
@@ -38,6 +37,6 @@ export default function ProductosEntradaDatosLocal() {
           </Table>
         </TableContainer>
       )}
-    </div>
+    </Box>
   );
 }

@@ -20,6 +20,7 @@ import Entradas from './Entradas';
 import { getEntradas } from './entradaSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import { ChildModal } from './LayoutEntrada';
 
 export default function ListaEntradas() {
   const { entradas } = useSelector(
@@ -63,7 +64,16 @@ export default function ListaEntradas() {
         <Typography sx={titulos} variant='h4' component='h2'>
           ENTRADAS
         </Typography>
-
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '100%',
+            '&>button': { m: '.5rem' },
+          }}
+        >
+          <ChildModal />
+        </Box>
         <TextField
           sx={{
             display: 'flex',
@@ -86,13 +96,13 @@ export default function ListaEntradas() {
         <TableContainer component={Paper} style={{ maxHeight: 550 }}>
           <Table stickyHeader arial-label='simple tables'>
             <TableHead>
-              <TableRow>
-                <TableCell sx={centrar}>Codigo Documento</TableCell>
-                <TableCell sx={centrar}>Usuario</TableCell>
-                <TableCell sx={centrar}>Proveedor</TableCell>
-                <TableCell sx={centrar}>Cantidad de Productos</TableCell>
-                <TableCell sx={centrar}>Monto Total</TableCell>
-                <TableCell sx={centrar}>Acciones</TableCell>
+              <TableRow sx={{ '& th': { textAlign: 'center' } }}>
+                <TableCell>Codigo Documento</TableCell>
+                <TableCell>Usuario</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Razón Entrada</TableCell>
+                <TableCell>Cantidad de Productos</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

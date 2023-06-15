@@ -43,12 +43,6 @@ export default function LayoutEntrada() {
 
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-  //   dispatch(getEntradas());
-  //   dispatch(getProductos());
-  //   dispatch(getDetalleEntradas());
-  // }, [dispatch]);
-
   const handleOpen = () => {
     dispatch(borrarEstado());
     setOpen(true);
@@ -69,9 +63,8 @@ export default function LayoutEntrada() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 1050, borderRadius: 4 }}>
+        <Box sx={{ ...style, width: 1000, maxWidth: 1200, borderRadius: 4 }}>
           <ListaEntradas />
-          <ChildModal />
         </Box>
       </Modal>
     </div>

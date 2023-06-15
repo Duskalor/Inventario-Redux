@@ -4,7 +4,9 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { style } from '../style';
 import ListaProductosSalida from './ListaProductosSalida';
-export function LayoutProductosSalida({ NumeroDocumento, montoTotal }) {
+import { Typography } from '@mui/material';
+import { BoxContainer } from '../../components/BoxContainer';
+export function LayoutProductosSalida({ NumeroDocumento }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -17,20 +19,25 @@ export function LayoutProductosSalida({ NumeroDocumento, montoTotal }) {
     <React.Fragment>
       <Button onClick={handleOpen}>{NumeroDocumento}</Button>
       <Modal
-        hideBackdrop
+        // hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 600 }}>
-          <h1>{NumeroDocumento}</h1>
+          <Typography py={1} sx={{ textAlign: 'center' }} variant='h1'>
+            {NumeroDocumento}
+          </Typography>
           <ListaProductosSalida
-            montoTotal={montoTotal}
             handleClose={handleClose}
             codigo={NumeroDocumento}
           />
-          <Button onClick={handleClose}>Cerrar</Button>
+          <BoxContainer py={1}>
+            <Button variant='contained' onClick={handleClose}>
+              Cerrar
+            </Button>
+          </BoxContainer>
         </Box>
       </Modal>
     </React.Fragment>

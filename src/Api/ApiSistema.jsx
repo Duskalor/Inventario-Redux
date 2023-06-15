@@ -3,9 +3,11 @@ import axios from 'axios';
 // export const apiSistema = axios.create({
 //   baseURL: 'http://192.168.0.5:3500/api/',
 // });
+// const URL = 'https://api-sistema-de-almacenes-production.up.railway.app/';
+const URL = 'http://127.0.0.1:8000/';
 
 export const apiSistema = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/',
+  baseURL: `${URL}api/`,
 });
 
 apiSistema.interceptors.request.use((req) => {

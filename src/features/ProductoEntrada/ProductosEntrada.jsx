@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { borrarItem } from './productoEntradaSlice';
 
 export default function ProductosEntrada({ producto }) {
-  const { IdProducto, PrecioCompra, Cantidad, SubTotal } = producto;
+  const { IdProducto, Cantidad } = producto;
 
   const { productos } = useSelector((state) => state.Productos);
-  //console.log(producto, productos);
+
   const ListaProductos = productos.find((pro) => pro.id === +IdProducto);
-  //console.log(ListaProductos);
+  // console.log({ ListaProductos });
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
@@ -19,11 +19,9 @@ export default function ProductosEntrada({ producto }) {
 
   return (
     <TableRow>
-      <TableCell>{ListaProductos.Codigo}</TableCell>
-      <TableCell>{ListaProductos.Descripcion}</TableCell>
-      <TableCell>{PrecioCompra}</TableCell>
+      <TableCell>{ListaProductos?.Codigo}</TableCell>
+      <TableCell>{ListaProductos?.Descripcion}</TableCell>
       <TableCell>{Cantidad}</TableCell>
-      <TableCell>{SubTotal}</TableCell>
       <TableCell>
         <Button onClick={() => deleteItem(IdProducto)}>Eliminar</Button>
       </TableCell>

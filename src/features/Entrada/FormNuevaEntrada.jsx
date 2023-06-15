@@ -12,13 +12,18 @@ import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrad
 import { createEntradas } from './entradaSlice';
 import EmptyTextarea from '../../components/TextArea';
 import { BoxError } from '../../components/BoxError';
+import { useState } from 'react';
+import { useUserLogin } from '../../utils/useUserLogin';
 export default function FormNuevaEntrada({ handleClose }) {
+  const { IdAlmacenes } = useUserLogin();
+
   const { usuarios } = useSelector((state) => state.Usuarios);
   const TextArea = EmptyTextarea();
-  // const { proveedores } = useSelector((state) => state.Proveedor);
+  const { entradas } = useSelector((state) => state.Entradas);
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
-
+  const [errorCodigo, setErrorCodigo] = useState(null);
   // USE STATE
+  const [errorsItems, setErrorsItems] = useState(null);
 
   const dispatch = useDispatch();
   const {
@@ -29,17 +34,25 @@ export default function FormNuevaEntrada({ handleClose }) {
 
   const onSubmit = async (datos) => {
     // verificando existencia de productos generar la entrada
-    if (productoEntrada.length !== 0) {
-      //   let Precio = 0;
-      //   productoEntrada.forEach((a) => (Precio += parseInt(a.SubTotal)));
-      //   datos = { ...datos, MontoTotal: Precio };
-
+    if (productoEntrada.length === 0)
+      setErrorsItems('no hay productos agregados');
+    else {
       let total = 0;
       productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
+
       datos = { ...datos, CantidadProductos: total };
-      dispatch(createEntradas({ datos, productoEntrada }));
+      dispatch(createEntradas({ datos, productoEntrada, IdAlmacenes }));
       handleClose();
     }
+  };
+
+  const VerificarCorrectoCodigo = (e) => {
+    errorCodigo !== null && setErrorCodigo(null);
+    const exist = entradas.some(
+      (entra) =>
+        entra.NumeroDocumento.toLowerCase() === e.target.value.toLowerCase()
+    );
+    exist && setErrorCodigo('Codigo Existente');
   };
 
   return (
@@ -56,12 +69,14 @@ export default function FormNuevaEntrada({ handleClose }) {
           type='text'
           {...register('NumeroDocumento', {
             required: true,
+            onChange: VerificarCorrectoCodigo,
           })}
           name='NumeroDocumento'
         />
         {errors.NumeroDocumento?.type === 'required' && (
           <BoxError>El Campo es requirido </BoxError>
         )}
+        {errorCodigo && <BoxError>{errorCodigo} </BoxError>}
       </Box>
       <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
@@ -73,13 +88,11 @@ export default function FormNuevaEntrada({ handleClose }) {
           })}
         >
           <option aria-label='None' value='' />
-          {usuarios.map((usuario) => {
-            return (
-              <option key={usuario.id} value={usuario.id}>
-                {usuario.FullName}
-              </option>
-            );
-          })}
+          {usuarios.map((usuario) => (
+            <option key={usuario.id} value={usuario.id}>
+              {usuario.FullName}
+            </option>
+          ))}
         </NativeSelect>
         {errors.IdUsuario?.type === 'required' && (
           <BoxError>El Campo es requirido </BoxError>
@@ -92,32 +105,27 @@ export default function FormNuevaEntrada({ handleClose }) {
           aria-label='empty textarea'
           placeholder='Razón del ingreso'
           type='input'
-          {...register('razonSalida')}
-        />
-      </Box>
-      {/*       
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Proveedor
-        </InputLabel>
-        <NativeSelect {...register('IdProveedor', { required: true })}>
-          <option aria-label='None' value='' />
-          {proveedores.map((proveedor) => {
-            return (
-              <option key={proveedor.id} value={proveedor.id}>
-                {proveedor.FullName}
-              </option>
-            );
+          maxRows={3}
+          {...register('razonEntrada', {
+            required: 'true',
+            max: 255,
           })}
-        </NativeSelect>
-        {errors.IdProveedor?.type === 'required' && (
-          <p>El Campo es requirido </p>
+        />
+        {errors.razonEntrada?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </Box> */}
+        {errors.razonEntrada?.type === 'max' && (
+          <BoxError>Maximo 255 Caracteres</BoxError>
+        )}
+      </Box>
 
       <hr />
-      <FormNuevoProductoEntrada />
+      <FormNuevoProductoEntrada
+        errorsItems={errorsItems}
+        setErrorsItems={setErrorsItems}
+      />
       <hr />
+      {errorsItems && <BoxError>{errorsItems}</BoxError>}
       <Button type='submit'>Crear</Button>
     </form>
   );

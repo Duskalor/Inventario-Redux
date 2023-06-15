@@ -1,4 +1,5 @@
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -25,23 +26,23 @@ export default function ListaProductosEntrada({ codigo }) {
   const listaProductosEntrada = productoEntradaBD.filter(
     (proEntrada) => proEntrada.IdEntrada === codigoDocumento.id
   );
-  //console.log(listaProductosEntrada);
   useEffect(() => {
-    //console.log(productoEntradaBD);
     dispatch(getDetalleEntradas());
   }, [dispatch]);
   return (
-    <div>
+    <Box>
       {/* <h1>PERMISOS</h1> */}
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>
-            <TableRow>
+            <TableRow
+              sx={{
+                '& th': { textAlign: 'center' },
+              }}
+            >
               <TableCell>Codigo</TableCell>
               <TableCell>Producto</TableCell>
-              <TableCell>Precio de Compra</TableCell>
               <TableCell>Cantidad</TableCell>
-              <TableCell>SubTotal</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -51,6 +52,6 @@ export default function ListaProductosEntrada({ codigo }) {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Box>
   );
 }

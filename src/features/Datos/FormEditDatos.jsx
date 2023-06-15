@@ -28,8 +28,8 @@ export default function FormEditCliente({ handleClose }) {
   const onSubmit = (dato) => {
     const { RazonSocial, Direccion, Ruc } = dato;
     if (
-      Datos.Direccion !== Direccion &&
-      Datos.Ruc !== Ruc &&
+      Datos.Direccion !== Direccion ||
+      Datos.Ruc !== Ruc ||
       Datos.RazonSocial !== RazonSocial
     ) {
       dispatch(updateDatos({ id, RazonSocial, Direccion, Ruc }));

@@ -1,81 +1,126 @@
-import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
-import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography,
+} from '@mui/material';
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GuardarEstado } from './productoEntradaSlice';
 import ProductosEntradaDatosLocal from './ProductosEntradaDatosLocal';
+import { BoxError } from '../../components/BoxError';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
 
-export default function FormNuevoProductoEntrada() {
+export default function FormNuevoProductoEntrada({
+  errorsItems,
+  setErrorsItems,
+}) {
   const { productos } = useSelector((state) => state.Productos);
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
+  const { IdAlmacenes, IdPermisos } = useUserLogin();
   const dispatch = useDispatch();
   const [productosAgregados, setProductosAgregados] = useState({
     IdProducto: '',
-    PrecioCompra: '',
     Cantidad: '',
-    SubTotal: '',
   });
+  // console.log(productosAgregados);
+  const [errorProductos, setErrorProductos] = useState(null);
+  const [todosLosProductos, setTodosLosProductos] = useState(false);
   const Guardar = (e) => {
     setProductosAgregados({
       ...productosAgregados,
       [e.target.name]: e.target.value,
     });
   };
-  const onSave = (e) => {
-    // obtener el subtotal
-    productosAgregados.SubTotal =
-      productosAgregados.Cantidad * productosAgregados.PrecioCompra;
-    // verficar existencia
+  const onSave = () => {
+    // verificando si son del almacén asignado
+
+    // if (productos[productosAgregados.IdProducto].IdAlmacenes !== IdAlmacenes)
+    //   return setErrorProductos('No existe en el almacén asignado');
+
+    // validando campos
+    if (productosAgregados.IdProducto === '')
+      return setErrorProductos('Seleccione un Producto');
+
+    if (productosAgregados.Cantidad === '')
+      return setErrorProductos('Ingrese Cantidad De productos');
+
+    // Verficando existencia
     const Verificar = productoEntrada.some(
       (pro) => pro.IdProducto === productosAgregados.IdProducto
     );
-    // console.log({ productosAgregados });
-    //  console.log({ Verificar });
+    if (Verificar) return setErrorProductos('Producto Existente');
 
-    // validando campos
-    if (
-      productosAgregados.PrecioCompra !== '' &&
-      productosAgregados.Cantidad !== '' &&
-      productosAgregados.IdProducto !== ''
-    ) {
-      // console.log('AQUI');
-      if (!Verificar) dispatch(GuardarEstado(productosAgregados));
-    }
+    // Guardando datos
+    dispatch(GuardarEstado(productosAgregados));
 
-    //console.log(productosAgregados);
-    setProductosAgregados({
-      IdProducto: '',
-      PrecioCompra: '',
-      Cantidad: '',
-      SubTotal: '',
-    });
+    // Limpiando campos
+    setProductosAgregados({ IdProducto: '', Cantidad: '' });
+  };
+
+  const Alldata = useMemo(() => {
+    return todosLosProductos
+      ? productos
+      : productos.filter((pro) => pro.IdAlmacenes === IdAlmacenes);
+  }, [productos, todosLosProductos]);
+
+  const handleChange = () => {
+    const newState = !todosLosProductos;
+    IdPermisos === roles.admin && setTodosLosProductos(newState);
+    !newState && setProductosAgregados((prev) => ({ ...prev, IdProducto: '' }));
   };
 
   return (
     <>
-      <div>
-        <NativeSelect onChange={(e) => Guardar(e)} name='IdProducto'>
+      <Box>
+        <NativeSelect
+          onChange={(e) => {
+            errorProductos !== null && setErrorProductos(null);
+            errorsItems !== null && setErrorsItems(null);
+            Guardar(e);
+          }}
+          value={productosAgregados.IdProducto}
+          name='IdProducto'
+        >
           <option aria-label='None' value='' />
-          {productos.map((producto) => {
+          {Alldata.filter((pro) => pro.active === 1).map((producto, i) => {
+            const color = producto.IdAlmacenes !== IdAlmacenes && 'red';
+            const WithoutStock = producto.Stock === 0;
+
             return (
-              <option key={producto.id} value={producto.id}>
-                {producto.Codigo} : {producto.Descripcion}
+              <option
+                style={{
+                  backgroundColor: WithoutStock ? 'rgba(0,0,0,0.6)' : color,
+                }}
+                key={producto.id}
+                value={producto.id}
+              >
+                {i + 1} :{producto.Codigo} : {producto.Descripcion} | Cantidad :
+                &nbsp;
+                {producto.Stock}
               </option>
             );
           })}
         </NativeSelect>
-      </div>
-      <div>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Precio Compra
-        </InputLabel>
-        <Input
-          type='number'
-          name='PrecioCompra'
-          value={productosAgregados.PrecioCompra}
-          onChange={(e) => Guardar(e)}
-        />
-      </div>
-      <div>
+        {IdPermisos === roles.admin && (
+          <Box py={1}>
+            <Box display='flex'>
+              <Box display='flex' gap={2} onClick={handleChange}>
+                <input
+                  type='checkbox'
+                  checked={todosLosProductos}
+                  onChange={handleChange}
+                />
+                <Typography variant='h4'>Todos los productos</Typography>
+              </Box>
+            </Box>
+          </Box>
+        )}
+      </Box>
+
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Cantidad
         </InputLabel>
@@ -83,9 +128,13 @@ export default function FormNuevoProductoEntrada() {
           type='number'
           name='Cantidad'
           value={productosAgregados.Cantidad}
-          onChange={(e) => Guardar(e)}
+          onChange={(e) => {
+            errorProductos !== null && setErrorProductos(null);
+            Guardar(e);
+          }}
         />
-      </div>
+        {errorProductos && <BoxError>{errorProductos}</BoxError>}
+      </Box>
       <Button onClick={(e) => onSave(e)}>Agregar</Button>
       <hr />
       <ProductosEntradaDatosLocal />

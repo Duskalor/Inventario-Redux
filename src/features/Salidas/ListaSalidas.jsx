@@ -1,4 +1,5 @@
 import {
+  Box,
   InputAdornment,
   Paper,
   Table,
@@ -19,6 +20,7 @@ import { getProductos } from '../Productos/productosSlice';
 import { centrar, titulos } from '../style';
 import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import { ChildModal } from './LayoutSalida';
 
 export default function ListaSalidas() {
   const { salidas } = useSelector((state) => state.Salidas);
@@ -44,10 +46,20 @@ export default function ListaSalidas() {
   }, [Busqueda, salidas]);
   // console.log({ salidasFiltradas });
   return (
-    <div>
+    <Box>
       <Typography sx={titulos} variant='h4' component='h2'>
         SALIDAS
       </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
+          '&>button': { m: '.5rem' },
+        }}
+      >
+        <ChildModal />
+      </Box>
 
       <TextField
         sx={{
@@ -75,11 +87,10 @@ export default function ListaSalidas() {
                 }}
               >
                 <TableCell>Codigo Documento</TableCell>
-                <TableCell>Vendedor</TableCell>
-                <TableCell>Cliente</TableCell>
-                <TableCell>Dni</TableCell>
+                <TableCell>Usuario</TableCell>
+                <TableCell>Razón Salida</TableCell>
+                <TableCell>Active</TableCell>
                 <TableCell>Cantidad de Productos</TableCell>
-                <TableCell>Monto Total</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
@@ -111,6 +122,6 @@ export default function ListaSalidas() {
           No hay salidas existentes
         </Typography>
       )}
-    </div>
+    </Box>
   );
 }

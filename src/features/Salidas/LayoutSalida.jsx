@@ -64,7 +64,6 @@ export default function LayoutSalida() {
       >
         <Box sx={{ ...style, width: 850, borderRadius: 4 }}>
           <ListaSalidas />
-          <ChildModal />
         </Box>
       </Modal>
     </Box>

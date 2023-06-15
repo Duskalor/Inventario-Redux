@@ -1,94 +1,133 @@
-import { Button, Input, InputLabel, NativeSelect } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography,
+} from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductoEntradaEdit from './ProductoEntradaEdit';
 import { GuardarDatos, GuardarEstadoEdit } from './productoEntradaSlice';
+import { BoxError } from '../../components/BoxError';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
 
-export default function LayoutProductoEntradaEdit({ id }) {
+export default function LayoutProductoEntradaEdit({
+  id,
+  setErrorsItems,
+  errorsItems,
+}) {
   const { productos } = useSelector((state) => state.Productos);
+  const { IdAlmacenes, IdPermisos } = useUserLogin();
+
   const { productoEntradaEdit, productoEntradaBD } = useSelector(
     (state) => state.ProductoEntrada
   );
+  const [errorProductos, setErrorProductos] = useState(null);
+  const [todosLosProductos, setTodosLosProductos] = useState(false);
+  const [errorProduct, setErrorProduct] = useState(null);
 
   const datos = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
-  // console.log(datos);
+  // console.log(errorProduct);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(GuardarDatos(datos));
   }, [dispatch]);
 
-  //console.log(productos);
   const [productosAgregados, setProductosAgregados] = useState({
     IdProducto: '',
-    PrecioCompra: '',
     Cantidad: '',
-    SubTotal: '',
   });
-  //console.log(productos);
   const Guardar = (e) => {
-    //console.log(e);
     setProductosAgregados({
       ...productosAgregados,
       [e.target.name]: e.target.value,
     });
   };
-  const onSave = (e) => {
+  const onSave = () => {
     const newProducto = structuredClone(productosAgregados);
-    newProducto.SubTotal = newProducto.Cantidad * newProducto.PrecioCompra;
 
     const Verificar = productoEntradaEdit.find(
       (pro) => pro.IdProducto === newProducto.IdProducto
     );
+
     newProducto.IdEntrada = id;
-    newProducto.PrecioCompra = newProducto.PrecioCompra + '.00';
-    newProducto.SubTotal = newProducto.SubTotal + '.00';
+    // console.log(productoEntradaEdit, newProducto);
+    if (productosAgregados.IdProducto === '')
+      return setErrorProduct('Seleccione un Producto');
 
-    console.log(productoEntradaEdit, newProducto);
-    if (
-      newProducto.PrecioCompra !== '' &&
-      newProducto.Cantidad !== '' &&
-      newProducto.IdProducto !== ''
-    ) {
-      if (!Verificar) {
-        dispatch(GuardarEstadoEdit(newProducto));
-      }
+    if (productosAgregados.Cantidad === '')
+      return setErrorProduct('Ingrese Cantidad De productos');
+
+    if (Verificar) {
+      return setErrorProduct('Producto Existente');
     }
+    dispatch(GuardarEstadoEdit(newProducto));
+    setProductosAgregados({ IdProducto: '', Cantidad: '' });
+  };
 
-    setProductosAgregados({
-      IdProducto: '',
-      PrecioCompra: '',
-      Cantidad: '',
-      SubTotal: '',
-    });
+  const Alldata = useMemo(() => {
+    return todosLosProductos
+      ? productos
+      : productos.filter((pro) => pro.IdAlmacenes === IdAlmacenes);
+  }, [productos, todosLosProductos]);
+
+  const handleChange = () => {
+    const newState = !todosLosProductos;
+    IdPermisos === roles.admin && setTodosLosProductos(newState);
+    !newState && setProductosAgregados((prev) => ({ ...prev, IdProducto: '' }));
   };
 
   return (
     <>
-      <div>
-        <NativeSelect onChange={(e) => Guardar(e)} name='IdProducto'>
+      <Box>
+        <NativeSelect
+          onChange={(e) => {
+            errorProductos !== null && setErrorProductos(null);
+            errorsItems !== null && setErrorsItems(null);
+            Guardar(e);
+          }}
+          value={productosAgregados.IdProducto}
+          name='IdProducto'
+        >
           <option aria-label='None' value='' />
-          {productos.map((producto) => {
+          {Alldata.filter((pro) => pro.active === 1).map((producto, i) => {
+            const color = producto.IdAlmacenes !== IdAlmacenes && 'red';
+            const WithoutStock = producto.Stock === 0;
+
             return (
-              <option key={producto.id} value={producto.id}>
-                {producto.Codigo} : {producto.Descripcion}
+              <option
+                style={{
+                  backgroundColor: WithoutStock ? 'rgba(0,0,0,0.6)' : color,
+                }}
+                key={producto.id}
+                value={producto.id}
+              >
+                {i + 1} :{producto.Codigo} : {producto.Descripcion} | Cantidad :
+                &nbsp;
+                {producto.Stock}
               </option>
             );
           })}
         </NativeSelect>
-      </div>
-      <div>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Precio Compra
-        </InputLabel>
-        <Input
-          type='number'
-          name='PrecioCompra'
-          value={productosAgregados.PrecioCompra}
-          onChange={(e) => Guardar(e)}
-        />
-      </div>
-      <div>
+        {IdPermisos === roles.admin && (
+          <Box py={1}>
+            <Box display='flex'>
+              <Box display='flex' gap={2} onClick={handleChange}>
+                <input
+                  type='checkbox'
+                  checked={todosLosProductos}
+                  onChange={handleChange}
+                />
+                <Typography variant='h4'>Todos los productos</Typography>
+              </Box>
+            </Box>
+          </Box>
+        )}
+      </Box>
+      <Box>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Cantidad
         </InputLabel>
@@ -96,9 +135,13 @@ export default function LayoutProductoEntradaEdit({ id }) {
           type='number'
           name='Cantidad'
           value={productosAgregados.Cantidad}
-          onChange={(e) => Guardar(e)}
+          onChange={(e) => {
+            setErrorProduct !== null && setErrorProduct(null);
+            Guardar(e);
+          }}
         />
-      </div>
+      </Box>
+      {errorProduct && <BoxError>{errorProduct}</BoxError>}
       <Button onClick={(e) => onSave(e)}>Agregar</Button>
       <hr />
       <ProductoEntradaEdit />

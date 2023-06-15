@@ -12,7 +12,7 @@ export default function ProductosSalida({ producto }) {
   //console.log(ListaProductos);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
-    if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
+    if (window.confirm('Esta Seguro de eliminar a esta Salida ?')) {
       dispatch(borrarItem(id));
     }
   };

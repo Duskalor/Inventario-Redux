@@ -1,4 +1,4 @@
-import { Button, InputLabel, NativeSelect } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import LayoutProductoEntradaEdit from '../ProductoEntrada/LayoutProductoEntradaEdit';
@@ -9,6 +9,9 @@ import {
 } from '../ProductoEntrada/productoEntradaSlice';
 import { updateProductos } from '../Productos/productosSlice';
 import { updateEntradas } from './entradaSlice';
+import EmptyTextarea from '../../components/TextArea';
+import { BoxError } from '../../components/BoxError';
+import { useState } from 'react';
 
 export default function FormEditEntrada({ handleClose, id }) {
   const dispatch = useDispatch();
@@ -18,18 +21,21 @@ export default function FormEditEntrada({ handleClose, id }) {
   const {
     NumeroDocumento,
     CantidadProductos,
-    IdProveedor,
+    razonEntrada,
     IdUsuario,
-    MontoTotal,
+    // MontoTotal,
     id: identrada,
+    active,
   } = entradas.find((entra) => entra.id === id);
 
-  const { usuarios } = useSelector((state) => state.Usuarios);
-  const { proveedores } = useSelector((state) => state.Proveedor);
+  // const { usuarios } = useSelector((state) => state.Usuarios);
+  // const { proveedores } = useSelector((state) => state.Proveedor);
   const { productoEntradaBD } = useSelector((state) => state.ProductoEntrada);
   const { productoEntradaEdit } = useSelector((state) => state.ProductoEntrada);
   const { productos } = useSelector((state) => state.Productos);
   const ProDucEntra = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
+  const TextArea = EmptyTextarea();
+  const [errorsItems, setErrorsItems] = useState(null);
 
   const {
     register,
@@ -39,9 +45,9 @@ export default function FormEditEntrada({ handleClose, id }) {
     defaultValues: {
       NumeroDocumento: NumeroDocumento,
       IdUsuario: IdUsuario,
-      IdProveedor: IdProveedor,
+      razonEntrada: razonEntrada,
       CantidadProductos: CantidadProductos,
-      MontoTotal: MontoTotal,
+      // MontoTotal: MontoTotal,
     },
   });
   const onSubmit = (datos) => {
@@ -84,7 +90,7 @@ export default function FormEditEntrada({ handleClose, id }) {
           );
           const pro = { ...productoAeditar };
           pro.Stock = pro.Stock + parseInt(pe.Cantidad);
-          //console.log(pro);
+          // console.log(pro);
           dispatch(updateProductos(pro));
         }
       });
@@ -108,27 +114,36 @@ export default function FormEditEntrada({ handleClose, id }) {
 
       // después de terminar con los productos ahora toca calular la cantidad y precio  total
       // de los productos para agregarlos
-      datos.id = id;
+      // datos.id = id;
       let total = 0;
       productoEntradaEdit.forEach((a) => (total += parseInt(a.Cantidad)));
-      let Precio = 0;
-      productoEntradaEdit.forEach((a) => (Precio += parseInt(a.SubTotal)));
 
-      datos = { ...datos, CantidadProductos: total, MontoTotal: Precio };
-
+      datos = {
+        ...datos,
+        id,
+        CantidadProductos: total,
+        active,
+      };
+      // console.log(datos);
       dispatch(updateEntradas(datos));
 
       handleClose();
     }
   };
+
+  const handleMax = (e) => {
+    e.target.value.length > 255 && setErrorsItems('Maximo 255 caracteres');
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <h2>
-          Codigo: <b>{NumeroDocumento}</b>
-        </h2>
+        <Typography variant='h1' textAlign='center'>
+          Codigo : <b>{NumeroDocumento}</b>
+        </Typography>
       </div>
-      <div>
+      <>
+        {/* <div>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Usuario
         </InputLabel>
@@ -146,8 +161,9 @@ export default function FormEditEntrada({ handleClose, id }) {
           })}
         </NativeSelect>
         {errors.IdUsuario?.type === 'required' && <p>El Campo es requirido </p>}
-      </div>
-      <div>
+      </div> */}
+
+        {/* <div>
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Proveedor
         </InputLabel>
@@ -155,23 +171,45 @@ export default function FormEditEntrada({ handleClose, id }) {
           {...register('IdProveedor', {
             required: true,
           })}
-        >
-          {proveedores.map((Proveedor) => {
+        > */}
+        {/* {proveedores.map((Proveedor) => {
             return (
               <option key={Proveedor.id} value={Proveedor.id}>
                 {Proveedor.FullName}
               </option>
             );
-          })}
-        </NativeSelect>
+          })} */}
+        {/* </NativeSelect>
         {errors.IdProveedor?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div>
-      <hr />
+      </div> */}
+        {/* <hr /> */}
+      </>
+      <Box>
+        <TextArea
+          sx={{ my: '2rem' }}
+          aria-label='empty textarea'
+          placeholder='Razón del ingreso'
+          type='input'
+          maxRows={3}
+          {...register('razonEntrada', {
+            required: 'true',
+            onChange: handleMax,
+          })}
+        />
+        {errors.razonEntrada?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+        {errorsItems && <BoxError>{errorsItems}</BoxError>}
+      </Box>
 
-      <LayoutProductoEntradaEdit id={identrada} />
-      {/* <EditProductoEntrada CodigoProductos={ProDucEntra} /> */}
+      <hr />
+      <LayoutProductoEntradaEdit
+        id={identrada}
+        errorsItems={errorsItems}
+        setErrorsItems={setErrorsItems}
+      />
       <Button type='submit'>Guardar</Button>
     </form>
   );
