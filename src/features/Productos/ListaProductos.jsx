@@ -17,27 +17,42 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductos } from './productosSlice';
 import SearchIcon from '@mui/icons-material/Search';
-import { centrar, titulos } from '../style';
+import { titulos } from '../style';
 import { ChildModal } from './LayoutProducto';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-// import { useTheme } from '@emotion/react';
+import { useProducts } from '../../utils/useProducts';
+import { useHandlePAge } from '../../utils/useHandlePage';
+import { BoxError } from '../../components/BoxError';
 
 export default function ListaProductos() {
-  const { productos, loading } = useSelector((state) => state.Productos);
+  const { loading } = useSelector((state) => state.Productos);
   const { almacenes } = useSelector((state) => state.Almacenes);
   const { id, IdAlmacenes } = useUserLogin();
-  // const { palette } = useTheme();
-
+  const productos = useProducts();
+  // console.log(productos);
   const [Busqueda, setBusqueda] = useState('');
   const [BusquedaDescription, setBusquedaDescription] = useState('Codigo');
   const [filterAlmacen, setFilterAlmacen] = useState(IdAlmacenes);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(7);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
+
+  const {
+    handleChangePage,
+    handleChangeRowsPerPage,
+    handleOnchangeUbicacion,
+    handleOnchangeFilterName,
+  } = useHandlePAge(
+    setPage,
+    setRowsPerPage,
+    setFilterAlmacen,
+    setBusquedaDescription
+  );
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductos());
@@ -53,7 +68,7 @@ export default function ListaProductos() {
       ? productos.filter((pro) => {
           return pro.IdAlmacenes === +filterAlmacen;
         })
-      : productos;
+      : productos.sort((a, b) => a.id - b.id);
   }, [productos, filterAlmacen]);
 
   const productosFiltrados = useMemo(() => {
@@ -71,24 +86,6 @@ export default function ListaProductos() {
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - productosFiltrados.length)
       : 0;
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleOnchangeUbicacion = (e) => {
-    setPage(0);
-    setFilterAlmacen(e.target.value);
-  };
-
-  const handleOnchangeFilterName = (e) => {
-    setBusquedaDescription(e.target.value);
-  };
 
   return (
     <Box>
@@ -130,7 +127,7 @@ export default function ListaProductos() {
                     </MenuItem>
                   );
                 })}
-                <MenuItem value={'All'}>Todos</MenuItem>
+                <MenuItem value='All'>Todos</MenuItem>
               </Select>
               {/* filter */}
               <Select
@@ -203,12 +200,15 @@ export default function ListaProductos() {
                         page * rowsPerPage + rowsPerPage
                       )
                   : productosFiltrados
-                ).map((producto, id) => (
-                  <Productos key={id} productos={producto} />
+                ).map((producto, i) => (
+                  <Productos key={i} productos={producto} />
                 ))
               ) : (
                 <TableRow>
-                  <TableCell sx={{ ...centrar, fontSize: '2rem' }} colSpan={7}>
+                  <TableCell
+                    sx={{ textAlign: 'center', fontSize: '2rem' }}
+                    colSpan={7}
+                  >
                     El codigo no existe
                   </TableCell>
                 </TableRow>
@@ -265,7 +265,7 @@ export default function ListaProductos() {
           {loading ? (
             <CircularProgress sx={{ fontSize: 65 }} />
           ) : (
-            <p>No hay productos ingresados</p>
+            <BoxError>No hay productos ingresados</BoxError>
           )}
         </Typography>
       )}

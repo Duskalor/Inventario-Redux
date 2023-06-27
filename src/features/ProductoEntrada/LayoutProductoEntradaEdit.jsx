@@ -12,13 +12,15 @@ import ProductoEntradaEdit from './ProductoEntradaEdit';
 import { GuardarDatos, GuardarEstadoEdit } from './productoEntradaSlice';
 import { BoxError } from '../../components/BoxError';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { useProducts } from '../../utils/useProducts';
 
 export default function LayoutProductoEntradaEdit({
   id,
   setErrorsItems,
   errorsItems,
 }) {
-  const { productos } = useSelector((state) => state.Productos);
+  // const { productos } = useSelector((state) => state.Productos);
+  const productos = useProducts();
   const { IdAlmacenes, IdPermisos } = useUserLogin();
 
   const { productoEntradaEdit, productoEntradaBD } = useSelector(
@@ -107,7 +109,7 @@ export default function LayoutProductoEntradaEdit({
               >
                 {i + 1} :{producto.Codigo} : {producto.Descripcion} | Cantidad :
                 &nbsp;
-                {producto.Stock}
+                {producto.Cantidad}
               </option>
             );
           })}

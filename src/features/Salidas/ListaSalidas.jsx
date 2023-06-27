@@ -1,7 +1,9 @@
 import {
   Box,
   InputAdornment,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -17,7 +19,7 @@ import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
 import Salidas from './Salidas';
 import { getSalidas } from './salidasSlice';
 import { getProductos } from '../Productos/productosSlice';
-import { centrar, titulos } from '../style';
+import { titulos } from '../style';
 import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChildModal } from './LayoutSalida';
@@ -25,6 +27,11 @@ import { ChildModal } from './LayoutSalida';
 export default function ListaSalidas() {
   const { salidas } = useSelector((state) => state.Salidas);
   const [Busqueda, setBusqueda] = useState('');
+  const [BusquedaDescription, setBusquedaDescription] =
+    useState('NumeroDocumento');
+  const handleOnchangeFilterName = (e) => {
+    setBusquedaDescription(e.target.value);
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -40,7 +47,9 @@ export default function ListaSalidas() {
   const salidasFiltradas = useMemo(() => {
     return Busqueda !== '' && Busqueda !== null
       ? salidas.filter((prod) =>
-          prod.NumeroDocumento.toLowerCase().includes(Busqueda.toLowerCase())
+          prod[BusquedaDescription].toLowerCase().includes(
+            Busqueda.toLowerCase()
+          )
         )
       : salidas;
   }, [Busqueda, salidas]);
@@ -53,11 +62,23 @@ export default function ListaSalidas() {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
           width: '100%',
           '&>button': { m: '.5rem' },
+          py: '0.5rem',
         }}
       >
+        <Select
+          labelId='demo-simple-select-label'
+          id='demo-simple-select'
+          value={BusquedaDescription}
+          label='filter'
+          onChange={handleOnchangeFilterName}
+        >
+          <MenuItem value='NumeroDocumento'>Codigo</MenuItem>
+          <MenuItem value='razonSalida'>Razón</MenuItem>
+        </Select>
+
         <ChildModal />
       </Box>
 
@@ -77,6 +98,7 @@ export default function ListaSalidas() {
         }}
         variant='standard'
       />
+
       {salidas.length !== 0 ? (
         <TableContainer component={Paper} style={{ maxHeight: 550 }}>
           <Table stickyHeader arial-label='simple tables'>
@@ -101,8 +123,11 @@ export default function ListaSalidas() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell sx={{ ...centrar, fontSize: '2rem' }} colSpan={6}>
-                    No existe codigo de Salida
+                  <TableCell
+                    sx={{ textAlign: 'center', fontSize: '2rem' }}
+                    colSpan={6}
+                  >
+                    No existe codigo o razón de Salida
                   </TableCell>
                 </TableRow>
               )}

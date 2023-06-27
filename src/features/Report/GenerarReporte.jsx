@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { ReportCenter, titulos } from '../style';
 
 export default function GenerarReporte({ handleClose }) {
-  var { productos } = useSelector((state) => state.Productos);
+  const { productos } = useSelector((state) => state.Productos);
   const { entradas } = useSelector((state) => state.Entradas);
   const { salidas } = useSelector((state) => state.Salidas);
   const { usuarios } = useSelector((state) => state.Usuarios);

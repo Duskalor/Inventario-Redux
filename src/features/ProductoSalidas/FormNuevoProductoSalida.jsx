@@ -13,12 +13,14 @@ import ProductosEntradaDatosLocal from './ProductosSalidaDatosLocal';
 import { GuardarEstado } from './productosSalidaSlice';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import { BoxError } from '../../components/BoxError';
+import { useProducts } from '../../utils/useProducts';
 
 export default function FormNuevoProductoSalida({
   errorsItems,
   setErrorsItems,
 }) {
-  const { productos } = useSelector((state) => state.Productos);
+  // const { productos } = useSelector((state) => state.Productos);
+  const productos = useProducts();
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
   const { IdAlmacenes, IdPermisos } = useUserLogin();
 
@@ -111,11 +113,11 @@ export default function FormNuevoProductoSalida({
                 style={{
                   backgroundColor: WithoutStock ? 'rgba(0,0,0,0.6)' : color1,
                 }}
-                key={producto.id}
+                key={crypto.randomUUID()}
                 value={producto.id}
               >
                 {i + 1} : {producto.Codigo} : {producto.Descripcion} | Cantidad
-                : &nbsp;{producto.Stock}
+                : &nbsp;{producto.Cantidad}
               </option>
             );
           })}

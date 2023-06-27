@@ -1,7 +1,9 @@
 import {
   Box,
   InputAdornment,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -31,8 +33,13 @@ export default function ListaEntradas() {
     (state) => state.Productos,
     (prevData, nextData) => prevData.productos === nextData.productos
   );
-  const [Busqueda, setBusqueda] = useState('');
 
+  const [Busqueda, setBusqueda] = useState('');
+  const [BusquedaDescription, setBusquedaDescription] =
+    useState('NumeroDocumento');
+  const handleOnchangeFilterName = (e) => {
+    setBusquedaDescription(e.target.value);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     if (entradas.length === 0) dispatch(getEntradas());
@@ -47,12 +54,14 @@ export default function ListaEntradas() {
   const entradasFiltradas = useMemo(() => {
     return (Busqueda !== '') & (Busqueda !== null)
       ? entradas.filter((entra) => {
-          return entra.NumeroDocumento.toLowerCase().includes(
+          return entra[BusquedaDescription].toLowerCase().includes(
             Busqueda.toLowerCase()
           );
         })
       : entradas;
   }, [Busqueda, entradas]);
+
+  // console.log(entradasFiltradas);
 
   return (
     <div>
@@ -67,11 +76,22 @@ export default function ListaEntradas() {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             width: '100%',
+            py: '0.5rem',
             '&>button': { m: '.5rem' },
           }}
         >
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={BusquedaDescription}
+            label='filter'
+            onChange={handleOnchangeFilterName}
+          >
+            <MenuItem value='NumeroDocumento'>Codigo</MenuItem>
+            <MenuItem value='razonEntrada'>Razón</MenuItem>
+          </Select>
           <ChildModal />
         </Box>
         <TextField
@@ -83,7 +103,12 @@ export default function ListaEntradas() {
           onChange={handleChange}
           InputProps={{
             startAdornment: (
-              <InputAdornment position='start'>
+              <InputAdornment
+                position='start'
+                sx={{
+                  my: '1.2rem',
+                }}
+              >
                 <SearchIcon />
               </InputAdornment>
             ),
@@ -102,18 +127,22 @@ export default function ListaEntradas() {
                 <TableCell>Status</TableCell>
                 <TableCell>Razón Entrada</TableCell>
                 <TableCell>Cantidad de Productos</TableCell>
+                <TableCell>Almancén</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {entradasFiltradas.length > 0 ? (
-                entradasFiltradas.map((entrada, id) => (
-                  <Entradas key={id} entrada={entrada} />
-                ))
+                [...entradasFiltradas]
+                  .reverse()
+                  .map((entrada, id) => <Entradas key={id} entrada={entrada} />)
               ) : (
                 <TableRow>
-                  <TableCell sx={{ ...centrar, fontSize: '2rem' }} colSpan={6}>
-                    No existe codigo de Entrada
+                  <TableCell
+                    sx={{ textAlign: 'center', fontSize: '2rem' }}
+                    colSpan={7}
+                  >
+                    No existe codigo o razón de Entrada
                   </TableCell>
                 </TableRow>
               )}

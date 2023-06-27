@@ -15,16 +15,16 @@ import { BoxError } from '../../components/BoxError';
 import { useState } from 'react';
 import { useUserLogin } from '../../utils/useUserLogin';
 export default function FormNuevaEntrada({ handleClose }) {
-  const { IdAlmacenes } = useUserLogin();
+  const { IdAlmacenes, id, Usuario } = useUserLogin();
 
-  const { usuarios } = useSelector((state) => state.Usuarios);
+  // const { usuarios } = useSelector((state) => state.Usuarios);
   const TextArea = EmptyTextarea();
   const { entradas } = useSelector((state) => state.Entradas);
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
   const [errorCodigo, setErrorCodigo] = useState(null);
   // USE STATE
   const [errorsItems, setErrorsItems] = useState(null);
-
+  // const user = usuarios.find((user) => user.id === id);
   const dispatch = useDispatch();
   const {
     register,
@@ -40,7 +40,7 @@ export default function FormNuevaEntrada({ handleClose }) {
       let total = 0;
       productoEntrada.forEach((a) => (total += parseInt(a.Cantidad)));
 
-      datos = { ...datos, CantidadProductos: total };
+      datos = { ...datos, CantidadProductos: total, IdUsuario: id };
       dispatch(createEntradas({ datos, productoEntrada, IdAlmacenes }));
       handleClose();
     }
@@ -82,18 +82,21 @@ export default function FormNuevaEntrada({ handleClose }) {
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Usuario
         </InputLabel>
-        <NativeSelect
-          {...register('IdUsuario', {
-            required: true,
-          })}
+
+        <Input
+          // {...register('IdUsuario', {
+          //   required: true,
+          // })}
+          value={Usuario}
+          disabled={true}
         >
-          <option aria-label='None' value='' />
+          {/* <option aria-label='None' value='' />
           {usuarios.map((usuario) => (
             <option key={usuario.id} value={usuario.id}>
               {usuario.FullName}
             </option>
-          ))}
-        </NativeSelect>
+          ))} */}
+        </Input>
         {errors.IdUsuario?.type === 'required' && (
           <BoxError>El Campo es requirido </BoxError>
         )}

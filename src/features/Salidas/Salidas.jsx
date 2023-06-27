@@ -8,9 +8,8 @@ import { centrar } from '../style';
 // import ModalPrint from './ModalPrint';
 import { deleteSalidas } from './salidasSlice';
 import { BoxStatus } from '../../components/BoxStatus';
-
+import { useProducts } from '../../utils/useProducts';
 export default function Salidas({ salida }) {
-  // console.log(salida);
   const {
     NumeroDocumento,
     CantidadProductos,
@@ -27,7 +26,7 @@ export default function Salidas({ salida }) {
   const UsuarioSalida = usuarios.find((user) => user.id === IdUsuario);
 
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
-  const { productos } = useSelector((state) => state.Productos);
+  const productos = useProducts();
   const ParaEliminar = productoSalidaBD.filter((pro) => pro.IdSalida === id);
 
   const dispatch = useDispatch();

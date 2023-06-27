@@ -12,12 +12,14 @@ import { GuardarEstado } from './productoEntradaSlice';
 import ProductosEntradaDatosLocal from './ProductosEntradaDatosLocal';
 import { BoxError } from '../../components/BoxError';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { useProducts } from '../../utils/useProducts';
 
 export default function FormNuevoProductoEntrada({
   errorsItems,
   setErrorsItems,
 }) {
-  const { productos } = useSelector((state) => state.Productos);
+  // const { productos } = useSelector((state) => state.Productos);
+  const productos = useProducts();
   const { productoEntrada } = useSelector((state) => state.ProductoEntrada);
   const { IdAlmacenes, IdPermisos } = useUserLogin();
   const dispatch = useDispatch();
@@ -25,7 +27,8 @@ export default function FormNuevoProductoEntrada({
     IdProducto: '',
     Cantidad: '',
   });
-  // console.log(productosAgregados);
+
+  // console.log(productos);
   const [errorProductos, setErrorProductos] = useState(null);
   const [todosLosProductos, setTodosLosProductos] = useState(false);
   const Guardar = (e) => {
@@ -36,9 +39,6 @@ export default function FormNuevoProductoEntrada({
   };
   const onSave = () => {
     // verificando si son del almacén asignado
-
-    // if (productos[productosAgregados.IdProducto].IdAlmacenes !== IdAlmacenes)
-    //   return setErrorProductos('No existe en el almacén asignado');
 
     // validando campos
     if (productosAgregados.IdProducto === '')
@@ -94,12 +94,12 @@ export default function FormNuevoProductoEntrada({
                 style={{
                   backgroundColor: WithoutStock ? 'rgba(0,0,0,0.6)' : color,
                 }}
-                key={producto.id}
+                key={crypto.randomUUID()}
                 value={producto.id}
               >
                 {i + 1} :{producto.Codigo} : {producto.Descripcion} | Cantidad :
                 &nbsp;
-                {producto.Stock}
+                {producto.Cantidad}
               </option>
             );
           })}

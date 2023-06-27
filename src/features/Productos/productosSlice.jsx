@@ -38,10 +38,10 @@ export const productosSlice = createSlice({
     loading: false,
   },
   reducers: {
-    borrarProductos: (state /* action */) => {
+    borrarProductos: (state) => {
       state.productos = [];
     },
-    logoutProductos: (state /* action */) => {
+    logoutProductos: (state) => {
       state.productos = [];
       state.error = null;
       state.loading = false;

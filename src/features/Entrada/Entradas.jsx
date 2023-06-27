@@ -4,20 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LayoutProductosEntrada } from '../ProductoEntrada/LayoutProductosEntrada';
 import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
 import { updateProductos } from '../Productos/productosSlice';
-import { centrar } from '../style';
+// import { centrar } from '../style';
 import { deleteEntradas } from './entradaSlice';
 import { ModalEdit } from './ModalEdit';
 import { BoxStatus } from '../../components/BoxStatus';
 import { BoxContainer } from '../../components/BoxContainer';
+import { useProducts } from '../../utils/useProducts';
 
 export default function Entradas({ entrada }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
+  const { almacenes } = useSelector((state) => state.Almacenes);
   const { productoEntradaBD } = useSelector(
     (state) => state.ProductoEntrada,
     (prevData, nextData) =>
       prevData.productoEntradaBD === nextData.productoEntradaBD
   );
-  const { productos } = useSelector((state) => state.Productos);
+  const productos = useProducts();
   const dispatch = useDispatch();
 
   const {
@@ -26,12 +28,13 @@ export default function Entradas({ entrada }) {
     IdUsuario,
     active,
     id,
+    IdAlmacenes,
     razonEntrada,
   } = entrada;
 
   // obteniendo al usuario para listarlo
   const usuario = usuarios.find((user) => user.id === IdUsuario);
-
+  const almacen = almacenes.find((alma) => alma.id === IdAlmacenes);
   // obteniendo los productos para modificar el stock
   const ParaEliminar = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
 
@@ -69,6 +72,7 @@ export default function Entradas({ entrada }) {
       </TableCell>
 
       <TableCell sx={{ width: '77px' }}>{CantidadProductos}</TableCell>
+      <TableCell sx={{ width: '77px' }}>{almacen.ubicacion}</TableCell>
 
       <TableCell>
         <BoxContainer>

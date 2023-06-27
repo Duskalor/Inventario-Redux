@@ -1,5 +1,4 @@
 import { Box, Button, TableCell, TableRow } from '@mui/material';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
 import { deleteProductos } from './productosSlice';
@@ -7,12 +6,12 @@ import { roles, useUserLogin } from '../../utils/useUserLogin';
 import { BoxStatus } from '../../components/BoxStatus';
 
 export default function Productos({ productos }) {
-  const { id, Categoria, Codigo, Descripcion, active, IdAlmacenes, Stock } =
+  const { id, Categoria, Codigo, Descripcion, active, IdAlmacenes, Cantidad } =
     productos;
   const { id: idUser, IdAlmacenes: idAlmacenUser } = useUserLogin();
   const { almacenes } = useSelector((state) => state.Almacenes);
   const almancen = almacenes.find((alma) => alma.id === IdAlmacenes);
-  //console.log(clientes);
+  // console.log(almancen);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (IdAlmacenes !== idAlmacenUser) {
@@ -23,6 +22,11 @@ export default function Productos({ productos }) {
       }
     }
   };
+
+  // useEffect(() => {
+  //   dispatch(getDetalleEntradas());
+  //   dispatch(getDetalleSalida());
+  // }, []);
 
   return (
     <>
@@ -50,7 +54,7 @@ export default function Productos({ productos }) {
           </TableCell>
         )}
         <TableCell>
-          <Box>{Stock}</Box>
+          <Box>{Cantidad}</Box>
         </TableCell>
 
         <TableCell>

@@ -40,9 +40,11 @@ export const createSalida = createAsyncThunk(
     });
 
     dispatch(getDetalleSalida());
+    dispatch(getDetalleSalida());
     dispatch(borrarProductos());
     dispatch(getProductos());
     dispatch(BorrarEstadoEdit());
+
     return data;
   }
 );

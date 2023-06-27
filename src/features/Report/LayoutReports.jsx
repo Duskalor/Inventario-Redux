@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { style } from '../style';
-import GenerarReporte from './GenerarReporte';
 import { ButtonLayout } from '../../components/ButtonLayout';
-
+import { Reportes } from './Reportes';
+import { Typography } from '@mui/material';
 export default function LayoutReports() {
   const [open, setOpen] = React.useState(false);
 
@@ -31,11 +30,17 @@ export default function LayoutReports() {
         <Box
           sx={{
             ...style,
-            width: 320,
+            width: 380,
             borderRadius: 4,
           }}
         >
-          <GenerarReporte handleClose={handleClose} />
+          {/* <GenerarReporte handleClose={handleClose} /> */}
+          <Box>
+            <Typography variant='h2' textAlign='center' py={1}>
+              Generar Reportes
+            </Typography>
+            <Reportes handleClose={handleClose} />
+          </Box>
         </Box>
       </Modal>
     </div>
