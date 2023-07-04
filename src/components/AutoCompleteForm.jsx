@@ -2,7 +2,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
 const AutocompleteForm = ({ filterProducto, setfilterProducto, RamdomId }) => {
   const { productos } = useSelector((state) => state.Productos);

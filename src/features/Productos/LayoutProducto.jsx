@@ -7,7 +7,6 @@ import FormNuevoProducto from './FormNuevoProducto';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { style } from '../style';
 import { ButtonLayout } from '../../components/ButtonLayout';
-import { useTheme } from '@emotion/react';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);

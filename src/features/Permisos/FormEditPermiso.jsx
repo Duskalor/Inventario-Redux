@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Input,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Checkbox, TextField, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatepermisos } from './permisosSlice';

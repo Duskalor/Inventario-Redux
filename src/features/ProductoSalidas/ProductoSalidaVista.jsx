@@ -1,7 +1,7 @@
 import { TableCell, TableRow } from '@mui/material';
 import { useSelector } from 'react-redux';
 export default function ProductoSalidaVista({ producto }) {
-  const { IdProducto, PrecioVenta, Cantidad, SubTotal } = producto;
+  const { IdProducto, Cantidad } = producto;
   const { productos } = useSelector((state) => state.Productos);
 
   const ListaProductos = productos.find((pro) => pro.id === +IdProducto);

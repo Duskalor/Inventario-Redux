@@ -18,7 +18,6 @@ import { useRef } from 'react';
 import ItemsForPrint from './ItemsForPrint';
 import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
 import { titulos } from '../style';
-import { BoxContainer } from '../../components/BoxContainer';
 
 export default function ForPrint({ ToPrint }) {
   //console.log(ToPrint);
