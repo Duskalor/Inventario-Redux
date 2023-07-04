@@ -57,7 +57,9 @@ export default function FormNuevoProductoSalida({
       return setErrorProductos('Seleccione un Producto');
 
     const producto = productos.find(
-      (pro) => pro.id === +productosAgregados.IdProducto
+      (pro) =>
+        pro.id === +productosAgregados.IdProducto &&
+        pro.IdAlmacenes === IdAlmacenes
     );
     if (producto.IdAlmacenes !== IdAlmacenes)
       return setErrorProductos('No existe en el almacén asignado');

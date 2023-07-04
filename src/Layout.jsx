@@ -11,6 +11,7 @@ import LayoutAlmacenes from './features/Almacenes/LayoutAlmacenes';
 import { ButtonLogout } from './components/ButtonLogout';
 import { TitleSystem } from './components/TitleSystem';
 import { BoxContainer } from './components/BoxContainer';
+import LayoutPermisos from './features/Permisos/LayoutPermisos';
 
 export default function Layout() {
   const { permisos } = useSelector((state) => state.Permisos);
@@ -46,7 +47,7 @@ export default function Layout() {
         <BoxContainer>
           <Grid
             container
-            columns={30}
+            columns={14}
             gap={10}
             justifyContent='center'
             p={5}
@@ -71,6 +72,11 @@ export default function Layout() {
             {UserPermiso?.Usuarios === 1 && (
               <Grid item md={2}>
                 <LayoutUsuarios />
+              </Grid>
+            )}
+            {UserPermiso?.Usuarios === 1 && (
+              <Grid item md={2}>
+                <LayoutPermisos />
               </Grid>
             )}
 

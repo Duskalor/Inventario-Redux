@@ -31,7 +31,7 @@ export const createSalida = createAsyncThunk(
     // console.log('aqui');
     // console.log(data);
     productoSalida.forEach((pe) => {
-      console.log({ pe });
+      // console.log({ pe });
       dispatch(createProductoSalida({ IdSalida, pe }));
       const ParaAgregar = productos.find((pro) => pro.id === +pe.IdProducto);
       const pro = { ...ParaAgregar };

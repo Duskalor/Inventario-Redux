@@ -8,26 +8,22 @@ import { BoxStatus } from '../../components/BoxStatus';
 export default function Productos({ productos }) {
   const { id, Categoria, Codigo, Descripcion, active, IdAlmacenes, Cantidad } =
     productos;
-  const { id: idUser, IdAlmacenes: idAlmacenUser } = useUserLogin();
+  const { IdAlmacenes: idAlmacenUser, IdPermisos } = useUserLogin();
   const { almacenes } = useSelector((state) => state.Almacenes);
   const almancen = almacenes.find((alma) => alma.id === IdAlmacenes);
   // console.log(almancen);
   const dispatch = useDispatch();
+
   const deleteItem = (id) => {
-    if (IdAlmacenes !== idAlmacenUser) {
-      alert('no se puede eliminar');
-    } else {
-      if (window.confirm('Esta Seguro de eliminar este Producto?')) {
-        dispatch(deleteProductos(id));
-      }
+    if (IdAlmacenes !== idAlmacenUser) return alert('no se puede eliminar');
+    if (Cantidad !== 0)
+      return alert(
+        `no se puede eliminar el ${Descripcion} contiene la cantidad de items : ${Cantidad}`
+      );
+    if (window.confirm('Esta Seguro de eliminar este Producto?')) {
+      dispatch(deleteProductos(id));
     }
   };
-
-  // useEffect(() => {
-  //   dispatch(getDetalleEntradas());
-  //   dispatch(getDetalleSalida());
-  // }, []);
-
   return (
     <>
       <TableRow
@@ -39,14 +35,16 @@ export default function Productos({ productos }) {
         <TableCell>
           <Box>{Codigo}</Box>
         </TableCell>
-        <TableCell>{Descripcion}</TableCell>
+        <TableCell>
+          <Box>{Descripcion}</Box>
+        </TableCell>
         <TableCell>
           <Box>{Categoria}</Box>
         </TableCell>
         <TableCell>
           <Box>{almancen.ubicacion}</Box>
         </TableCell>
-        {roles.admin === idUser && (
+        {roles.admin === IdPermisos && (
           <TableCell>
             <BoxStatus active={active}>
               {active ? <Box>Active</Box> : <Box>No active</Box>}
@@ -59,7 +57,7 @@ export default function Productos({ productos }) {
 
         <TableCell>
           <Box>
-            {roles.admin === idUser && <ModalEdit id={id} />}
+            {roles.admin === IdPermisos && <ModalEdit id={id} />}
             <Button onClick={() => deleteItem(id)}>Eliminar</Button>
           </Box>
         </TableCell>

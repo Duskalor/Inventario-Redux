@@ -9,3 +9,8 @@ body,
   font-family: system-ui;
   background-color: #131516;
 }
+
+.print {
+  /* color: red; */
+  background-color: white;
+}

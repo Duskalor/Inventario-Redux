@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { titulos } from '../style';
 import Permiso from './Permiso';
 import { getpermisos } from './permisosSlice';
+import { ChildModal } from './LayoutPermisos';
 
 export default function ListaPermisos() {
   const { permisos } = useSelector((state) => state.Permisos);
@@ -26,6 +27,8 @@ export default function ListaPermisos() {
       <Typography sx={titulos} variant='h4' component='h2'>
         PERMISOS
       </Typography>
+      <ChildModal />
+
       <TableContainer component={Paper}>
         <Table arial-label='simple tables'>
           <TableHead>

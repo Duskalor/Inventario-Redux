@@ -18,9 +18,10 @@ export const useProducts = () => {
   const ProductosActuales = useMemo(() => {
     const ContadorEntradas = proEntradas.reduce((acc, proEntrada) => {
       const { IdProducto, Cantidad, IdEntrada } = proEntrada;
-      const { IdAlmacenes, active } = entradas.find(
-        (entra) => entra.id === IdEntrada
-      );
+      const { IdAlmacenes, active } = entradas.find((entra) => {
+        // console.log({ entra, IdEntrada });
+        return entra.id === IdEntrada;
+      });
       if (active) {
         const exist = acc.findIndex(
           (pro) => pro.id === IdProducto && pro.IdAlmacenes === IdAlmacenes
@@ -43,22 +44,36 @@ export const useProducts = () => {
 
       return acc;
     }, []);
-
+    // console.log({ ContadorEntradas, proSalidas, salidas });
     const total = ContadorEntradas.map((proEntrada) => {
       const { id: IdProducto, Cantidad, IdAlmacenes } = proEntrada;
-      const producto = proSalidas.find((pro) => pro.IdProducto === IdProducto);
-      if (!producto) return proEntrada;
+      const producto = proSalidas
+        .filter(
+          (pro) =>
+            pro.IdProducto === IdProducto && pro.IdAlmacenes === IdAlmacenes
+        )
+        .reduce((acc, pro) => {
+          if (acc.length === 0) acc.push(pro);
+          else
+            acc[0] = { ...acc[0], Cantidad: acc[0].Cantidad + +pro.Cantidad };
+
+          return acc;
+        }, []);
+
+      if (producto.length === 0) return proEntrada;
       const { IdAlmacenes: almacen, active } = salidas.find(
-        (sali) => sali.id === producto.IdSalida
+        (sali) => sali.id === producto[0].IdSalida
       );
-      if (!active) return proEntrada;
-      return IdAlmacenes === almacen
+      // console.log({ producto, proEntrada });
+
+      return IdAlmacenes === almacen && active
         ? {
             ...proEntrada,
-            Cantidad: Cantidad - producto.Cantidad,
+            Cantidad: Cantidad - producto[0].Cantidad,
           }
         : proEntrada;
     });
+    // console.log(total);
     // return total;
 
     const finalData = allProductos

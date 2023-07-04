@@ -22,7 +22,9 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Entrada</Button>
+      <Button variant='contained' onClick={handleOpen}>
+        Nuevo Entrada
+      </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -54,7 +56,7 @@ export default function LayoutEntrada() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <ArrowDownwardIcon sx={{ fontSize: 65 }} />
+        <ArrowDownwardIcon sx={{ fontSize: 75 }} />
         Entradas
       </ButtonLayout>
       <Modal

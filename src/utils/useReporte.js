@@ -13,9 +13,10 @@ export const useReporte = () => {
     return [
       ...productoEntradaBD.map(
         ({ IdProducto, Cantidad, created_at, IdEntrada }) => {
-          const { Codigo, Descripcion } = productos.find(
-            (pro) => pro.id === IdProducto
-          );
+          const product = productos.find((pro) => pro.id === IdProducto);
+          // console.log({ IdProducto, product });
+          const { Codigo, Descripcion } = product;
+
           const entrada = entradas.find((pro) => pro.id === IdEntrada);
           const almacen = almacenes.find(
             (alma) => alma.id === entrada.IdAlmacenes

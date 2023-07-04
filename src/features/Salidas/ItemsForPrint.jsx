@@ -3,18 +3,21 @@ import { useSelector } from 'react-redux';
 export default function ItemsForPrint({ producto }) {
   const { productos } = useSelector((state) => state.Productos);
   const DatoProducto = productos.find((pro) => pro.id === +producto.IdProducto);
-
   return (
     producto && (
-      <TableRow>
-        <TableCell sx={{ textAlign: 'center' }}>{producto.Cantidad}</TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>
-          {DatoProducto.Descripcion}
-        </TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>
-          {producto.PrecioVenta}
-        </TableCell>
-        <TableCell sx={{ textAlign: 'center' }}>{producto.SubTotal}</TableCell>
+      <TableRow
+        sx={{
+          '& td': {
+            textAlign: 'center',
+            color: 'black',
+            fontWeight: '600',
+          },
+        }}
+      >
+        <TableCell>{DatoProducto.Codigo}</TableCell>
+        <TableCell>{DatoProducto.Descripcion}</TableCell>
+        <TableCell>{DatoProducto.Categoria}</TableCell>
+        <TableCell>{producto.Cantidad}</TableCell>
       </TableRow>
     )
   );

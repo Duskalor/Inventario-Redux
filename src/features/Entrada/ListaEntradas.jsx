@@ -8,7 +8,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -17,14 +19,19 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetalleEntradas } from '../ProductoEntrada/productoEntradaSlice';
 import { getProductos } from '../Productos/productosSlice';
-import { centrar, titulos } from '../style';
+import { titulos } from '../style';
 import Entradas from './Entradas';
 import { getEntradas } from './entradaSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { ChildModal } from './LayoutEntrada';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { useHandlePAge } from '../../utils/useHandlePage';
+import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 
 export default function ListaEntradas() {
+  const { IdPermisos, IdAlmacenes } = useUserLogin();
+  const { almacenes } = useSelector((state) => state.Almacenes);
   const { entradas } = useSelector(
     (state) => state.Entradas,
     (prevData, nextData) => prevData.entradas === nextData.entradas
@@ -37,34 +44,59 @@ export default function ListaEntradas() {
   const [Busqueda, setBusqueda] = useState('');
   const [BusquedaDescription, setBusquedaDescription] =
     useState('NumeroDocumento');
-  const handleOnchangeFilterName = (e) => {
-    setBusquedaDescription(e.target.value);
-  };
+  const [filterAlmacen, setFilterAlmacen] = useState(IdAlmacenes);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const {
+    handleChangePage,
+    handleChangeRowsPerPage,
+    handleOnchangeUbicacion,
+    handleOnchangeFilterName,
+  } = useHandlePAge(
+    setPage,
+    setRowsPerPage,
+    setFilterAlmacen,
+    setBusquedaDescription
+  );
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (entradas.length === 0) dispatch(getEntradas());
+    dispatch(getEntradas());
     if (productos.length === 0) dispatch(getProductos());
     dispatch(getDetalleEntradas());
   }, [dispatch]);
 
-  const handleChange = (e) => {
-    setBusqueda(e.target.value);
-  };
+  // const handleOnchangeUbicacion = (e) => setFilterAlmacen(e.target.value);
+  const handleChange = (e) => setBusqueda(e.target.value);
 
+  const entradasFiltradosAlmacen = useMemo(() => {
+    return filterAlmacen !== 'All' && Busqueda !== null
+      ? entradas.filter((entra) => {
+          return entra.IdAlmacenes === +filterAlmacen;
+        })
+      : [...entradas].sort((a, b) => a.id - b.id);
+  }, [entradas, filterAlmacen]);
+
+  // console.log(productos);
   const entradasFiltradas = useMemo(() => {
     return (Busqueda !== '') & (Busqueda !== null)
-      ? entradas.filter((entra) => {
+      ? entradasFiltradosAlmacen.filter((entra) => {
           return entra[BusquedaDescription].toLowerCase().includes(
             Busqueda.toLowerCase()
           );
         })
-      : entradas;
-  }, [Busqueda, entradas]);
+      : entradasFiltradosAlmacen;
+  }, [Busqueda, entradasFiltradosAlmacen]);
 
-  // console.log(entradasFiltradas);
+  const emptyRows =
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - entradasFiltradas.length)
+      : 0;
+
+  // console.log(rowsPerPage, emptyRows);
 
   return (
-    <div>
+    <Box>
       <Box
         sx={{
           justifyContent: 'space-evenly ',
@@ -82,16 +114,34 @@ export default function ListaEntradas() {
             '&>button': { m: '.5rem' },
           }}
         >
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            value={BusquedaDescription}
-            label='filter'
-            onChange={handleOnchangeFilterName}
-          >
-            <MenuItem value='NumeroDocumento'>Codigo</MenuItem>
-            <MenuItem value='razonEntrada'>Razón</MenuItem>
-          </Select>
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={filterAlmacen}
+              label='ubicacion'
+              onChange={handleOnchangeUbicacion}
+            >
+              {almacenes.map((almacen) => {
+                return (
+                  <MenuItem key={almacen.id} value={almacen.id}>
+                    {almacen.ubicacion}
+                  </MenuItem>
+                );
+              })}
+              <MenuItem value='All'>Todos</MenuItem>
+            </Select>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={BusquedaDescription}
+              label='filter'
+              onChange={handleOnchangeFilterName}
+            >
+              <MenuItem value='NumeroDocumento'>Codigo</MenuItem>
+              <MenuItem value='razonEntrada'>Razón</MenuItem>
+            </Select>
+          </Box>
           <ChildModal />
         </Box>
         <TextField
@@ -124,7 +174,7 @@ export default function ListaEntradas() {
               <TableRow sx={{ '& th': { textAlign: 'center' } }}>
                 <TableCell>Codigo Documento</TableCell>
                 <TableCell>Usuario</TableCell>
-                <TableCell>Status</TableCell>
+                {IdPermisos === roles.admin && <TableCell>Status</TableCell>}
                 <TableCell>Razón Entrada</TableCell>
                 <TableCell>Cantidad de Productos</TableCell>
                 <TableCell>Almancén</TableCell>
@@ -146,7 +196,39 @@ export default function ListaEntradas() {
                   </TableCell>
                 </TableRow>
               )}
+              {emptyRows > 0 && entradasFiltradas.length > 0 && (
+                <TableRow style={{ height: 66 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
             </TableBody>
+            {entradasFiltradas.length > 0 && (
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[
+                      6,
+                      10,
+                      25,
+                      { label: 'All', value: -1 },
+                    ]}
+                    colSpan={7}
+                    count={entradasFiltradas.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        'aria-label': 'filas por paginas',
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            )}
           </Table>
         </TableContainer>
       ) : (
@@ -162,6 +244,6 @@ export default function ListaEntradas() {
           No hay entradas existentes
         </Typography>
       )}
-    </div>
+    </Box>
   );
 }

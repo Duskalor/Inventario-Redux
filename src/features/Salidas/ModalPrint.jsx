@@ -27,7 +27,7 @@ export default function ModalPrint({ ToPrint }) {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 800 }}>
+        <Box sx={{ ...style, width: 800, background: 'white' }}>
           <ForPrint ToPrint={ToPrint} />
         </Box>
       </Modal>

@@ -35,10 +35,15 @@ export function ChildModal() {
             width: 230,
             borderRadius: 4,
             borderColor: 'rgba(255,255,255,0.2)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
         >
           <FormNuevoUsuario handleClose={handleClose} />
-          <Button onClick={handleClose}>Cerrar</Button>
+          <Button sx={{ mt: '2rem' }} onClick={handleClose}>
+            Cerrar
+          </Button>
         </Box>
       </Modal>
     </React.Fragment>
@@ -56,7 +61,7 @@ export default function LayoutUsuarios() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <SelfImprovementIcon sx={{ fontSize: 65 }} />
+        <SelfImprovementIcon sx={{ fontSize: 75 }} />
         Usuarios
       </ButtonLayout>
       <Modal

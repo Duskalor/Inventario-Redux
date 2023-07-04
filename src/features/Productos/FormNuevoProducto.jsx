@@ -79,21 +79,6 @@ export default function FormNuevoProducto({ handleClose }) {
             <p>El Campo es requirido </p>
           )}
         </Box>
-
-        <Box>
-          <TextField
-            sx={{
-              margin: '10px 0 0 0',
-            }}
-            type='text'
-            {...register('Stock', {
-              required: true,
-            })}
-            label='Stock'
-            variant='outlined'
-          />
-          {errors.Stock?.type === 'required' && <p>El Campo es requirido </p>}
-        </Box>
       </Box>
 
       <Button

@@ -8,7 +8,7 @@ export default function FormEditProducto({ handleClose, id }) {
   //console.log(id);
   const { productos } = useSelector((state) => state.Productos);
 
-  const { Codigo, Categoria, Descripcion, Stock, active } = productos.find(
+  const { Codigo, Categoria, Descripcion, active } = productos.find(
     (producto) => producto.id === id
   );
   const {
@@ -21,18 +21,18 @@ export default function FormEditProducto({ handleClose, id }) {
       Categoria: Categoria,
       Descripcion: Descripcion,
       active: active,
-      Stock: Stock,
+      // Stock: Stock,
     },
   });
   const onSubmit = (dato) => {
-    const { Categoria, Descripcion, active, Stock } = dato;
+    const { Categoria, Descripcion, active } = dato;
     dispatch(
       updateProductos({
         id,
         Categoria,
         Descripcion,
         active,
-        Stock,
+        // Stock,
       })
     );
     handleClose();
@@ -72,7 +72,7 @@ export default function FormEditProducto({ handleClose, id }) {
         <Input type='checkbox' {...register('active')} />
         {errors.active?.type === 'required' && <p>El Campo es requirido </p>}
       </Box>
-      <Box>
+      {/* <Box>
         <label>Stock</label>
         <Input
           type='number'
@@ -81,7 +81,7 @@ export default function FormEditProducto({ handleClose, id }) {
           })}
         />
         {errors.Stock?.type === 'required' && <p>El Campo es requirido </p>}
-      </Box>
+      </Box> */}
 
       <Button type='submit'>Guardar</Button>
     </form>

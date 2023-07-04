@@ -10,6 +10,7 @@ import { ModalEdit } from './ModalEdit';
 import { BoxStatus } from '../../components/BoxStatus';
 import { BoxContainer } from '../../components/BoxContainer';
 import { useProducts } from '../../utils/useProducts';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
 
 export default function Entradas({ entrada }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
@@ -21,7 +22,7 @@ export default function Entradas({ entrada }) {
   );
   const productos = useProducts();
   const dispatch = useDispatch();
-
+  const { IdPermisos } = useUserLogin();
   const {
     NumeroDocumento,
     CantidadProductos,
@@ -31,7 +32,6 @@ export default function Entradas({ entrada }) {
     IdAlmacenes,
     razonEntrada,
   } = entrada;
-
   // obteniendo al usuario para listarlo
   const usuario = usuarios.find((user) => user.id === IdUsuario);
   const almacen = almacenes.find((alma) => alma.id === IdAlmacenes);
@@ -61,11 +61,13 @@ export default function Entradas({ entrada }) {
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
       <TableCell>{usuario.FullName}</TableCell>
-      <TableCell sx={{ width: '77px' }}>
-        <BoxStatus active={active}>
-          {active ? <Box>Active</Box> : <Box>No active</Box>}
-        </BoxStatus>
-      </TableCell>
+      {IdPermisos === roles.admin && (
+        <TableCell sx={{ width: '77px' }}>
+          <BoxStatus active={active}>
+            {active ? <Box>Active</Box> : <Box>No active</Box>}
+          </BoxStatus>
+        </TableCell>
+      )}
 
       <TableCell sx={{ width: '100px', wordWrap: 'break-word' }}>
         {razonEntrada === '' ? 'Sin Razón' : razonEntrada}
@@ -76,7 +78,7 @@ export default function Entradas({ entrada }) {
 
       <TableCell>
         <BoxContainer>
-          <ModalEdit id={id} />
+          {IdPermisos === roles.admin && <ModalEdit id={id} />}
           <Button onClick={() => deleteItem(id)}>Eliminar</Button>
         </BoxContainer>
       </TableCell>

@@ -23,9 +23,13 @@ import { titulos } from '../style';
 import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChildModal } from './LayoutSalida';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
 
 export default function ListaSalidas() {
+  const { IdAlmacenes, IdPermisos } = useUserLogin();
   const { salidas } = useSelector((state) => state.Salidas);
+  const [filterAlmacen, setFilterAlmacen] = useState(IdAlmacenes);
+  const { almacenes } = useSelector((state) => state.Almacenes);
   const [Busqueda, setBusqueda] = useState('');
   const [BusquedaDescription, setBusquedaDescription] =
     useState('NumeroDocumento');
@@ -40,20 +44,33 @@ export default function ListaSalidas() {
     dispatch(getDetalleSalida());
   }, [dispatch]);
 
-  const handleChange = (e) => {
-    setBusqueda(e.target.value);
-  };
+  const handleChange = (e) => setBusqueda(e.target.value);
+  const handleOnchangeUbicacion = (e) => setFilterAlmacen(e.target.value);
 
-  const salidasFiltradas = useMemo(() => {
-    return Busqueda !== '' && Busqueda !== null
-      ? salidas.filter((prod) =>
-          prod[BusquedaDescription].toLowerCase().includes(
-            Busqueda.toLowerCase()
+  // const SalidasAlmacenAsignado = useMemo(
+  //   () => salidas.filter((pro) => pro.IdAlmacenes === IdAlmacenes),
+  //   [salidas]
+  // );
+  const salidasFiltradosAlmacen = useMemo(() => {
+    return filterAlmacen !== 'All' && Busqueda !== null
+      ? salidas.filter((entra) => {
+          return entra.IdAlmacenes === +filterAlmacen;
+        })
+      : [...salidas].sort((a, b) => a.id - b.id);
+  }, [salidas, filterAlmacen]);
+
+  const salidasFiltradas = useMemo(
+    () =>
+      Busqueda !== '' && Busqueda !== null
+        ? salidasFiltradosAlmacen.filter((prod) =>
+            prod[BusquedaDescription].toLowerCase().includes(
+              Busqueda.toLowerCase()
+            )
           )
-        )
-      : salidas;
-  }, [Busqueda, salidas]);
-  // console.log({ salidasFiltradas });
+        : salidasFiltradosAlmacen,
+    [Busqueda, salidasFiltradosAlmacen]
+  );
+
   return (
     <Box>
       <Typography sx={titulos} variant='h4' component='h2'>
@@ -68,16 +85,36 @@ export default function ListaSalidas() {
           py: '0.5rem',
         }}
       >
-        <Select
-          labelId='demo-simple-select-label'
-          id='demo-simple-select'
-          value={BusquedaDescription}
-          label='filter'
-          onChange={handleOnchangeFilterName}
-        >
-          <MenuItem value='NumeroDocumento'>Codigo</MenuItem>
-          <MenuItem value='razonSalida'>Razón</MenuItem>
-        </Select>
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
+          {IdPermisos === roles.admin && (
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={filterAlmacen}
+              label='ubicacion'
+              onChange={handleOnchangeUbicacion}
+            >
+              {almacenes.map((almacen) => {
+                return (
+                  <MenuItem key={almacen.id} value={almacen.id}>
+                    {almacen.ubicacion}
+                  </MenuItem>
+                );
+              })}
+              <MenuItem value='All'>Todos</MenuItem>
+            </Select>
+          )}
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={BusquedaDescription}
+            label='filter'
+            onChange={handleOnchangeFilterName}
+          >
+            <MenuItem value='NumeroDocumento'>Codigo</MenuItem>
+            <MenuItem value='razonSalida'>Razón</MenuItem>
+          </Select>
+        </Box>
 
         <ChildModal />
       </Box>
@@ -99,7 +136,7 @@ export default function ListaSalidas() {
         variant='standard'
       />
 
-      {salidas.length !== 0 ? (
+      {salidasFiltradosAlmacen.length !== 0 ? (
         <TableContainer component={Paper} style={{ maxHeight: 550 }}>
           <Table stickyHeader arial-label='simple tables'>
             <TableHead>
@@ -111,21 +148,22 @@ export default function ListaSalidas() {
                 <TableCell>Codigo Documento</TableCell>
                 <TableCell>Usuario</TableCell>
                 <TableCell>Razón Salida</TableCell>
-                <TableCell>Active</TableCell>
+                {IdPermisos === roles.admin && <TableCell>Active</TableCell>}
                 <TableCell>Cantidad de Productos</TableCell>
+                <TableCell>Ubicación</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {salidasFiltradas.length > 0 ? (
-                salidasFiltradas.map((salida, id) => (
-                  <Salidas key={id} salida={salida} />
-                ))
+                [...salidasFiltradas]
+                  .reverse()
+                  .map((salida, id) => <Salidas key={id} salida={salida} />)
               ) : (
                 <TableRow>
                   <TableCell
                     sx={{ textAlign: 'center', fontSize: '2rem' }}
-                    colSpan={6}
+                    colSpan={7}
                   >
                     No existe codigo o razón de Salida
                   </TableCell>
@@ -140,6 +178,7 @@ export default function ListaSalidas() {
             display: 'flex',
             justifyContent: 'center',
             padding: '15px',
+            fontSize: 25,
           }}
           variant='h4'
           component='h2'

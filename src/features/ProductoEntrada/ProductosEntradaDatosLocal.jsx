@@ -19,7 +19,7 @@ export default function ProductosEntradaDatosLocal() {
         <TableContainer component={Paper} style={{ maxHeight: 700 }}>
           <Table arial-label='simple tables'>
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ '& th': { textAlign: 'center' } }}>
                 <TableCell>Codigo</TableCell>
                 <TableCell>Producto</TableCell>
                 {/* <TableCell>Precio de Compra</TableCell> */}

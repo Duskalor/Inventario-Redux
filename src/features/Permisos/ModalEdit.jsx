@@ -26,7 +26,9 @@ export function ModalEdit({ id }) {
       >
         <Box sx={{ ...style, width: 200 }}>
           <FormEditPermiso handleClose={handleClose} id={id} />
-          <Button onClick={handleClose}>Cerrar</Button>
+          <Box display='flex' justifyContent='flex-end' mt={1}>
+            <Button onClick={handleClose}>Cerrar</Button>
+          </Box>
         </Box>
       </Modal>
     </React.Fragment>

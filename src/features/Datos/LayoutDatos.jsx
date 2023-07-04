@@ -19,7 +19,7 @@ export default function LayoutDatos() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <BusinessIcon sx={{ fontSize: 65 }} />
+        <BusinessIcon sx={{ fontSize: 75 }} />
         Datos
       </ButtonLayout>
 

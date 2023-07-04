@@ -18,19 +18,21 @@ import { useRef } from 'react';
 import ItemsForPrint from './ItemsForPrint';
 import { getDetalleSalida } from '../ProductoSalidas/productosSalidaSlice';
 import { titulos } from '../style';
+import { BoxContainer } from '../../components/BoxContainer';
 
 export default function ForPrint({ ToPrint }) {
   //console.log(ToPrint);
-  const { MontoTotal, id, IdClienteSalida, fecha, IdUsuarioSalida } = ToPrint;
+  const { id, fecha, usuario, CantidadProductos } = ToPrint;
   const Datos = useSelector((state) => state.Datos);
   const dispatch = useDispatch();
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
   const Productos = productoSalidaBD.filter((pro) => pro.IdSalida === id);
-  //console.log(Productos);
+  // console.log(Productos);
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `F-${fecha.substr(0, 10)}-NB00${id}  `,
+    documentTitle: `F-${fecha ? fecha.substr(0, 10) : new Date()}-NB00${id}`,
+    bodyClass: 'print',
     // onAfterPrint: () => alert('print success'),
   });
   useEffect(() => {
@@ -40,38 +42,60 @@ export default function ForPrint({ ToPrint }) {
   return (
     <>
       <Box ref={componentRef} sx={{}}>
-        <Typography sx={titulos} variant='h4' component='h2'>
+        <Typography sx={titulos} variant='h4' component='h2' color='black'>
           {Datos.RazonSocial}
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box
-            sx={{
-              pl: 3,
-            }}
-          >
-            <h3>Señor(es) : {IdClienteSalida.FullName}</h3>
-            <h3>DNI : {IdClienteSalida.Dni}</h3>
-            <h3>Fecha de Emision : {fecha.substr(0, 10)}</h3>
-            <h3>Atendido por : {IdUsuarioSalida.FullName}</h3>
+        <Box
+          mx={2}
+          borderTop={1}
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
+        >
+          <Box>
+            <h3>Usuario : {usuario}</h3>
           </Box>
-          <Box
-            sx={{
-              pr: 6,
-            }}
-          >
-            <h3> {Datos.Direccion}</h3>
-            <h3> R.U.C. {Datos.Ruc}</h3>
-            <h3>Boleta de Venta 00{id}</h3>
+          <Box sx={{ pl: 3 }}>
+            <h3>
+              Salida creada :&nbsp;
+              {fecha
+                ? fecha.substr(0, 10)
+                : new Date().getFullYear() +
+                  '-' +
+                  new Date().getMonth() +
+                  '-' +
+                  new Date().getDay()}
+            </h3>
           </Box>
         </Box>
-        <TableContainer component={Paper}>
+        <Box>
+          <Typography
+            variant='h2'
+            textAlign='center'
+            fontWeight={600}
+            py={1}
+            mt={2}
+            borderBottom={1}
+            borderTop={1}
+          >
+            PRODUCTOS
+          </Typography>
+        </Box>
+        <TableContainer component={Paper} style={{ backgroundColor: 'white' }}>
           <Table arial-label='simple tables'>
             <TableHead>
-              <TableRow>
-                <TableCell sx={{ textAlign: 'center' }}>CANT.</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>DESCRIPCIÓN</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>P. UNIT</TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>IMPORTE</TableCell>
+              <TableRow
+                sx={{
+                  '& th': {
+                    textAlign: 'center',
+                    color: 'black',
+                    fontWeight: '600',
+                    fontSize: 15,
+                  },
+                }}
+              >
+                <TableCell>CODIGO</TableCell>
+                <TableCell>DESCRIPCIÓN</TableCell>
+                <TableCell>CATEGORIA</TableCell>
+                <TableCell>CANT.</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -81,17 +105,23 @@ export default function ForPrint({ ToPrint }) {
             </TableBody>
           </Table>
         </TableContainer>
-        <Typography align='right' variant='subtitle2' mt={2} mr={3}>
-          SUBTOTAL S/. {(MontoTotal - (MontoTotal * 18) / 100).toFixed(2)}
-        </Typography>
-        <Typography align='right' variant='subtitle2' mt={2} mr={3}>
-          I.G.V.(18%) S/. {((MontoTotal * 18) / 100).toFixed(2)}
-        </Typography>
-        <Typography align='right' variant='subtitle1' mt={2} mr={3}>
-          TOTAL S/. {parseInt(MontoTotal).toFixed(2)}
-        </Typography>
+        <Box
+          py={2}
+          fontWeight={600}
+          display='flex'
+          justifyContent='flex-end'
+          px={2}
+          borderBottom={1}
+        >
+          Cantidad Total : {CantidadProductos}
+        </Box>
       </Box>
-      <Button onClick={handlePrint}> Imprimir </Button>
+
+      <Box display='flex' justifyContent='center' mt={1}>
+        <Button variant='contained' onClick={handlePrint}>
+          Imprimir
+        </Button>
+      </Box>
     </>
   );
 }

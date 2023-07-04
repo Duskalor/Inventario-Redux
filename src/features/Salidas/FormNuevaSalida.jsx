@@ -17,13 +17,14 @@ import EmptyTextarea from '../../components/TextArea';
 import { useUserLogin } from '../../utils/useUserLogin';
 
 export default function FormNuevaSalida({ handleClose }) {
-  const { usuarios } = useSelector((state) => state.Usuarios);
+  // const { usuarios } = useSelector((state) => state.Usuarios);
+
   // const { clientes } = useSelector((state) => state.Clientes);
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
   const [errorsItems, setErrorsItems] = useState(null);
   const TextArea = EmptyTextarea();
   const [errorText, setErrorText] = useState(null);
-  const { IdAlmacenes } = useUserLogin();
+  const { id, IdAlmacenes, Usuario } = useUserLogin();
 
   // USE STATE
 
@@ -43,7 +44,7 @@ export default function FormNuevaSalida({ handleClose }) {
       total += parseInt(a.Cantidad);
     });
 
-    datos = { ...datos, CantidadProductos: total };
+    datos = { ...datos, CantidadProductos: total, IdUsuario: id };
     // console.log(datos);
     dispatch(createSalida({ datos, productoSalida, IdAlmacenes }));
     handleClose();
@@ -77,7 +78,14 @@ export default function FormNuevaSalida({ handleClose }) {
         <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Usuario
         </InputLabel>
-        <NativeSelect {...register('IdUsuario', { required: true })}>
+        <Input
+          // {...register('IdUsuario', {
+          //   required: true,
+          // })}
+          value={Usuario}
+          disabled={true}
+        />
+        {/* <NativeSelect {...register('IdUsuario', { required: true })}>
           <option aria-label='None' value='' />
           {usuarios.map(({ id, FullName }) => (
             <option key={id} value={id}>
@@ -87,13 +95,13 @@ export default function FormNuevaSalida({ handleClose }) {
         </NativeSelect>
         {errors.IdUsuario?.type === 'required' && (
           <BoxError>El Campo es requirido </BoxError>
-        )}
+        )} */}
       </Box>
       <Box>
         <TextArea
           sx={{ my: '2rem' }}
           aria-label='empty textarea'
-          placeholder='Razón del ingreso'
+          placeholder='Razón del salida'
           type='input'
           maxRows={3}
           {...register('razonSalida', {

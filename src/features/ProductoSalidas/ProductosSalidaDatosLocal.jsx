@@ -19,12 +19,10 @@ export default function ProductosSalidaDatosLocal() {
         <TableContainer component={Paper} style={{ maxHeight: 250 }}>
           <Table arial-label='simple tables'>
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ '& th': { textAlign: 'center' } }}>
                 <TableCell>Codigo</TableCell>
                 <TableCell>Producto</TableCell>
-                <TableCell>Precio de Compra</TableCell>
                 <TableCell>Cantidad</TableCell>
-                <TableCell>SubTotal</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>

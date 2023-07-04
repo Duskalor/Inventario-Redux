@@ -19,7 +19,11 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Permiso</Button>
+      <Box display='flex' justifyContent='flex-end' py={1}>
+        <Button variant='contained' onClick={handleOpen}>
+          Nuevo Permiso
+        </Button>
+      </Box>
       <Modal
         hideBackdrop
         open={open}
@@ -47,7 +51,7 @@ export default function LayoutPermisos() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <ManageAccountsIcon sx={{ fontSize: 65 }} />
+        <ManageAccountsIcon sx={{ fontSize: 75 }} />
         Permisos
       </ButtonLayout>
       <Modal
@@ -58,7 +62,6 @@ export default function LayoutPermisos() {
       >
         <Box sx={{ ...style, width: 1050, borderRadius: 4 }}>
           <ListaPermisos />
-          <ChildModal />
         </Box>
       </Modal>
     </div>

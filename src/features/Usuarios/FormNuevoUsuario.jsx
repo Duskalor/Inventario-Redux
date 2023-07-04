@@ -4,6 +4,7 @@ import {
   Input,
   InputLabel,
   NativeSelect,
+  TextField,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -11,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUsuarios } from './UsuariosSlice';
 import { BoxError } from '../../components/BoxError';
+import { BoxContainer } from '../../components/BoxContainer';
 export default function FormNuevoUsuario({ handleClose }) {
   const { permisos } = useSelector((state) => state.Permisos);
   const { almacenes } = useSelector((state) => state.Almacenes);
@@ -34,135 +36,162 @@ export default function FormNuevoUsuario({ handleClose }) {
       <Typography variant='h1' py={2}>
         Nuevo Usuario
       </Typography>
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          gap: '.9rem',
+        }}
+      >
+        <BoxContainer>
+          {/* <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Nombre
-        </InputLabel>
-        <Input
-          type='text'
-          {...register('FullName', {
-            required: true,
-          })}
-        />
-        {errors.FullName?.type === 'required' && <p>El Campo es requirido </p>}
-      </Box>
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+        </InputLabel> */}
+          <TextField
+            label='Nombre'
+            type='text'
+            {...register('FullName', {
+              required: true,
+            })}
+          />
+          {errors.FullName?.type === 'required' && (
+            <p>El Campo es requirido </p>
+          )}
+        </BoxContainer>
+        <BoxContainer>
+          {/* <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Usuario
-        </InputLabel>
-        <Input
-          type='text'
-          {...register('Usuario', {
-            required: true,
-          })}
-        />
-        {errors.Usuario?.type === 'required' && <p>El Campo es requirido </p>}
-      </Box>
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+        </InputLabel> */}
+          <TextField
+            label='Usuario'
+            type='text'
+            {...register('Usuario', {
+              required: true,
+            })}
+          />
+          {errors.Usuario?.type === 'required' && <p>El Campo es requirido </p>}
+        </BoxContainer>
+        <BoxContainer>
+          {/* <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Email
-        </InputLabel>
-        <Input
-          type='text'
-          {...register('email', {
-            required: true,
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: 'Formato Incorrecto',
-            },
-          })}
-        />
-        {errors.email?.type === 'required' && (
-          <BoxError>El Campo es requirido </BoxError>
-        )}
-        {errors.email?.type === 'pattern' && (
-          <BoxError>{errors.email.message}</BoxError>
-        )}
-      </Box>
+        </InputLabel> */}
+          <TextField
+            label='Email'
+            type='text'
+            {...register('email', {
+              required: true,
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Formato Incorrecto',
+              },
+            })}
+          />
+          {errors.email?.type === 'required' && (
+            <BoxError>El Campo es requirido </BoxError>
+          )}
+          {errors.email?.type === 'pattern' && (
+            <BoxError>{errors.email.message}</BoxError>
+          )}
+        </BoxContainer>
 
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Permiso
-        </InputLabel>
-        <NativeSelect
-          {...register('IdPermisos', {
-            required: true,
-          })}
-        >
-          {permisos.map((permiso) => {
-            return (
-              <option key={permiso.id} value={permiso.id}>
-                {permiso.Descripcion}
-              </option>
-            );
-          })}
-        </NativeSelect>
-        {errors.IdPermisos?.type === 'required' && (
-          <BoxError>El Campo es requirido </BoxError>
-        )}
-      </Box>
+        <BoxContainer sx={{ flexDirection: 'column', textAlign: 'center' }}>
+          <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+            Permisos
+          </InputLabel>
+          <NativeSelect
+            {...register('IdPermisos', {
+              required: true,
+            })}
+          >
+            {permisos.map((permiso) => {
+              return (
+                <option
+                  key={permiso.id}
+                  value={permiso.id}
+                  style={{ textAlign: 'center' }}
+                >
+                  {permiso.Descripcion}
+                </option>
+              );
+            })}
+          </NativeSelect>
+          {errors.IdPermisos?.type === 'required' && (
+            <BoxError>El Campo es requirido </BoxError>
+          )}
+        </BoxContainer>
 
-      {/* Almacen */}
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
-          Almacenes
-        </InputLabel>
-        <NativeSelect
-          {...register('IdAlmacenes', {
-            required: true,
-          })}
-        >
-          {almacenes.map((almacen) => {
-            return (
-              <option key={almacen.id} value={almacen.id}>
-                {almacen.ubicacion}
-              </option>
-            );
-          })}
-        </NativeSelect>
-        {errors.IdAlmacenes?.type === 'required' && (
-          <BoxError>El Campo es requirido </BoxError>
-        )}
-      </Box>
+        {/* Almacen */}
+        <BoxContainer sx={{ flexDirection: 'column', textAlign: 'center' }}>
+          <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+            Almacenes
+          </InputLabel>
+          <NativeSelect
+            {...register('IdAlmacenes', {
+              required: true,
+            })}
+          >
+            {almacenes.map((almacen) => {
+              return (
+                <option
+                  key={almacen.id}
+                  value={almacen.id}
+                  style={{ textAlign: 'center' }}
+                >
+                  {almacen.ubicacion}
+                </option>
+              );
+            })}
+          </NativeSelect>
+          {errors.IdAlmacenes?.type === 'required' && (
+            <BoxError>El Campo es requirido </BoxError>
+          )}
+        </BoxContainer>
 
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+        <BoxContainer>
+          {/* <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Password
-        </InputLabel>
-        <Input
-          type='password'
-          {...register('password', {
-            required: true,
-            minLength: 6,
-          })}
-        />
-        {errors.Password?.type === 'required' && (
-          <BoxError>El Campo es requirido </BoxError>
-        )}
-        {errors.Password?.type === 'minLength' && (
-          <BoxError>El debe tener 6 digitos </BoxError>
-        )}
-      </Box>
-      {/* CONFIRMACION PASSWORD */}
-      <Box>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'>
+        </InputLabel> */}
+          <TextField
+            label='Password'
+            type='password'
+            {...register('password', {
+              required: true,
+              minLength: 6,
+            })}
+          />
+          {errors.Password?.type === 'required' && (
+            <BoxError>El Campo es requirido </BoxError>
+          )}
+          {errors.Password?.type === 'minLength' && (
+            <BoxError>El debe tener 6 digitos </BoxError>
+          )}
+        </BoxContainer>
+        {/* CONFIRMACION PASSWORD */}
+        <BoxContainer>
+          {/* <InputLabel variant='standard' htmlFor='uncontrolled-native'>
           Confirmar Password
-        </InputLabel>
-        <Input
-          type='password'
-          {...register('password_confirmation', {
-            required: true,
-            minLength: 6,
-          })}
-        />
-        {errors.password_confirmation?.type === 'required' && (
-          <BoxError>El Campo es requirido </BoxError>
-        )}
-        {errors.password_confirmation?.type === 'minLength' && (
-          <BoxError>El debe tener 6 digitos </BoxError>
-        )}
+        </InputLabel> */}
+          <TextField
+            label='Confirmar Password'
+            type='password'
+            {...register('password_confirmation', {
+              required: true,
+              minLength: 6,
+            })}
+          />
+          {errors.password_confirmation?.type === 'required' && (
+            <BoxError>El Campo es requirido </BoxError>
+          )}
+          {errors.password_confirmation?.type === 'minLength' && (
+            <BoxError>El debe tener 6 digitos </BoxError>
+          )}
+        </BoxContainer>
+        <Button variant='contained' type='submit'>
+          Crear
+        </Button>
       </Box>
-      <Button type='submit'>Crear</Button>
     </form>
   );
 }

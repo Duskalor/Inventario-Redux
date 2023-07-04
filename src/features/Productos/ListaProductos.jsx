@@ -32,14 +32,14 @@ import { BoxError } from '../../components/BoxError';
 export default function ListaProductos() {
   const { loading } = useSelector((state) => state.Productos);
   const { almacenes } = useSelector((state) => state.Almacenes);
-  const { id, IdAlmacenes } = useUserLogin();
+  const { IdPermisos, IdAlmacenes } = useUserLogin();
   const productos = useProducts();
   // console.log(productos);
   const [Busqueda, setBusqueda] = useState('');
   const [BusquedaDescription, setBusquedaDescription] = useState('Codigo');
   const [filterAlmacen, setFilterAlmacen] = useState(IdAlmacenes);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
 
   const {
     handleChangePage,
@@ -68,7 +68,7 @@ export default function ListaProductos() {
       ? productos.filter((pro) => {
           return pro.IdAlmacenes === +filterAlmacen;
         })
-      : productos.sort((a, b) => a.id - b.id);
+      : [...productos].sort((a, b) => a.id - b.id);
   }, [productos, filterAlmacen]);
 
   const productosFiltrados = useMemo(() => {
@@ -89,11 +89,7 @@ export default function ListaProductos() {
 
   return (
     <Box>
-      <Box
-        sx={{
-          justifyContent: 'space-evenly ',
-        }}
-      >
+      <Box sx={{ justifyContent: 'space-evenly ' }}>
         <Typography sx={titulos} variant='h4' component='h2'>
           PRODUCTOS
         </Typography>
@@ -139,6 +135,7 @@ export default function ListaProductos() {
               >
                 <MenuItem value='Codigo'>Codigo</MenuItem>
                 <MenuItem value='Descripcion'>Descripcion</MenuItem>
+                <MenuItem value='Categoria'>Categoria</MenuItem>
               </Select>
             </Box>
           </Box>
@@ -168,7 +165,8 @@ export default function ListaProductos() {
         <TableContainer
           component={Paper}
           sx={{
-            height: '600px',
+            display: 'block',
+            maxHeight: '510px',
           }}
         >
           <Table arial-label='simple tables'>
@@ -182,7 +180,7 @@ export default function ListaProductos() {
                 <TableCell sx={{ width: '420px' }}>Descripción</TableCell>
                 <TableCell sx={{ width: '140px' }}>Categoría</TableCell>
                 <TableCell>Ubicación</TableCell>
-                {roles.admin === id && (
+                {roles.admin === IdPermisos && (
                   <TableCell sx={{ width: '70px' }}>Status </TableCell>
                 )}
                 <TableCell>Stock </TableCell>
@@ -194,7 +192,7 @@ export default function ListaProductos() {
               {productosFiltrados.length > 0 ? (
                 (rowsPerPage > 0
                   ? [...productosFiltrados]
-                      .reverse()
+                      .sort((a, b) => b.Stock - a.Stock)
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
@@ -228,7 +226,7 @@ export default function ListaProductos() {
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[
-                      7,
+                      6,
                       10,
                       25,
                       { label: 'All', value: -1 },
@@ -263,7 +261,7 @@ export default function ListaProductos() {
           component='h2'
         >
           {loading ? (
-            <CircularProgress sx={{ fontSize: 65 }} />
+            <CircularProgress sx={{ fontSize: 70 }} />
           ) : (
             <BoxError>No hay productos ingresados</BoxError>
           )}

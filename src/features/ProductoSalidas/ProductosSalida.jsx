@@ -1,7 +1,8 @@
-import { Button, TableCell, TableRow } from '@mui/material';
+import { Box, Button, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { borrarItem } from './productosSalidaSlice';
+import { BoxContainer } from '../../components/BoxContainer';
 
 export default function ProductosSalida({ producto }) {
   const { IdProducto, PrecioCompra, Cantidad, SubTotal } = producto;
@@ -19,13 +20,21 @@ export default function ProductosSalida({ producto }) {
 
   return (
     <TableRow>
-      <TableCell>{ListaProductos.Codigo}</TableCell>
-      <TableCell>{ListaProductos.Descripcion}</TableCell>
-      <TableCell>{PrecioCompra}</TableCell>
-      <TableCell>{Cantidad}</TableCell>
-      <TableCell>{SubTotal}</TableCell>
       <TableCell>
-        <Button onClick={() => deleteItem(IdProducto)}>Eliminar</Button>
+        <BoxContainer> {ListaProductos.Codigo}</BoxContainer>
+      </TableCell>
+      <TableCell>
+        <BoxContainer> {ListaProductos.Descripcion}</BoxContainer>
+      </TableCell>
+      {/* <TableCell>{PrecioCompra}</TableCell> */}
+      <TableCell>
+        <BoxContainer>{Cantidad}</BoxContainer>
+      </TableCell>
+      {/* <TableCell>{SubTotal}</TableCell> */}
+      <TableCell>
+        <BoxContainer>
+          <Button onClick={() => deleteItem(IdProducto)}>Eliminar</Button>
+        </BoxContainer>
       </TableCell>
     </TableRow>
   );

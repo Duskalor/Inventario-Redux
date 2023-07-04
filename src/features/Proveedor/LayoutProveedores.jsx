@@ -47,7 +47,7 @@ export default function LayoutProveedores() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <TransferWithinAStationIcon sx={{ fontSize: 65 }} />
+        <TransferWithinAStationIcon sx={{ fontSize: 70 }} />
         Proveedores
       </ButtonLayout>
       <Modal

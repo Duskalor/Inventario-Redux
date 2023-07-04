@@ -1,7 +1,16 @@
-import { Button, Checkbox, Input } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Input,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatepermisos } from './permisosSlice';
+import { BoxError } from '../../components/BoxError';
+import { BoxPermiso } from '../../components/BoxPermiso';
 
 export default function FormEditPermiso({ handleClose, id }) {
   const dispatch = useDispatch();
@@ -79,21 +88,24 @@ export default function FormEditPermiso({ handleClose, id }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Descripción</label>
-        <Input
+    <form onSubmit={handleSubmit(onSubmit)} style={{ color: 'white' }}>
+      <Typography variant='h2' textAlign='center' mb={1.5}>
+        Editar Permiso
+      </Typography>
+      <BoxPermiso sx={{ textAlign: 'center' }}>
+        <TextField
+          label='Descripción'
           type='text'
           {...register('Descripcion', {
             required: true,
           })}
         />
         {errors.Descripcion?.type === 'required' && (
-          <p>El Campo es requirido </p>
+          <BoxError>El Campo es requirido </BoxError>
         )}
-      </div>
+      </BoxPermiso>
 
-      <div>
+      <BoxPermiso px={1}>
         <label>Salidas</label>
         <Controller
           control={control}
@@ -107,8 +119,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Usuarios</label>
         <Controller
           control={control}
@@ -122,8 +134,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Entradas</label>
         <Controller
           control={control}
@@ -137,8 +149,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Productos</label>
         <Controller
           control={control}
@@ -152,8 +164,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Clientes</label>
         <Controller
           control={control}
@@ -167,8 +179,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Proveedores</label>
         <Controller
           control={control}
@@ -182,8 +194,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Permisos</label>
         <Controller
           control={control}
@@ -197,8 +209,8 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso px={1}>
         <label>Configuracion</label>
         <Controller
           control={control}
@@ -212,9 +224,13 @@ export default function FormEditPermiso({ handleClose, id }) {
             />
           )}
         />
-      </div>
+      </BoxPermiso>
 
-      <Button type='submit'>Guardar</Button>
+      <Box display='flex' justifyContent='center' py={1}>
+        <Button variant='contained' type='submit'>
+          Guardar
+        </Button>
+      </Box>
     </form>
   );
 }

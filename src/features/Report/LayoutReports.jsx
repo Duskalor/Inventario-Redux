@@ -9,16 +9,12 @@ import { Typography } from '@mui/material';
 export default function LayoutReports() {
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AssignmentIcon sx={{ fontSize: 65 }} />
+        <AssignmentIcon sx={{ fontSize: 75 }} />
         Reportes
       </ButtonLayout>
       <Modal
@@ -34,9 +30,8 @@ export default function LayoutReports() {
             borderRadius: 4,
           }}
         >
-          {/* <GenerarReporte handleClose={handleClose} /> */}
           <Box>
-            <Typography variant='h2' textAlign='center' py={1}>
+            <Typography variant='h3' textAlign='center' py={1}>
               Generar Reportes
             </Typography>
             <Reportes handleClose={handleClose} />

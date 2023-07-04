@@ -47,7 +47,7 @@ export default function LayoutClientes() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AccountCircleIcon sx={{ fontSize: 65 }} />
+        <AccountCircleIcon sx={{ fontSize: 75 }} />
         Clientes
       </ButtonLayout>
       <Modal

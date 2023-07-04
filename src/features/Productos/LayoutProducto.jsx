@@ -20,7 +20,9 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Producto</Button>
+      <Button variant='contained' onClick={handleOpen}>
+        Nuevo Producto
+      </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -62,9 +64,9 @@ export default function LayoutProducto() {
   };
 
   return (
-    <Box sx={{}}>
+    <Box>
       <ButtonLayout onClick={handleOpen}>
-        <InventoryIcon sx={{ fontSize: 65 }} />
+        <InventoryIcon sx={{ fontSize: 75 }} />
         Productos
       </ButtonLayout>
       <Modal
@@ -76,7 +78,8 @@ export default function LayoutProducto() {
         <Box
           sx={{
             ...style,
-            width: 1250,
+            width: 'min(1200px,80%)',
+
             borderRadius: 4,
           }}
         >

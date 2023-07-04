@@ -40,7 +40,9 @@ export function ChildModal() {
       >
         <Box sx={{ ...style, width: 250, borderRadius: 4 }}>
           <FormNuevoAlmacen handleClose={handleClose} />
-          <Button onClick={handleClose}>Cerrar</Button>
+          <Box display='flex' justifyContent='flex-end'>
+            <Button onClick={handleClose}>Cerrar</Button>
+          </Box>
         </Box>
       </Modal>
     </React.Fragment>
@@ -58,7 +60,7 @@ export default function LayoutAlmacenes() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AssignmentIcon sx={{ fontSize: 65 }} />
+        <AssignmentIcon sx={{ fontSize: 75 }} />
         Almacenes
       </ButtonLayout>
       <Modal

@@ -9,20 +9,24 @@ import { centrar } from '../style';
 import { deleteSalidas } from './salidasSlice';
 import { BoxStatus } from '../../components/BoxStatus';
 import { useProducts } from '../../utils/useProducts';
+import { roles, useUserLogin } from '../../utils/useUserLogin';
+import ModalPrint from './ModalPrint';
 export default function Salidas({ salida }) {
+  const { IdPermisos } = useUserLogin();
   const {
     NumeroDocumento,
     CantidadProductos,
-    // IdAlmacenes,
+    IdAlmacenes,
     IdUsuario,
     id,
     razonSalida,
     active,
-    // updated_at: fecha,
+    updated_at: fecha,
   } = salida;
 
   const { usuarios } = useSelector((state) => state.Usuarios);
-
+  const { almacenes } = useSelector((state) => state.Almacenes);
+  const Almacen = almacenes.find((alma) => alma.id === IdAlmacenes);
   const UsuarioSalida = usuarios.find((user) => user.id === IdUsuario);
 
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
@@ -45,7 +49,13 @@ export default function Salidas({ salida }) {
       dispatch(borrarEstado());
     }
   };
-  // const ToPrint = { MontoTotal, id, IdUsuarioSalida, IdClienteSalida, fecha };
+  // console.log(UsuarioSalida);
+  const ToPrint = {
+    id,
+    usuario: UsuarioSalida.FullName,
+    fecha,
+    CantidadProductos,
+  };
 
   return (
     <TableRow sx={centrar}>
@@ -54,14 +64,20 @@ export default function Salidas({ salida }) {
       </TableCell>
       <TableCell>{UsuarioSalida?.FullName}</TableCell>
       <TableCell>{razonSalida}</TableCell>
-      <TableCell>
-        <BoxStatus active={active}>
-          {active ? <Box>Active</Box> : <Box>No active</Box>}
-        </BoxStatus>
-      </TableCell>
+      {IdPermisos === roles.admin && (
+        <TableCell>
+          <BoxStatus active={active}>
+            {active ? <Box>Active</Box> : <Box>No active</Box>}
+          </BoxStatus>
+        </TableCell>
+      )}
       <TableCell>{CantidadProductos}</TableCell>
+      <TableCell>{Almacen.ubicacion}</TableCell>
       <TableCell>
-        <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <ModalPrint ToPrint={ToPrint} />
+          <Button onClick={() => deleteItem(id)}>Eliminar</Button>
+        </Box>
       </TableCell>
     </TableRow>
   );

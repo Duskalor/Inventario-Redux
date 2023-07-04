@@ -18,7 +18,7 @@ import { ChildModal } from './LayoutAlmacenes';
 
 export default function ListaAlmacenes() {
   const { almacenes } = useSelector((state) => state.Almacenes);
-  const { id } = useUserLogin();
+  const { IdPermisos } = useUserLogin();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function ListaAlmacenes() {
             >
               <TableCell>Nombre</TableCell>
               <TableCell>Dirección</TableCell>
-              {roles.admin === id && <TableCell>Status </TableCell>}
+              {roles.admin === IdPermisos && <TableCell>Status </TableCell>}
               <TableCell>Ubicación</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>

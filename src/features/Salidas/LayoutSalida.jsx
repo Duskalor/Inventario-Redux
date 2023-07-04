@@ -23,7 +23,9 @@ export function ChildModal() {
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nueva Salida</Button>
+      <Button variant='contained' onClick={handleOpen}>
+        Nueva Salida
+      </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -54,7 +56,7 @@ export default function LayoutSalida() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <ArrowUpwardIcon sx={{ fontSize: 65 }} /> Salidas
+        <ArrowUpwardIcon sx={{ fontSize: 75 }} /> Salidas
       </ButtonLayout>
       <Modal
         open={open}
