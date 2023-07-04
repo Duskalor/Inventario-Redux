@@ -11,6 +11,7 @@ export default function ProductosEntrada({ producto }) {
   const ListaProductos = productos.find((pro) => pro.id === +IdProducto);
   // console.log({ ListaProductos });
   const dispatch = useDispatch();
+
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {
       dispatch(borrarItem(id));
@@ -18,7 +19,7 @@ export default function ProductosEntrada({ producto }) {
   };
 
   return (
-    <TableRow>
+    <TableRow sx={{ '& td': { textAlign: 'center' } }}>
       <TableCell>{ListaProductos?.Codigo}</TableCell>
       <TableCell>{ListaProductos?.Descripcion}</TableCell>
       <TableCell>{Cantidad}</TableCell>
