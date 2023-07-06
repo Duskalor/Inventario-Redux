@@ -1,8 +1,9 @@
-import { Button, Checkbox, TextField } from '@mui/material';
+import { Box, Button, Checkbox, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { createpermisos } from './permisosSlice';
+import { BoxPermiso } from '../../components/BoxPermiso';
 
 export default function FormNuevoPermiso({ handleClose }) {
   const dispatch = useDispatch();
@@ -15,7 +16,9 @@ export default function FormNuevoPermiso({ handleClose }) {
 
   const onSubmit = (dato) => {
     reset();
-    dato.Clientes = dato.Clientes ? (dato.Clientes = 1) : (dato.Clientes = 0);
+    dato.Empleados = dato.Empleados
+      ? (dato.Empleados = 1)
+      : (dato.Empleados = 0);
     dato.Configuracion = dato.Configuracion
       ? (dato.Configuracion = 1)
       : (dato.Configuracion = 0);
@@ -35,9 +38,11 @@ export default function FormNuevoPermiso({ handleClose }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Nuevo Rol</h1>
-      <div>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ color: 'white' }}>
+      <Typography variant='h2' textAlign='center' mb={1.5}>
+        Nuevo Rol
+      </Typography>
+      <BoxPermiso>
         <TextField
           sx={{
             margin: '10px 0 0 0',
@@ -52,40 +57,44 @@ export default function FormNuevoPermiso({ handleClose }) {
         {errors.Descripcion?.type === 'required' && (
           <p>El Campo es requirido </p>
         )}
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso>
         <label>Salidas</label>
         <Checkbox defaultChecked {...register('Salidas')} />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso>
         <label>Usuarios</label>
         <Checkbox defaultChecked {...register('Usuarios')} />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso>
         <label>Entradas</label>
         <Checkbox defaultChecked {...register('Entradas')} />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso>
         <label>Productos</label>
         <Checkbox defaultChecked {...register('Productos')} />
-      </div>
-      <div>
-        <label>Clientes</label>
-        <Checkbox {...register('Clientes')} />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso>
+        <label>Empleados</label>
+        <Checkbox {...register('Empleados')} />
+      </BoxPermiso>
+      <BoxPermiso>
         <label>Proveedores</label>
         <Checkbox {...register('Proveedores')} />
-      </div>
-      <div>
+      </BoxPermiso>
+      <BoxPermiso>
         <label>Permisos</label>
         <Checkbox {...register('Permisos')} />
-      </div>
-      <div>
-        <label>Configuracion</label>
+      </BoxPermiso>
+      <BoxPermiso>
+        <label>Configuración</label>
         <Checkbox {...register('Configuracion')} />
-      </div>
-      <Button type='submit'>Crear</Button>
+      </BoxPermiso>
+      <Box display='flex' justifyContent='center' pt={1}>
+        <Button variant='contained' type='submit'>
+          Crear
+        </Button>
+      </Box>
     </form>
   );
 }

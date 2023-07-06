@@ -8,6 +8,7 @@ export const useReporte = () => {
   const { entradas } = useSelector((state) => state.Entradas);
   const { salidas } = useSelector((state) => state.Salidas);
   const { almacenes } = useSelector((state) => state.Almacenes);
+  const { empleados } = useSelector((state) => state.Empleados);
 
   const Reporte = useMemo(() => {
     return [
@@ -21,10 +22,14 @@ export const useReporte = () => {
           const almacen = almacenes.find(
             (alma) => alma.id === entrada.IdAlmacenes
           );
+          const empleado = empleados.find(
+            (emple) => emple.id === entrada.IdEmpleados
+          );
           return {
             IdProducto,
             action: 'Entrada',
             Codigo,
+            empleado: `${empleado.FullName}-${empleado.Cargo}`,
             Descripcion,
             Cantidad,
             created_at,
@@ -42,10 +47,14 @@ export const useReporte = () => {
           const almacen = almacenes.find(
             (alma) => alma.id === salida.IdAlmacenes
           );
+          const empleado = empleados.find(
+            (emple) => emple.id === salida.IdEmpleados
+          );
           return {
             IdProducto,
             action: 'Salida',
             Codigo,
+            empleado: `${empleado.FullName}-${empleado.Cargo}`,
             Descripcion,
             Cantidad,
             created_at,

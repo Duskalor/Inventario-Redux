@@ -1,4 +1,11 @@
-import { Box, Button, Input, InputLabel, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
@@ -17,7 +24,8 @@ export default function FormNuevaEntrada({ handleClose }) {
   const [errorCodigo, setErrorCodigo] = useState(null);
   // USE STATE
   const [errorsItems, setErrorsItems] = useState(null);
-  // const user = usuarios.find((user) => user.id === id);
+  const { empleados } = useSelector((state) => state.Empleados);
+
   const dispatch = useDispatch();
   const {
     register,
@@ -94,7 +102,23 @@ export default function FormNuevaEntrada({ handleClose }) {
           <BoxError>El Campo es requirido </BoxError>
         )}
       </Box>
-
+      <Box>
+        <NativeSelect
+          {...register('IdEmpleados', {
+            required: true,
+          })}
+        >
+          <option aria-label='None' value='' />
+          {empleados.map((usuario) => (
+            <option key={usuario.id} value={usuario.id}>
+              {usuario.FullName}
+            </option>
+          ))}
+        </NativeSelect>
+        {errors.IdEmpleados?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
+      </Box>
       <Box>
         <TextArea
           sx={{ my: '2rem' }}

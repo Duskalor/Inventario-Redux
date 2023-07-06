@@ -147,6 +147,7 @@ export default function ListaSalidas() {
               >
                 <TableCell>Codigo Documento</TableCell>
                 <TableCell>Usuario</TableCell>
+                <TableCell>Empleado</TableCell>
                 <TableCell>Razón Salida</TableCell>
                 {IdPermisos === roles.admin && <TableCell>Active</TableCell>}
                 <TableCell>Cantidad de Productos</TableCell>

@@ -6,7 +6,7 @@ import { updateProveedor } from './ProveedorSlice';
 export default function FormEditProveedor({ handleClose, id }) {
   const dispatch = useDispatch();
   //console.log(id);
-  const { proveedores } = useSelector((state) => state.Proveedor); //console.log(clientes);
+  const { proveedores } = useSelector((state) => state.Proveedor);
   const { FullName, Ruc } = proveedores.find(
     (proveedor) => proveedor.id === id
   );

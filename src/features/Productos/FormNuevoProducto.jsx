@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { createProducto } from './productosSlice';
+import { BoxError } from '../../components/BoxError';
 
 export default function FormNuevoProducto({ handleClose }) {
   const dispatch = useDispatch();
@@ -32,62 +33,46 @@ export default function FormNuevoProducto({ handleClose }) {
       >
         <Box>
           <TextField
-            sx={{
-              margin: '10px 0 0 0',
-            }}
+            sx={{ margin: '10px 0 0 0' }}
             type='text'
-            {...register('Codigo', {
-              required: true,
-            })}
+            {...register('Codigo', { required: true })}
             label='Codigo'
             variant='outlined'
           />
 
-          {errors.Codigo?.type === 'required' && <p>El Campo es requirido </p>}
+          {errors.Codigo?.type === 'required' && (
+            <BoxError>El Campo es requirido </BoxError>
+          )}
         </Box>
         <Box>
           <TextField
-            sx={{
-              margin: '10px 0 0 0',
-            }}
+            sx={{ margin: '10px 0 0 0' }}
             type='text'
-            {...register('Descripcion', {
-              required: true,
-            })}
+            {...register('Descripcion', { required: true })}
             label='Descripción'
             variant='outlined'
           />
           {errors.Descripcion?.type === 'required' && (
-            <p>El Campo es requirido </p>
+            <BoxError>El Campo es requirido </BoxError>
           )}
         </Box>
 
         <Box>
           <TextField
-            sx={{
-              margin: '10px 0 0 0',
-            }}
+            sx={{ margin: '10px 0 0 0' }}
             type='text'
-            {...register('Categoria', {
-              required: true,
-            })}
+            {...register('Categoria', { required: true })}
             label='Categoría'
             variant='outlined'
           />
 
           {errors.Categoria?.type === 'required' && (
-            <p>El Campo es requirido </p>
+            <BoxError>El Campo es requirido </BoxError>
           )}
         </Box>
       </Box>
 
-      <Button
-        sx={{
-          mt: '1rem',
-        }}
-        type='submit'
-        variant='contained'
-      >
+      <Button sx={{ mt: '1rem' }} type='submit' variant='contained'>
         Crear
       </Button>
     </form>

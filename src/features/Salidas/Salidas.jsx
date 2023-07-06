@@ -21,13 +21,17 @@ export default function Salidas({ salida }) {
     id,
     razonSalida,
     active,
+    IdEmpleados,
     updated_at: fecha,
   } = salida;
 
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { almacenes } = useSelector((state) => state.Almacenes);
+  const { empleados } = useSelector((state) => state.Empleados);
+
   const Almacen = almacenes.find((alma) => alma.id === IdAlmacenes);
   const UsuarioSalida = usuarios.find((user) => user.id === IdUsuario);
+  const empleado = empleados.find((emple) => emple.id === IdEmpleados);
 
   const { productoSalidaBD } = useSelector((state) => state.ProductoSalida);
   const productos = useProducts();
@@ -63,6 +67,10 @@ export default function Salidas({ salida }) {
         <LayoutProductosSalida NumeroDocumento={NumeroDocumento} />
       </TableCell>
       <TableCell>{UsuarioSalida?.FullName}</TableCell>
+      <TableCell>
+        {empleado?.FullName}
+        <Box>{empleado?.Cargo}</Box>
+      </TableCell>
       <TableCell>{razonSalida}</TableCell>
       {IdPermisos === roles.admin && (
         <TableCell>

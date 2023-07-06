@@ -9,10 +9,11 @@ import { productosSalidaSlice } from './features/ProductoSalidas/productosSalida
 import { salidasSlice } from './features/Salidas/salidasSlice';
 import { UsuariosSlice } from './features/Usuarios/UsuariosSlice';
 import { almacenesSlice } from './features/Almacenes/almacenesSlice';
+import { empleadosSlice } from './features/Empleados/empleadosSlice';
 export const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
-    // [clientesSlice.name]: clientesSlice.reducer,
+    [empleadosSlice.name]: empleadosSlice.reducer,
     [datosSlice.name]: datosSlice.reducer,
     [productosSlice.name]: productosSlice.reducer,
     // [ProveedorSlice.name]: ProveedorSlice.reducer,

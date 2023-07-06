@@ -7,7 +7,6 @@ export default function FormEditAlmacen({ handleClose, id }) {
   const dispatch = useDispatch();
   //console.log(id);
   const { almacenes } = useSelector((state) => state.Almacenes);
-  //console.log(clientes);
   const { name, Direccion, active, ubicacion } = almacenes.find(
     (almacen) => almacen.id === id
   );

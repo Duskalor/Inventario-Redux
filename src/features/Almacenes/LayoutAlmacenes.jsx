@@ -60,7 +60,7 @@ export default function LayoutAlmacenes() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AssignmentIcon sx={{ fontSize: 75 }} />
+        <AssignmentIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Almacenes
       </ButtonLayout>
       <Modal

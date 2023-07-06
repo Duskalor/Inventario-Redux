@@ -14,7 +14,7 @@ export default function LayoutReports() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AssignmentIcon sx={{ fontSize: 75 }} />
+        <AssignmentIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Reportes
       </ButtonLayout>
       <Modal

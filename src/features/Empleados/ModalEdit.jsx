@@ -2,17 +2,13 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import FormEditCliente from './FormEditCliente';
 import { style } from '../style';
+import FormEditEmpleado from './FormEditEmpleado';
 
 export function ModalEdit({ id }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <React.Fragment>
@@ -25,7 +21,7 @@ export function ModalEdit({ id }) {
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 200 }}>
-          <FormEditCliente handleClose={handleClose} id={id} />
+          <FormEditEmpleado handleClose={handleClose} id={id} />
           <Button onClick={handleClose}>Cerrar</Button>
         </Box>
       </Modal>

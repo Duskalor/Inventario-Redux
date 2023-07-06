@@ -24,16 +24,15 @@ export const TitleSystem = ({ UserPermiso, user }) => {
         <img
           src='./logo.png'
           alt='Legion Tech'
-          style={{
-            width: '45px',
-            height: '73px',
-          }}
+          style={{ width: '45px', height: '73px' }}
         />
-        <Typography variant='h3'>{RazonSocial}</Typography>
+        <Typography variant='h3' sx={{ fontSize: 'max(1rem, 15px)' }}>
+          {RazonSocial}
+        </Typography>
       </BoxContainer>
-      <BoxContainer px={3} alignItems='center'>
+      <BoxContainer px={3} alignItems='center' sx={{ flexDirection: 'column' }}>
         {!loading && UserPermiso && (
-          <Typography variant='h3'>
+          <Typography variant='h3' sx={{ fontSize: 'max(1rem, 15px)' }}>
             Bienvenido {user.FullName} - {UserPermiso?.Descripcion} -&nbsp;
             {NameAlmacen?.ubicacion}
           </Typography>

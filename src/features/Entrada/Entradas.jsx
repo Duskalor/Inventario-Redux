@@ -15,6 +15,7 @@ import { roles, useUserLogin } from '../../utils/useUserLogin';
 export default function Entradas({ entrada }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { almacenes } = useSelector((state) => state.Almacenes);
+  const { empleados } = useSelector((state) => state.Empleados);
   const { productoEntradaBD } = useSelector(
     (state) => state.ProductoEntrada,
     (prevData, nextData) =>
@@ -31,10 +32,12 @@ export default function Entradas({ entrada }) {
     id,
     IdAlmacenes,
     razonEntrada,
+    IdEmpleados,
   } = entrada;
   // obteniendo al usuario para listarlo
   const usuario = usuarios.find((user) => user.id === IdUsuario);
   const almacen = almacenes.find((alma) => alma.id === IdAlmacenes);
+  const empleado = empleados.find((emple) => emple.id === IdEmpleados);
   // obteniendo los productos para modificar el stock
   const ParaEliminar = productoEntradaBD.filter((pro) => pro.IdEntrada === id);
 
@@ -61,6 +64,10 @@ export default function Entradas({ entrada }) {
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>
       <TableCell>{usuario.FullName}</TableCell>
+      <TableCell>
+        {empleado.FullName}
+        <Box>{empleado?.Cargo}</Box>
+      </TableCell>
       {IdPermisos === roles.admin && (
         <TableCell sx={{ width: '77px' }}>
           <BoxStatus active={active}>

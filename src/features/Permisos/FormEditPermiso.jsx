@@ -12,7 +12,7 @@ export default function FormEditPermiso({ handleClose, id }) {
 
   //console.log(permisos);
   const {
-    Clientes,
+    Empleados,
     Configuracion,
     Descripcion,
     Entradas,
@@ -22,9 +22,8 @@ export default function FormEditPermiso({ handleClose, id }) {
     Salidas,
     Usuarios,
   } = permisos.find((permiso) => permiso.id === id);
-  // console.log(Clientes);
 
-  const Clientes1 = Clientes === 1 ? true : false;
+  const Empleados1 = Empleados === 1 ? true : false;
   const Configuracion1 = Configuracion === 1 ? true : false;
   const Entradas1 = Entradas === 1 ? true : false;
   const Permisos1 = Permisos === 1 ? true : false;
@@ -46,7 +45,7 @@ export default function FormEditPermiso({ handleClose, id }) {
       Usuarios: Usuarios1,
       Entradas: Entradas1,
       Productos: Productos1,
-      Clientes: Clientes1,
+      Empleados: Empleados1,
       Proveedores: Proveedores1,
       Permisos: Permisos1,
       Configuracion: Configuracion1,
@@ -56,7 +55,9 @@ export default function FormEditPermiso({ handleClose, id }) {
   //console.log(datosParaEditar);
   const onSubmit = (dato) => {
     reset();
-    dato.Clientes = dato.Clientes ? (dato.Clientes = 1) : (dato.Clientes = 0);
+    dato.Empleados = dato.Empleados
+      ? (dato.Empleados = 1)
+      : (dato.Empleados = 0);
     dato.Configuracion = dato.Configuracion
       ? (dato.Configuracion = 1)
       : (dato.Configuracion = 0);
@@ -159,10 +160,10 @@ export default function FormEditPermiso({ handleClose, id }) {
         />
       </BoxPermiso>
       <BoxPermiso px={1}>
-        <label>Clientes</label>
+        <label>Empleados</label>
         <Controller
           control={control}
-          name='Clientes'
+          name='Empleados'
           render={({ field: { value, onChange } }) => (
             <Checkbox
               checked={value}

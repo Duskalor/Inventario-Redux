@@ -56,7 +56,7 @@ export default function LayoutEntrada() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <ArrowDownwardIcon sx={{ fontSize: 75 }} />
+        <ArrowDownwardIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Entradas
       </ButtonLayout>
       <Modal

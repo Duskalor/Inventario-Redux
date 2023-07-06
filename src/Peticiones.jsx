@@ -11,6 +11,7 @@ import { getEntradas } from './features/Entrada/entradaSlice';
 import { getDetalleEntradas } from './features/ProductoEntrada/productoEntradaSlice';
 import { getDetalleSalida } from './features/ProductoSalidas/productosSalidaSlice';
 import { getSalidas } from './features/Salidas/salidasSlice';
+import { getEmpleados } from './features/Empleados/empleadosSlice';
 
 export default function Peticiones() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function Peticiones() {
     dispatch(getUsuarios());
     dispatch(getProductos());
     dispatch(getEntradas());
+    dispatch(getEmpleados());
     dispatch(getSalidas());
     dispatch(getDetalleEntradas());
     dispatch(getDetalleSalida());

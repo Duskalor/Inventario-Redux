@@ -2,24 +2,22 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import FormNuevoCliente from './FormNuevoCliente';
-import ListaCliente from './ListaCliente';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { style } from '../style';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import ListaEmpleados from './ListaEmpleados';
+import FormNuevoEmpleado from './FormNuevoEmpleado';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <React.Fragment>
-      <Button onClick={handleOpen}>Nuevo Cliente</Button>
+      <Button variant='contained' onClick={handleOpen}>
+        Nuevo Empleado
+      </Button>
       <Modal
         hideBackdrop
         open={open}
@@ -28,27 +26,25 @@ export function ChildModal() {
         aria-describedby='child-modal-description'
       >
         <Box sx={{ ...style, width: 250, borderRadius: 4 }}>
-          <FormNuevoCliente handleClose={handleClose} />
-          <Button onClick={handleClose}>Cerrar</Button>
+          <FormNuevoEmpleado handleClose={handleClose} />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', pt: 2 }}>
+            <Button onClick={handleClose}>Cerrar</Button>
+          </Box>
         </Box>
       </Modal>
     </React.Fragment>
   );
 }
-export default function LayoutClientes() {
+export default function LayoutEmpleados() {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AccountCircleIcon sx={{ fontSize: 75 }} />
-        Clientes
+        <AccountCircleIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        Empleados
       </ButtonLayout>
       <Modal
         open={open}
@@ -56,9 +52,8 @@ export default function LayoutClientes() {
         aria-labelledby='parent-modal-title'
         aria-describedby='parent-modal-description'
       >
-        <Box sx={{ ...style, width: 500, borderRadius: 4 }}>
-          <ListaCliente />
-          <ChildModal />
+        <Box sx={{ ...style, width: 600, borderRadius: 4 }}>
+          <ListaEmpleados />
         </Box>
       </Modal>
     </div>

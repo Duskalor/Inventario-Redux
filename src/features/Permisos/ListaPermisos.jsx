@@ -43,7 +43,7 @@ export default function ListaPermisos() {
               <TableCell>Entradas</TableCell>
               <TableCell>Productos</TableCell>
               <TableCell>Almacenes</TableCell>
-              <TableCell>Proveedores</TableCell>
+              <TableCell>Empleados</TableCell>
               <TableCell>Permisos</TableCell>
               <TableCell>Configuración</TableCell>
               <TableCell>Acciones</TableCell>

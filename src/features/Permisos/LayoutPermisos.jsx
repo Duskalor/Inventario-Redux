@@ -33,7 +33,9 @@ export function ChildModal() {
       >
         <Box sx={{ ...style, width: 200, borderRadius: 4 }}>
           <FormNuevoPermiso handleClose={handleClose} />
-          <Button onClick={handleClose}>Cerrar</Button>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', pt: 2 }}>
+            <Button onClick={handleClose}>Cerrar</Button>
+          </Box>
         </Box>
       </Modal>
     </React.Fragment>
@@ -51,7 +53,7 @@ export default function LayoutPermisos() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <ManageAccountsIcon sx={{ fontSize: 75 }} />
+        <ManageAccountsIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Permisos
       </ButtonLayout>
       <Modal

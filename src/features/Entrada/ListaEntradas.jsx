@@ -174,6 +174,7 @@ export default function ListaEntradas() {
               <TableRow sx={{ '& th': { textAlign: 'center' } }}>
                 <TableCell>Codigo Documento</TableCell>
                 <TableCell>Usuario</TableCell>
+                <TableCell>Empleado</TableCell>
                 {IdPermisos === roles.admin && <TableCell>Status</TableCell>}
                 <TableCell>Razón Entrada</TableCell>
                 <TableCell>Cantidad de Productos</TableCell>
@@ -212,7 +213,7 @@ export default function ListaEntradas() {
                       25,
                       { label: 'All', value: -1 },
                     ]}
-                    colSpan={7}
+                    colSpan={8}
                     count={entradasFiltradas.length}
                     rowsPerPage={rowsPerPage}
                     page={page}

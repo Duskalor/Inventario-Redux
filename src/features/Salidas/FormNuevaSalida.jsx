@@ -1,19 +1,24 @@
-import { Box, Button, Input, InputLabel, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  NativeSelect,
+  Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import FormNuevoProductoSalida from '../ProductoSalidas/FormNuevoProductoSalida';
 import { createSalida } from './salidasSlice';
-// import FormNuevoProductoEntrada from '../ProductoEntrada/FormNuevoProductoEntrada';
 import { BoxError } from '../../components/BoxError';
 import { useState } from 'react';
 import EmptyTextarea from '../../components/TextArea';
 import { useUserLogin } from '../../utils/useUserLogin';
 
 export default function FormNuevaSalida({ handleClose }) {
-  // const { usuarios } = useSelector((state) => state.Usuarios);
-
-  // const { clientes } = useSelector((state) => state.Clientes);
   const { productoSalida } = useSelector((state) => state.ProductoSalida);
+  const { empleados } = useSelector((state) => state.Empleados);
+
   const [errorsItems, setErrorsItems] = useState(null);
   const TextArea = EmptyTextarea();
   const [errorText, setErrorText] = useState(null);
@@ -89,6 +94,23 @@ export default function FormNuevaSalida({ handleClose }) {
         {errors.IdUsuario?.type === 'required' && (
           <BoxError>El Campo es requirido </BoxError>
         )} */}
+      </Box>
+      <Box>
+        <NativeSelect
+          {...register('IdEmpleados', {
+            required: true,
+          })}
+        >
+          <option aria-label='None' value='' />
+          {empleados.map((usuario) => (
+            <option key={usuario.id} value={usuario.id}>
+              {usuario.FullName}
+            </option>
+          ))}
+        </NativeSelect>
+        {errors.IdEmpleados?.type === 'required' && (
+          <BoxError>El Campo es requirido </BoxError>
+        )}
       </Box>
       <Box>
         <TextArea

@@ -61,7 +61,7 @@ export default function LayoutUsuarios() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <SelfImprovementIcon sx={{ fontSize: 75 }} />
+        <SelfImprovementIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Usuarios
       </ButtonLayout>
       <Modal

@@ -8,18 +8,13 @@ import { ButtonLayout } from '../../components/ButtonLayout';
 export default function LayoutDatos() {
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  // ;
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <BusinessIcon sx={{ fontSize: 75 }} />
+        <BusinessIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Datos
       </ButtonLayout>
 

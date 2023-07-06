@@ -65,7 +65,7 @@ export default function LayoutProducto() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <InventoryIcon sx={{ fontSize: 75 }} />
+        <InventoryIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
         Productos
       </ButtonLayout>
       <Modal

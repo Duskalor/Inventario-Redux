@@ -18,7 +18,6 @@ export default function Permiso({ permisos }) {
     Configuracion,
     id,
   } = permisos;
-  //console.log(clientes);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {

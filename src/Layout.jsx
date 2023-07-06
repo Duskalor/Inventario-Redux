@@ -12,6 +12,7 @@ import { ButtonLogout } from './components/ButtonLogout';
 import { TitleSystem } from './components/TitleSystem';
 import { BoxContainer } from './components/BoxContainer';
 import LayoutPermisos from './features/Permisos/LayoutPermisos';
+import LayoutEmpleados from './features/Empleados/LayoutEmpleados';
 
 export default function Layout() {
   const { permisos } = useSelector((state) => state.Permisos);
@@ -33,8 +34,8 @@ export default function Layout() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          width: '1200px',
-          height: '600px',
+          width: 'min(90%,1200px)',
+          // height: 'min(400px,80%)',
           backgroundColor: 'rgba(0,0,0,0.1)',
           border: '1px solid rgba(255,255,255,0.2)',
           borderRadius: '1rem',
@@ -47,51 +48,56 @@ export default function Layout() {
         <BoxContainer>
           <Grid
             container
-            columns={14}
-            gap={10}
+            columns={5}
+            gap={3}
             justifyContent='center'
             p={5}
-            mx={4}
+            // mx={4}
           >
             {UserPermiso?.Configuracion === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutDatos />
               </Grid>
             )}
             {UserPermiso?.Productos === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutProducto />
               </Grid>
             )}
             {UserPermiso?.Almacenes === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutAlmacenes />
               </Grid>
             )}
 
             {UserPermiso?.Usuarios === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutUsuarios />
               </Grid>
             )}
+            {UserPermiso?.Empleados === 1 && (
+              <Grid item md={'auto'}>
+                <LayoutEmpleados />
+              </Grid>
+            )}
             {UserPermiso?.Usuarios === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutPermisos />
               </Grid>
             )}
 
             {UserPermiso?.Entradas === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutEntrada />
               </Grid>
             )}
             {UserPermiso?.Salidas === 1 && (
-              <Grid item md={2}>
+              <Grid item md={'auto'}>
                 <LayoutSalida />
               </Grid>
             )}
 
-            <Grid item md={2}>
+            <Grid item md={'auto'}>
               <LayoutReports />
             </Grid>
           </Grid>

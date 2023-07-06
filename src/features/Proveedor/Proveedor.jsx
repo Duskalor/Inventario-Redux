@@ -6,7 +6,6 @@ import { deleteProveedor } from './ProveedorSlice';
 
 export default function Proveedor({ proveedores }) {
   const { FullName, Ruc, id } = proveedores;
-  //console.log(clientes);
   const dispatch = useDispatch();
   const deleteItem = (id) => {
     if (window.confirm('Esta Seguro de eliminar a este cliente ?')) {

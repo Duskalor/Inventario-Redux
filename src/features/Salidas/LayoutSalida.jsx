@@ -56,7 +56,7 @@ export default function LayoutSalida() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <ArrowUpwardIcon sx={{ fontSize: 75 }} /> Salidas
+        <ArrowUpwardIcon sx={{ fontSize: 'min(10vw, 75px)' }} /> Salidas
       </ButtonLayout>
       <Modal
         open={open}
