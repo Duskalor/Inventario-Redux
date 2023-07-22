@@ -7,9 +7,9 @@ import AutocompleteForm from '../../components/AutoCompleteForm';
 import { useReporte } from '../../utils/useReporte';
 import { formatDate } from '../../utils/formatDate';
 import { BoxError } from '../../components/BoxError';
-
+import { v4 } from 'uuid';
 export const Reportes = ({ handleClose }) => {
-  const RamdomId = useRef(crypto.randomUUID());
+  const RamdomId = useRef(v4());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [error, setError] = useState(null);
@@ -20,11 +20,11 @@ export const Reportes = ({ handleClose }) => {
     id: RamdomId.current,
     Codigo: 'All',
   });
-
+  // console.log(filterProducto);
   const { Reporte } = useReporte();
 
   const FilterReport =
-    filterProducto.id !== RamdomId.current
+    filterProducto !== null && filterProducto.id !== RamdomId.current
       ? Reporte.filter((pro) => pro.IdProducto === filterProducto.id)
       : Reporte;
 

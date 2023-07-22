@@ -16,7 +16,6 @@ export const store = configureStore({
     [empleadosSlice.name]: empleadosSlice.reducer,
     [datosSlice.name]: datosSlice.reducer,
     [productosSlice.name]: productosSlice.reducer,
-    // [ProveedorSlice.name]: ProveedorSlice.reducer,
     [UsuariosSlice.name]: UsuariosSlice.reducer,
     [permisosSlice.name]: permisosSlice.reducer,
     [entradaSlice.name]: entradaSlice.reducer,

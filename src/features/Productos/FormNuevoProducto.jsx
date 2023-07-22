@@ -13,11 +13,13 @@ export default function FormNuevoProducto({ handleClose }) {
     formState: { errors },
     reset,
   } = useForm();
+
+
+  
   const onSubmit = (dato) => {
     dispatch(createProducto(dato));
     handleClose();
     reset();
-    //console.log(d);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

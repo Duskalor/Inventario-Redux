@@ -56,7 +56,7 @@ export default function FormNuevoUsuario({ handleClose }) {
             })}
           />
           {errors.FullName?.type === 'required' && (
-            <p>El Campo es requirido </p>
+            <BoxError>El Campo es requirido </BoxError>
           )}
         </BoxContainer>
         <BoxContainer>

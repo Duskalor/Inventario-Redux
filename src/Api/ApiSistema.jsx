@@ -25,9 +25,8 @@ apiSistema.interceptors.response.use(
     const token = localStorage.getItem('userToken');
 
     if (
-      token &&
-      error.response.status === 401
-      //||  error.response.status === 500
+      (token && error.response.status === 401) ||
+      error.response.status === 500
     ) {
       localStorage.clear();
     }
