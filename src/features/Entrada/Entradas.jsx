@@ -11,6 +11,7 @@ import { BoxStatus } from '../../components/BoxStatus';
 import { BoxContainer } from '../../components/BoxContainer';
 import { useProducts } from '../../utils/useProducts';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { useResponsive } from '../../utils/responsive';
 
 export default function Entradas({ entrada }) {
   const { usuarios } = useSelector((state) => state.Usuarios);
@@ -23,6 +24,7 @@ export default function Entradas({ entrada }) {
   );
   const productos = useProducts();
   const dispatch = useDispatch();
+  const maxwidth = useResponsive();
   const { IdPermisos } = useUserLogin();
   const {
     NumeroDocumento,
@@ -59,7 +61,11 @@ export default function Entradas({ entrada }) {
   };
 
   return (
-    <TableRow sx={{ '& td': { textAlign: 'center' } }}>
+    <TableRow
+      sx={{
+        '&>td': { textAlign: 'center', padding: maxwidth ? '7px' : '16px' },
+      }}
+    >
       <TableCell>
         <LayoutProductosEntrada NumeroDocumento={NumeroDocumento} />
       </TableCell>

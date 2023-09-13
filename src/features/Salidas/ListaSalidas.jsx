@@ -24,8 +24,10 @@ import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChildModal } from './LayoutSalida';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
+import { useResponsive } from '../../utils/responsive';
 
 export default function ListaSalidas() {
+  const maxwidth = useResponsive();
   const { IdAlmacenes, IdPermisos } = useUserLogin();
   const { salidas } = useSelector((state) => state.Salidas);
   const [filterAlmacen, setFilterAlmacen] = useState(IdAlmacenes);
@@ -73,7 +75,11 @@ export default function ListaSalidas() {
 
   return (
     <Box>
-      <Typography sx={titulos} variant='h4' component='h2'>
+      <Typography
+        sx={{ ...titulos, fontSize: maxwidth ? '30px' : '35px' }}
+        variant='h4'
+        component='h2'
+      >
         SALIDAS
       </Typography>
       <Box

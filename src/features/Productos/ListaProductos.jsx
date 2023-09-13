@@ -16,7 +16,6 @@ import {
   TableRow,
   TextField,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -108,7 +107,6 @@ export default function ListaProductos() {
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-            // height: '20px',
             '&>button': { m: '1rem' },
           }}
         >
@@ -143,6 +141,7 @@ export default function ListaProductos() {
                 value={BusquedaDescription}
                 label='filter'
                 onChange={handleOnchangeFilterName}
+                // sx={{ height: maxwidth ? '2px' : '16px' }}
               >
                 <MenuItem value='Codigo'>Codigo</MenuItem>
                 <MenuItem value='Descripcion'>Descripcion</MenuItem>
@@ -188,6 +187,7 @@ export default function ListaProductos() {
                     textAlign: 'center',
                     color: 'white',
                     fontSize: maxwidth ? '12px' : '16px',
+                    padding: maxwidth ? '7px' : '16px',
                   },
                 }}
               >
@@ -229,7 +229,8 @@ export default function ListaProductos() {
               {emptyRows > 0 && productosFiltrados.length > 0 && (
                 <TableRow
                   style={{
-                    height: 66 * emptyRows,
+                    //66
+                    height: (maxwidth ? 48 : 66) * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -243,7 +244,7 @@ export default function ListaProductos() {
                     rowsPerPageOptions={[
                       6,
                       10,
-                      25,
+                      // 25,
                       { label: 'All', value: -1 },
                     ]}
                     colSpan={7}

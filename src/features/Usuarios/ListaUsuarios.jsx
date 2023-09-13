@@ -15,8 +15,10 @@ import { titulos } from '../style';
 import Usuarios from './Usuarios';
 import { getUsuarios } from './UsuariosSlice';
 import { ChildModal } from './LayoutUsuarios';
+import { useResponsive } from '../../utils/responsive';
 
 export default function ListaUsuarios() {
+  const maxwidth = useResponsive();
   const { usuarios } = useSelector((state) => state.Usuarios);
   const { permisos } = useSelector((state) => state.Permisos);
   const { almacenes } = useSelector((state) => state.Almacenes);
@@ -28,7 +30,11 @@ export default function ListaUsuarios() {
   }, [dispatch]);
   return (
     <div>
-      <Typography sx={titulos} variant='h4' component='h2'>
+      <Typography
+        sx={{ ...titulos, fontSize: maxwidth ? '30px' : '35px' }}
+        variant='h4'
+        component='h2'
+      >
         USUARIOS
       </Typography>
       <Box

@@ -11,7 +11,9 @@ import { BoxStatus } from '../../components/BoxStatus';
 import { useProducts } from '../../utils/useProducts';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import ModalPrint from './ModalPrint';
+import { useResponsive } from '../../utils/responsive';
 export default function Salidas({ salida }) {
+  const maxwidth = useResponsive();
   const { IdPermisos } = useUserLogin();
   const {
     NumeroDocumento,
@@ -62,7 +64,9 @@ export default function Salidas({ salida }) {
   };
 
   return (
-    <TableRow sx={centrar}>
+    <TableRow
+      sx={{ ...centrar, '&>td': { padding: maxwidth ? '7px' : '16px' } }}
+    >
       <TableCell>
         <LayoutProductosSalida NumeroDocumento={NumeroDocumento} />
       </TableCell>

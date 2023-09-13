@@ -3,8 +3,10 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalEdit } from './ModalEdit';
 import { deleteUsuarios } from './UsuariosSlice';
+import { useResponsive } from '../../utils/responsive';
 
 export default function Usuarios({ usuarios, permisos, almacenes }) {
+  const maxwidth = useResponsive();
   const { FullName, Email, Usuario, IdPermisos, id, IdAlmacenes } = usuarios;
 
   const { Descripcion: permiso } = permisos.find(
@@ -22,6 +24,7 @@ export default function Usuarios({ usuarios, permisos, almacenes }) {
   return (
     <TableRow
       sx={{
+        '&>td': { padding: maxwidth ? '7px' : '16px' },
         '&>td>div': { textAlign: 'center' },
       }}
     >

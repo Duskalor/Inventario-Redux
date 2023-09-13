@@ -28,8 +28,10 @@ import { ChildModal } from './LayoutEntrada';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import { useHandlePAge } from '../../utils/useHandlePage';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import { useResponsive } from '../../utils/responsive';
 
 export default function ListaEntradas() {
+  const maxwidth = useResponsive();
   const { IdPermisos, IdAlmacenes } = useUserLogin();
   const { almacenes } = useSelector((state) => state.Almacenes);
   const { entradas } = useSelector(
@@ -102,7 +104,11 @@ export default function ListaEntradas() {
           justifyContent: 'space-evenly ',
         }}
       >
-        <Typography sx={titulos} variant='h4' component='h2'>
+        <Typography
+          sx={{ ...titulos, fontSize: maxwidth ? '30px' : '35px' }}
+          variant='h4'
+          component='h2'
+        >
           ENTRADAS
         </Typography>
         <Box
