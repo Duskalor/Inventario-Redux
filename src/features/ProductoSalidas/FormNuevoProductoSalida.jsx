@@ -96,13 +96,14 @@ export default function FormNuevoProductoSalida({
     <>
       <Box>
         <NativeSelect
-          className='line'
+          // className='line'
           value={productosAgregados.IdProducto}
           onChange={(e) => {
             errorProductos !== null && setErrorProductos(null);
             errorsItems !== null && setErrorsItems(null);
             Guardar(e);
           }}
+          sx={{ color: 'transparent' }}
           name='IdProducto'
         >
           <option aria-label='None' value='' />
@@ -114,6 +115,7 @@ export default function FormNuevoProductoSalida({
                 disabled={WithoutStock}
                 style={{
                   backgroundColor: WithoutStock ? 'rgba(0,0,0,0.6)' : color1,
+                  color: 'white',
                 }}
                 key={crypto.randomUUID()}
                 value={producto.id}
