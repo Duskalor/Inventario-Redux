@@ -4,8 +4,10 @@ import { ModalEdit } from './ModalEdit';
 import { deleteProductos } from './productosSlice';
 import { roles, useUserLogin } from '../../utils/useUserLogin';
 import { BoxStatus } from '../../components/BoxStatus';
+import { useResponsive } from '../../utils/responsive';
 
 export default function Productos({ productos }) {
+  const maxwidth = useResponsive();
   const { id, Categoria, Codigo, Descripcion, active, IdAlmacenes, Cantidad } =
     productos;
   const { IdAlmacenes: idAlmacenUser, IdPermisos } = useUserLogin();
@@ -28,8 +30,15 @@ export default function Productos({ productos }) {
     <>
       <TableRow
         sx={{
-          '&>td>div': { display: 'flex', justifyContent: 'center' },
-          '&>td': { height: '30px', color: 'white' },
+          '&>td>div': {
+            display: 'flex',
+            justifyContent: 'center',
+          },
+          '&>td': {
+            height: '30px',
+            color: 'white',
+            padding: maxwidth ? '7px' : '16px',
+          },
         }}
       >
         <TableCell>

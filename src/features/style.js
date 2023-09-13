@@ -19,7 +19,7 @@ export const titulos = {
   justifyContent: 'center',
   padding: '15px 0 20px 0',
   textTransform: 'capitalize',
-  fontSize: '2.2em',
+  fontSize: '2.2rem',
   fontWeight: '600',
 };
 

@@ -92,7 +92,15 @@ export default function ListaProductos() {
   return (
     <Box>
       <Box sx={{ justifyContent: 'space-evenly ' }}>
-        <Typography sx={titulos} variant='h4' component='h2'>
+        <Typography
+          sx={{
+            ...titulos,
+            padding: '0px',
+            fontSize: maxwidth ? '30px' : '35px',
+          }}
+          variant='h4'
+          component='h2'
+        >
           PRODUCTOS
         </Typography>
         <Box
@@ -100,6 +108,7 @@ export default function ListaProductos() {
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
+            // height: '20px',
             '&>button': { m: '1rem' },
           }}
         >
@@ -175,7 +184,11 @@ export default function ListaProductos() {
             <TableHead>
               <TableRow
                 sx={{
-                  '&>th': { textAlign: 'center', color: 'white' },
+                  '&>th': {
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: maxwidth ? '12px' : '16px',
+                  },
                 }}
               >
                 <TableCell sx={{ width: '70px' }}>Código</TableCell>
