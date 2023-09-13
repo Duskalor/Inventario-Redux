@@ -7,6 +7,7 @@ import FormNuevoPermiso from './FormNuevoPermiso';
 import { style } from '../style';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -42,6 +43,7 @@ export function ChildModal() {
   );
 }
 export default function LayoutPermisos() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -53,7 +55,9 @@ export default function LayoutPermisos() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <ManageAccountsIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <ManageAccountsIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Permisos
       </ButtonLayout>
       <Modal

@@ -17,7 +17,6 @@ import LayoutEmpleados from './features/Empleados/LayoutEmpleados';
 export default function Layout() {
   const { permisos } = useSelector((state) => state.Permisos);
   const { user } = useSelector((state) => state.Auth);
-
   const UserPermiso = permisos.find(
     (permiso) => permiso.id === user.IdPermisos
   );
@@ -45,14 +44,7 @@ export default function Layout() {
         <TitleSystem user={user} UserPermiso={UserPermiso} />
 
         <BoxContainer>
-          <Grid
-            container
-            columns={5}
-            gap={3}
-            justifyContent='center'
-            p={5}
-            // mx={4}
-          >
+          <Grid container columns={5} gap={3} justifyContent='center' p={5}>
             {UserPermiso?.Configuracion === 1 && (
               <Grid item md={'auto'}>
                 <LayoutDatos />

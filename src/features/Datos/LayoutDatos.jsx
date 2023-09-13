@@ -5,8 +5,10 @@ import FormEditDatos from './FormEditDatos';
 import BusinessIcon from '@mui/icons-material/Business';
 import { style } from '../style';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 export default function LayoutDatos() {
   const [open, setOpen] = React.useState(false);
+  const maxwidth = useResponsive();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -14,7 +16,9 @@ export default function LayoutDatos() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <BusinessIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <BusinessIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Datos
       </ButtonLayout>
 

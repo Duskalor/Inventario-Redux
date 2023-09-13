@@ -6,7 +6,9 @@ import { style } from '../style';
 import { ButtonLayout } from '../../components/ButtonLayout';
 import { Reportes } from './Reportes';
 import { Typography } from '@mui/material';
+import { useResponsive } from '../../utils/responsive';
 export default function LayoutReports() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -14,7 +16,9 @@ export default function LayoutReports() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AssignmentIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <AssignmentIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Reportes
       </ButtonLayout>
       <Modal

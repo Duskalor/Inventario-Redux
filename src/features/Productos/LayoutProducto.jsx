@@ -7,6 +7,7 @@ import FormNuevoProducto from './FormNuevoProducto';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { style } from '../style';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -54,6 +55,7 @@ export function ChildModal() {
 }
 
 export default function LayoutProducto() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -65,7 +67,9 @@ export default function LayoutProducto() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <InventoryIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <InventoryIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Productos
       </ButtonLayout>
       <Modal
@@ -78,7 +82,7 @@ export default function LayoutProducto() {
           sx={{
             ...style,
             width: 'min(1200px,80%)',
-
+            // height: '200px',
             borderRadius: 4,
           }}
         >

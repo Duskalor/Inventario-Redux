@@ -9,6 +9,7 @@ import FormNuevaSalida from './FormNuevaSalida';
 import { borrarEstado } from '../ProductoSalidas/productosSalidaSlice';
 import { useDispatch } from 'react-redux';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -42,6 +43,7 @@ export function ChildModal() {
   );
 }
 export default function LayoutSalida() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -56,7 +58,10 @@ export default function LayoutSalida() {
   return (
     <Box>
       <ButtonLayout onClick={handleOpen}>
-        <ArrowUpwardIcon sx={{ fontSize: 'min(10vw, 75px)' }} /> Salidas
+        <ArrowUpwardIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />{' '}
+        Salidas
       </ButtonLayout>
       <Modal
         open={open}

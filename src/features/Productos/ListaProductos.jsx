@@ -16,6 +16,7 @@ import {
   TableRow,
   TextField,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,8 +29,9 @@ import TablePaginationActions from '@mui/material/TablePagination/TablePaginatio
 import { useProducts } from '../../utils/useProducts';
 import { useHandlePAge } from '../../utils/useHandlePage';
 import { BoxError } from '../../components/BoxError';
-
+import { useResponsive } from '../../utils/responsive';
 export default function ListaProductos() {
+  const maxwidth = useResponsive();
   const { loading } = useSelector((state) => state.Productos);
   const { almacenes } = useSelector((state) => state.Almacenes);
   const { IdPermisos, IdAlmacenes } = useUserLogin();

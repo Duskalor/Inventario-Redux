@@ -7,6 +7,7 @@ import { style } from '../style';
 import { ButtonLayout } from '../../components/ButtonLayout';
 import ListaEmpleados from './ListaEmpleados';
 import FormNuevoEmpleado from './FormNuevoEmpleado';
+import { useResponsive } from '../../utils/responsive';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -36,6 +37,7 @@ export function ChildModal() {
   );
 }
 export default function LayoutEmpleados() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,7 +45,9 @@ export default function LayoutEmpleados() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AccountCircleIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <AccountCircleIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Empleados
       </ButtonLayout>
       <Modal

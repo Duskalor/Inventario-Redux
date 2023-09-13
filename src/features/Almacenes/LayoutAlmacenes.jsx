@@ -7,6 +7,7 @@ import { style } from '../style';
 import ListaAlmacenes from './ListaAlmacenes';
 import FormNuevoAlmacen from './FormNuevoAlmacen';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -49,6 +50,7 @@ export function ChildModal() {
   );
 }
 export default function LayoutAlmacenes() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -60,7 +62,9 @@ export default function LayoutAlmacenes() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <AssignmentIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <AssignmentIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Almacenes
       </ButtonLayout>
       <Modal

@@ -7,6 +7,7 @@ import ListaUsuarios from './ListaUsuarios';
 import { style } from '../style';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 
 export function ChildModal() {
   const [open, setOpen] = React.useState(false);
@@ -50,6 +51,7 @@ export function ChildModal() {
   );
 }
 export default function LayoutUsuarios() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -61,7 +63,9 @@ export default function LayoutUsuarios() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <SelfImprovementIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <SelfImprovementIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Usuarios
       </ButtonLayout>
       <Modal

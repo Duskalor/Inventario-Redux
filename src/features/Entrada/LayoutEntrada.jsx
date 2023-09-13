@@ -9,6 +9,7 @@ import { borrarEstado } from '../ProductoEntrada/productoEntradaSlice';
 import { useDispatch } from 'react-redux';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { ButtonLayout } from '../../components/ButtonLayout';
+import { useResponsive } from '../../utils/responsive';
 export function ChildModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -41,6 +42,7 @@ export function ChildModal() {
   );
 }
 export default function LayoutEntrada() {
+  const maxwidth = useResponsive();
   const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -56,7 +58,9 @@ export default function LayoutEntrada() {
   return (
     <div>
       <ButtonLayout onClick={handleOpen}>
-        <ArrowDownwardIcon sx={{ fontSize: 'min(10vw, 75px)' }} />
+        <ArrowDownwardIcon
+          sx={{ fontSize: `min(10vw, ${maxwidth ? '60px' : '75px'})` }}
+        />
         Entradas
       </ButtonLayout>
       <Modal
