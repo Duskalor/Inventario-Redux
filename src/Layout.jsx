@@ -35,7 +35,6 @@ export default function Layout() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           width: 'min(90%,1200px)',
-          // height: 'min(400px,80%)',
           backgroundColor: 'rgba(0,0,0,0.1)',
           border: '1px solid rgba(255,255,255,0.2)',
           borderRadius: '1rem',

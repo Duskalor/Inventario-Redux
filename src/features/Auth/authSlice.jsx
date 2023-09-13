@@ -17,9 +17,7 @@ export const login = createAsyncThunk('login/LoginUser', async (userAuth) => {
   try {
     const { data } = await apiSistema.post('login', userAuth);
     return data;
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 });
 export const logout = createAsyncThunk(
   'Logout/LogoutUser',
@@ -77,8 +75,8 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        if (!payload.success) {
-          state.error = payload.mensaje;
+        if (!payload?.success) {
+          state.error = payload?.mensaje;
         } else {
           localStorage.setItem('userToken', payload.userToken);
           localStorage.setItem('userId', payload.User.id);
